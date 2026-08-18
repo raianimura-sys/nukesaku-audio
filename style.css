@@ -658,6 +658,71 @@ a { color: inherit; text-decoration: none; }
   background-size: auto, 34px 34px, 34px 34px;
 }
 
+/* 黒板解説：暗緑の黒板+チョークの粉 */
+.thumb-board {
+  background:
+    radial-gradient(120% 120% at 80% 20%, rgba(255, 255, 255, .07), transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 16px, rgba(255, 255, 255, .045) 16px 17px),
+    radial-gradient(140% 140% at 50% 0%, #54695a, #2f3d31 70%);
+}
+
+.thumb-note {
+  position: absolute;
+  left: 12px; bottom: -6px;
+  font-size: 5.2rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, .85);
+  text-shadow: 0 0 18px rgba(255, 255, 255, .35);
+  transform: rotate(-12deg);
+  opacity: .9;
+}
+
+/* DAW解説：暗めのグリッド+EQカーブ */
+.thumb-daw {
+  background:
+    radial-gradient(120% 120% at 15% 85%, var(--lav-soft), transparent 55%),
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: auto, 30px 30px, 30px 30px;
+}
+
+.thumb-wave {
+  position: absolute;
+  left: 14px; right: 14px; bottom: 10px;
+  height: 38%;
+  opacity: .85;
+}
+
+.thumb-wave svg {
+  width: 100%;
+  height: 100%;
+}
+
+.thumb-wave path {
+  fill: none;
+  stroke: var(--pink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(220, 167, 165, .6));
+}
+
+/* 記事：ノート/ドキュメント風 */
+.thumb-article {
+  background:
+    radial-gradient(120% 120% at 20% 20%, var(--mint-soft), transparent 55%),
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: auto, 28px 28px, 28px 28px;
+  display: grid;
+  place-items: center;
+}
+
+.thumb-doc {
+  font-size: 3.2rem;
+  line-height: 1;
+  opacity: .75;
+}
+
 .thumb-glow {
   position: absolute;
   inset: 0;
@@ -995,6 +1060,9 @@ a { color: inherit; text-decoration: none; }
   padding: 28px 26px;
   position: relative;
   overflow: hidden;
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .lab-card::before {
@@ -1543,4 +1611,71 @@ a.is-placeholder:focus-visible {
 @media (max-width: 420px) {
   .hero-cta { flex-direction: column; }
   .hero-cta .btn { width: 100%; }
+}
+
+/* ======== Article ======== */
+.article-hero {
+  padding-bottom: 30px;
+}
+
+.article-hero .section-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.article-body {
+  max-width: 720px;
+  margin: 0 auto 120px;
+  padding: 0 24px;
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.article-section {
+  margin-bottom: 56px;
+}
+
+.article-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--pink-deep);
+}
+
+.article-section p {
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+}
+
+.article-section ul {
+  margin: 18px 0 18px 1.5em;
+}
+
+.article-section li {
+  margin-bottom: 10px;
+}
+
+.article-section strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.article-summary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px;
+  margin-top: 64px;
+}
+
+@media (max-width: 640px) {
+  .article-body {
+    padding: 0 20px;
+    margin-bottom: 80px;
+  }
+  .article-section h2 {
+    font-size: 1.3rem;
+  }
+  .article-summary {
+    padding: 22px;
+  }
 }
