@@ -1622,6 +1622,11 @@ a.is-placeholder:focus-visible {
   font-size: clamp(2rem, 6vw, 3rem);
 }
 
+.kicker-keep-case {
+  text-transform: none;
+  letter-spacing: .12em;
+}
+
 .article-body {
   max-width: 720px;
   margin: 0 auto 120px;
