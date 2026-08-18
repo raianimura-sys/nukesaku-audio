@@ -1622,6 +1622,25 @@ a.is-placeholder:focus-visible {
   font-size: clamp(2rem, 6vw, 3rem);
 }
 
+.dtm-brand {
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+.er-box {
+  display: inline-block;
+  font-size: .72em;
+  font-weight: 800;
+  line-height: 1;
+  padding: 2px 5px 3px;
+  margin-left: 1px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--pink-deep);
+  vertical-align: middle;
+}
+
 .article-body {
   max-width: 720px;
   margin: 0 auto 120px;
