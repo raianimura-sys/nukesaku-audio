@@ -623,207 +623,83 @@ a { color: inherit; text-decoration: none; }
    ============================================================ */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .video-card { display: flex; flex-direction: column; }
 
-.video-thumb {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--bg-soft);
+/* 横長カード：アイコンタイル + 本文 + 矢印 */
+.video-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 24px;
 }
 
-/* サムネ装飾：3枚とも違う柄に */
-.thumb-latest {
-  background:
-    radial-gradient(120% 120% at 85% 15%, var(--pink-soft), transparent 55%),
-    repeating-linear-gradient(90deg, transparent 0 26px, var(--line-soft) 26px 27px);
+.video-card .card-body {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.thumb-popular {
-  background:
-    radial-gradient(120% 120% at 15% 85%, var(--lav-soft), transparent 55%),
-    radial-gradient(circle at 50% 50%, transparent 30%, var(--line-soft) 31%, transparent 32% 34%, var(--line-soft) 35%, transparent 36% 38%, var(--line-soft) 39%, transparent 40%);
-  background-size: auto, 60px 60px;
-}
-
-.thumb-making {
-  background:
-    radial-gradient(120% 120% at 50% 100%, var(--mint-soft), transparent 60%),
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: auto, 34px 34px, 34px 34px;
-}
-
-/* 黒板解説：暗緑の黒板+チョークの粉 */
-.thumb-board {
-  background:
-    radial-gradient(120% 120% at 80% 20%, rgba(255, 255, 255, .07), transparent 55%),
-    repeating-linear-gradient(0deg, transparent 0 16px, rgba(255, 255, 255, .045) 16px 17px),
-    radial-gradient(140% 140% at 50% 0%, #54695a, #2f3d31 70%);
-}
-
-.thumb-note {
-  position: absolute;
-  left: 12px; bottom: -6px;
-  font-size: 5.2rem;
-  line-height: 1;
-  color: rgba(255, 255, 255, .85);
-  text-shadow: 0 0 18px rgba(255, 255, 255, .35);
-  transform: rotate(-12deg);
-  opacity: .9;
-}
-
-/* DAW解説：暗めのグリッド+EQカーブ */
-.thumb-daw {
-  background:
-    radial-gradient(120% 120% at 15% 85%, var(--lav-soft), transparent 55%),
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: auto, 30px 30px, 30px 30px;
-}
-
-.thumb-wave {
-  position: absolute;
-  left: 14px; right: 14px; bottom: 10px;
-  height: 38%;
-  opacity: .85;
-}
-
-.thumb-wave svg {
-  width: 100%;
-  height: 100%;
-}
-
-.thumb-wave path {
-  fill: none;
-  stroke: var(--pink);
-  stroke-width: 3;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 6px rgba(220, 167, 165, .6));
-}
-
-/* 記事：ノート/ドキュメント風 */
-.thumb-article {
-  background:
-    radial-gradient(120% 120% at 20% 20%, var(--mint-soft), transparent 55%),
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: auto, 28px 28px, 28px 28px;
+.card-icon {
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
   display: grid;
   place-items: center;
+  font-size: 1.7rem;
+  background: var(--pink-soft);
+  border: 1px solid var(--line-soft);
+  transition: transform .25s;
 }
 
-.thumb-doc {
-  font-size: 3.2rem;
-  line-height: 1;
-  opacity: .75;
-}
+.video-card:hover .card-icon { transform: translateY(-2px) rotate(-4deg); }
 
-.thumb-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 40%, var(--glow-pink), transparent 60%);
-  opacity: .45;
-  animation: glowPulse 4s ease-in-out infinite;
-}
+.accent-lavender .card-icon { background: var(--lav-soft); }
+.accent-mint .card-icon { background: var(--mint-soft); }
+.accent-pink .card-icon { background: var(--pink-soft); }
 
-@keyframes glowPulse {
-  0%, 100% { opacity: .25; }
-  50%      { opacity: .55; }
-}
-
-.thumb-tag {
-  position: absolute;
-  top: 10px; left: 10px;
-  font-family: var(--font-en);
-  font-size: .62rem;
+.card-arrow {
+  flex: none;
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: .14em;
-  color: #fff;
-  background: var(--text);
+  color: var(--text-faint);
+  transition: transform .25s, color .25s;
+}
+
+.video-card:hover .card-arrow {
+  transform: translateX(5px);
+  color: var(--pink-deep);
+}
+
+.accent-lavender:hover .card-arrow { color: var(--lav-deep); }
+.accent-mint:hover .card-arrow { color: var(--mint-deep); }
+
+.video-card:hover .card-title { color: var(--pink-deep); }
+.accent-lavender:hover .card-title { color: var(--lav-deep); }
+.accent-mint:hover .card-title { color: var(--mint-deep); }
+
+/* ステータスをバッジ風に */
+.video-card .card-status {
+  align-self: flex-start;
+  padding: 3px 12px;
   border-radius: 999px;
-  padding: 4px 10px;
-  box-shadow: 0 2px 8px rgba(75,67,80,.25);
+  background: var(--lav-soft);
+  color: var(--lav-deep);
+  border: 1px solid var(--line-soft);
+  margin-bottom: 8px;
 }
 
-/* 再生ボタン風マーク */
-.play-btn {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 54px; height: 54px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: rgba(255,253,248,.72);
-  border: 1.5px solid var(--text);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 14px rgba(75,67,80,.2);
-  transition: transform .2s, background .2s;
-}
-
-.play-btn::after {
-  content: "";
-  position: absolute;
-  top: 50%; left: 54%;
-  transform: translate(-50%, -50%);
-  border-left: 15px solid var(--text);
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-}
-
-.video-card:hover .play-btn { transform: translate(-50%, -50%) scale(1.12); background: var(--pink); }
-
-/* 制作中カードのミニミキサー風装飾 */
-.mini-mixer {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 55%;
-  background: linear-gradient(180deg, transparent, rgba(250,246,238,.9));
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 9px;
-  padding-bottom: 16px;
-}
-
-.mini-fader {
-  width: 7px;
-  height: 100%;
-  max-height: 42px;
-  border-radius: 6px;
-  background: linear-gradient(180deg, var(--mint), var(--pink));
-  box-shadow: 0 0 10px var(--glow-mint);
-  animation: faderBounce 1.6s ease-in-out infinite;
-}
-
-.mini-fader:nth-child(2) { animation-delay: .3s; height: 70%; }
-.mini-fader:nth-child(3) { animation-delay: .6s; height: 85%; }
-
-@keyframes faderBounce {
-  0%, 100% { transform: scaleY(1); }
-  50%      { transform: scaleY(.65); }
-}
-
-.mini-note {
-  position: absolute;
-  top: 14px; right: 16px;
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  background: var(--pink);
-  box-shadow: 0 0 12px var(--glow-pink);
-  animation: noteFloat 2.4s ease-in-out infinite;
-}
-
-.mini-note::after {
-  content: "";
-  position: absolute;
-  left: 50%; top: 0;
-  width: 2px; height: 16px;
-  background: var(--text);
-  transform: translateX(-50%) rotate(12deg);
+@media (max-width: 640px) {
+  .video-card { gap: 14px; padding: 18px; }
+  .card-icon { width: 48px; height: 48px; font-size: 1.4rem; border-radius: 14px; }
+  .card-arrow { display: none; }
 }
 
 /* ============================================================
@@ -1614,12 +1490,46 @@ a.is-placeholder:focus-visible {
 }
 
 /* ======== Article ======== */
+.article-breadcrumb {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 24px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: .8rem;
+  color: var(--text-faint);
+}
+
+.article-list {
+  max-width: 720px;
+  margin: 0 auto;
+  grid-template-columns: 1fr;
+}
+
+.article-breadcrumb a {
+  color: var(--text-dim);
+  transition: color .2s;
+}
+
+.article-breadcrumb a:hover {
+  color: var(--pink-deep);
+}
+
 .article-hero {
   padding-bottom: 30px;
 }
 
 .article-hero .section-title {
   font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.article-meta {
+  margin-top: 14px;
+  font-size: .82rem;
+  color: var(--text-faint);
+  letter-spacing: .05em;
 }
 
 .kicker-keep-case {
@@ -1635,6 +1545,65 @@ a.is-placeholder:focus-visible {
   line-height: 1.9;
 }
 
+.article-toc {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 22px 26px;
+  margin-bottom: 56px;
+}
+
+.article-toc-title {
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  color: var(--pink-deep);
+  margin-bottom: 14px;
+}
+
+.article-toc ol {
+  margin: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.article-toc li {
+  counter-increment: toc;
+  margin-bottom: 8px;
+}
+
+.article-toc li:last-child {
+  margin-bottom: 0;
+}
+
+.article-toc li a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: .95rem;
+  color: var(--text);
+  border-bottom: 1px dashed var(--line-soft);
+  transition: color .2s;
+}
+
+.article-toc li:last-child a {
+  border-bottom: none;
+}
+
+.article-toc li a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--font-en);
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--pink-deep);
+  flex-shrink: 0;
+}
+
+.article-toc li a:hover {
+  color: var(--pink-deep);
+}
+
 .article-section {
   margin-bottom: 56px;
 }
@@ -1644,6 +1613,7 @@ a.is-placeholder:focus-visible {
   font-weight: 700;
   margin-bottom: 20px;
   color: var(--pink-deep);
+  scroll-margin-top: 96px;
 }
 
 .article-section p {
@@ -1664,6 +1634,24 @@ a.is-placeholder:focus-visible {
   font-weight: 700;
 }
 
+.article-note {
+  background: var(--lav-soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--lavender);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 26px 0;
+}
+
+.article-note p {
+  margin: 0;
+  font-size: .98rem;
+}
+
+.article-note strong {
+  color: var(--lav-deep);
+}
+
 .article-summary {
   background: var(--card);
   border: 1px solid var(--line);
@@ -1672,7 +1660,33 @@ a.is-placeholder:focus-visible {
   margin-top: 64px;
 }
 
+.article-related {
+  margin-top: 24px;
+}
+
+.article-related .article-back {
+  text-align: center;
+}
+
+.article-back {
+  margin-top: 26px;
+  font-size: .85rem;
+  color: var(--text-dim);
+}
+
+.article-back a {
+  color: var(--pink-deep);
+  font-weight: 700;
+}
+
+.article-back a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
+  .article-breadcrumb {
+    padding: 84px 20px 0;
+  }
   .article-body {
     padding: 0 20px;
     margin-bottom: 80px;

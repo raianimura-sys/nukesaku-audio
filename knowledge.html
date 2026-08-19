@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基礎知識 | Nukesaku Audio</title>
+  <meta name="description" content="DTMや作曲の基礎を初心者向けにやさしく解説する記事一覧。MIDI、コード進行、テンポなど、曲作りに役立つ知識を少しずつ増やしていきます。">
+  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- ======== 背景装飾 ======== -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="bg-orb orb-pink"></div>
+    <div class="bg-orb orb-lavender"></div>
+    <div class="bg-orb orb-mint"></div>
+  </div>
+
+  <!-- ======== Header / Navigation ======== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-knob" aria-hidden="true"></span>
+        <span class="brand-name">Nukesaku Audio</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
+        <a href="index.html#plugins">Plugins</a>
+        <a href="index.html#dtmer">DTMerへの道！</a>
+        <a href="knowledge.html">基礎知識</a>
+        <a href="index.html#lab">Nukesaku Lab</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======== パンくず ======== -->
+    <nav class="article-breadcrumb" aria-label="パンくずリスト">
+      <a href="index.html">ホーム</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">基礎知識</span>
+    </nav>
+
+    <!-- ======== 一覧ヘッダー ======== -->
+    <section class="section article-hero">
+      <div class="section-head">
+        <p class="section-kicker kicker-keep-case">基礎知識</p>
+        <h1 class="section-title">基礎知識</h1>
+        <p class="section-desc">DTMや作曲の「これって何？」を、やさしく解説する記事シリーズ。<br>MIDIからはじめて、少しずつ記事を増やしていきます。</p>
+      </div>
+    </section>
+
+    <!-- ======== 記事一覧 ======== -->
+    <div class="video-grid article-list">
+
+      <a class="card video-card accent-mint" href="article-midi.html">
+        <span class="card-icon" aria-hidden="true">📝</span>
+        <div class="card-body">
+          <p class="card-status">基礎知識</p>
+          <h3 class="card-title">MIDIって何？</h3>
+          <p class="card-text">MIDIは音そのものではなく、音を鳴らすための「設計図・楽譜のようなデータ」です。</p>
+        </div>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="card video-card accent-lavender" href="article-chord.html">
+        <span class="card-icon" aria-hidden="true">🎼</span>
+        <div class="card-body">
+          <p class="card-status">基礎知識</p>
+          <h3 class="card-title">コード進行とは？</h3>
+          <p class="card-text">曲の「明るい・切ない」はコード進行が決めています。定番進行から、その仕組みを解説します。</p>
+        </div>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      </a>
+
+    </div>
+
+    <p class="section-note">テンポ・リズム・メロディーなども、順番に記事を増やしていく予定です。</p>
+
+  </main>
+
+  <!-- ======== Footer ======== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-knob" aria-hidden="true"></span>
+        <span class="brand-name">Nukesaku Audio</span>
+        <p>曲作りを、もっと楽しく、もっと気軽に。</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Site</h4>
+          <a href="index.html#plugins">Plugins</a>
+          <a href="index.html#dtmer">DTMerへの道！</a>
+          <a href="knowledge.html">基礎知識</a>
+          <a href="index.html#lab">Nukesaku Lab</a>
+          <a href="index.html#about">About</a>
+        </div>
+        <div class="footer-col">
+          <h4>Links</h4>
+          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH</a>
+          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube</a>
+          <a href="mailto:nukesakuaudio@proton.me">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nukesaku Audio. Made with love and lots of practice. 🎹</p>
+    </div>
+  </footer>
+
+  <script>
+    // モバイルメニュー
+    const navToggle = document.getElementById('navToggle');
+    const siteNav = document.getElementById('siteNav');
+    navToggle.addEventListener('click', () => {
+      const isOpen = siteNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  </script>
+
+</body>
+</html>

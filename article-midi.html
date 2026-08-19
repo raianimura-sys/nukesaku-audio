@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MIDIって何？ 〜音の設計図〜 | Nukesaku Audio</title>
   <meta name="description" content="MIDIとは何かを初心者向けに解説。MIDIは音そのものではなく、音を鳴らすための設計図・楽譜のようなデータです。DTMや作曲で役立つMIDIの基本をわかりやすく説明します。">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=7">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -32,6 +32,7 @@
       <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
         <a href="index.html#plugins">Plugins</a>
         <a href="index.html#dtmer">DTMerへの道！</a>
+        <a href="knowledge.html">基礎知識</a>
         <a href="index.html#lab">Nukesaku Lab</a>
         <a href="index.html#about">About</a>
         <a href="index.html#contact" class="nav-cta">Contact</a>
@@ -41,25 +42,51 @@
 
   <main id="top">
 
+    <!-- ======== パンくず ======== -->
+    <nav class="article-breadcrumb" aria-label="パンくずリスト">
+      <a href="index.html">ホーム</a>
+      <span aria-hidden="true">/</span>
+      <a href="knowledge.html">基礎知識</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">MIDIって何？</span>
+    </nav>
+
     <!-- ======== 記事ヘッダー ======== -->
     <section class="section article-hero">
       <div class="section-head">
-        <p class="section-kicker kicker-keep-case">DTMerへの道！ / 基礎知識</p>
+        <p class="section-kicker kicker-keep-case">基礎知識</p>
         <h1 class="section-title">MIDIって何？<br>〜音の設計図〜</h1>
         <p class="section-desc">DTMを始めると、必ず出てくる「MIDI」。<br>「音のデータ」と言われがちですが、正しくはもっと楽譜に近いものです。</p>
+        <p class="article-meta">2026年8月公開 ・ 約3分で読めます</p>
       </div>
     </section>
 
     <!-- ======== 記事本文 ======== -->
     <article class="article-body">
 
-      <section class="article-section">
+      <!-- ======== 目次 ======== -->
+      <nav class="article-toc" aria-label="目次">
+        <p class="article-toc-title">この記事の目次</p>
+        <ol>
+          <li><a href="#sec1">MIDIは「音のデータ」ではない</a></li>
+          <li><a href="#sec2">MIDIは「楽譜みたいなもの」</a></li>
+          <li><a href="#sec3">音を鳴らすのは「楽器」</a></li>
+          <li><a href="#sec4">DTMでMIDIがないと作曲は成り立たない</a></li>
+          <li><a href="#sec5">NukesakuCOMPOSEでもMIDIで作曲</a></li>
+          <li><a href="#sec6">まとめ</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-section" id="sec1">
         <h2>1. MIDIは「音のデータ」ではない</h2>
         <p>MIDIを初めて聞いたとき、「音のデータ」だと思いがちです。でも、厳密に言うと<strong>MIDI自体は音ではありません</strong>。</p>
         <p>例えば、CDやMP3のような音声データは「実際に鳴っている音」を記録しています。しかしMIDIは、「どの音を」「いつ」「どのくらいの強さで」鳴らすかという<strong>指示書</strong>のようなものです。</p>
+        <div class="article-note">
+          <p><strong>POINT</strong>：MIDIは「演奏の指示書」であり、音そのものではない</p>
+        </div>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="sec2">
         <h2>2. MIDIは「楽譜みたいなもの」</h2>
         <p>MIDIを一番近いものに例えるなら、<strong>電子版の楽譜</strong>です。</p>
         <p>楽譜には「ドレミの高さ」「長さ」「強弱」などが書かれていますよね。MIDIも同じように、以下の情報を持っています。</p>
@@ -72,14 +99,17 @@
         <p>楽譜が「紙に書かれた情報」であるように、MIDIは「デジタルな情報」です。</p>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="sec3">
         <h2>3. 音を鳴らすのは「楽器」</h2>
         <p>楽譜だけでは音は鳴りません。誰かがピアノを弾いたり、オーケストラが演奏したりすることで、初めて音になります。</p>
         <p>MIDIも同じで、<strong>MIDIデータだけでは音は鳴りません</strong>。MIDIの情報を受け取って音を鳴らすのが、DAWやシンセサイザー、音源プラグインなどの「楽器」です。</p>
         <p>同じMIDIデータでも、ピアノの音源で鳴らせばピアノ曲に、ベースの音源で鳴らせばベースラインになります。</p>
+        <div class="article-note">
+          <p><strong>POINT</strong>：同じMIDIデータを、どんな「楽器（音源）」に渡すかで、曲の表情が変わる</p>
+        </div>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="sec4">
         <h2>4. DTMでMIDIがないと作曲は成り立たない</h2>
         <p>現代のDTMでは、<strong>MIDIがあってこそ作曲が成立しています</strong>。</p>
         <p>ピアノロールに並ぶ音符、コード進行、ドラムのリズム、メロディーの高低――これらはすべてMIDIデータです。音源に「いつ、どの音を、どれくらいの強さで鳴らすか」を伝える情報がなければ、DAWは何も音を出せません。</p>
@@ -93,18 +123,35 @@
         <p>つまり、MIDIは作曲の<strong>土台となる言語</strong>です。便利なツールではなく、DTM作曲には欠かせない基盤なのです。</p>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="sec5">
         <h2>5. NukesakuCOMPOSEでもMIDIで作曲</h2>
         <p>私が開発中の <strong>NukesakuCOMPOSE</strong> も、MIDIを使って作曲をサポートします。</p>
         <p>アイデアをカタチにしやすくするため、MIDIデータをベースにコード進行やメロディーの候補を提示したり、試行錯誤をしやすくする機能を考えています。</p>
         <p>MIDIは作曲の「共通言語」のようなものなので、MIDIを理解しておくと、色々なツールやDAWを組み合わせて使いやすくなります。</p>
       </section>
 
-      <section class="article-section article-summary">
+      <section class="article-section article-summary" id="sec6">
         <h2>まとめ</h2>
         <p><strong>MIDIは「音そのもの」ではなく、「音を鳴らすための設計図・楽譜のようなデータ」です。</strong></p>
         <p>音を実際に鳴らすのは、その情報を受け取る「楽器＝音源」です。</p>
         <p>この違いを理解すると、DAWでの作業や作曲ツールの使い方が、ぐっと見えてきます。</p>
+      </section>
+
+      <!-- ======== 関連記事 ======== -->
+      <section class="article-section article-related">
+        <h2>関連記事</h2>
+        <div class="video-grid article-list">
+          <a class="card video-card accent-lavender" href="article-chord.html">
+            <span class="card-icon" aria-hidden="true">🎼</span>
+            <div class="card-body">
+              <p class="card-status">基礎知識</p>
+              <h3 class="card-title">コード進行とは？</h3>
+              <p class="card-text">曲の「明るい・切ない」はコード進行が決めています。定番進行から、その仕組みを解説します。</p>
+            </div>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <p class="article-back"><a href="knowledge.html">← 基礎知識 記事一覧に戻る</a></p>
       </section>
 
     </article>
@@ -125,6 +172,7 @@
           <h4>Site</h4>
           <a href="index.html#plugins">Plugins</a>
           <a href="index.html#dtmer">DTMerへの道！</a>
+          <a href="knowledge.html">基礎知識</a>
           <a href="index.html#lab">Nukesaku Lab</a>
           <a href="index.html#about">About</a>
         </div>
