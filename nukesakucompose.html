@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6ee">
   <title>NukesakuCOMPOSE | Nukesaku Audio</title>
   <meta name="description" content="作曲のアイデア出しを助ける作曲補助プラグイン NukesakuCOMPOSE。ベータ版をBOOTHで無料配布中。">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23faf6ee'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23e08d9b' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23a291c9'/%3E%3C/svg%3E">
 </head>
 <body>
+
+  <a class="skip-link" href="#top">本文へ移動</a>
 
   <!-- ======== 背景装飾 ======== -->
   <div class="bg-decor" aria-hidden="true">
@@ -25,7 +28,7 @@
         <span class="brand-name">Nukesaku Audio</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
         <span></span><span></span><span></span>
       </button>
 
@@ -40,14 +43,14 @@
     </div>
   </header>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
 
     <!-- ======== 商品ヒーロー ======== -->
     <section class="product-hero">
       <div class="product-stage" aria-hidden="true">
         <span class="stage-note n1">♪</span>
         <span class="stage-note n2">♫</span>
-        <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="product-shot" width="962" height="651">
+        <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="product-shot" width="1180" height="780" decoding="async" fetchpriority="high">
         <span class="visual-version">v0.3.0 β</span>
         <span class="plugin-knob stage-knob"></span>
       </div>
@@ -128,7 +131,7 @@
       </div>
       <div class="video-embed-wrap">
         <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/no4yGJC63Vo" title="NukesakuCOMPOSE 使い方解説動画" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/no4yGJC63Vo" title="NukesakuCOMPOSE 使い方解説動画" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </div>
       <p class="section-note">YouTubeチャンネルは <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" class="note-link" target="_blank" rel="noopener">こちら</a> で配信中です！</p>
@@ -220,6 +223,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

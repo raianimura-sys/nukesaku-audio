@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6ee">
   <title>基礎知識 | Nukesaku Audio</title>
   <meta name="description" content="DTMや作曲の基礎を初心者向けにやさしく解説する記事一覧。MIDI、コード進行、テンポなど、曲作りに役立つ知識を少しずつ増やしていきます。">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body>
+
+  <a class="skip-link" href="#top">本文へ移動</a>
 
   <!-- ======== 背景装飾 ======== -->
   <div class="bg-decor" aria-hidden="true">
@@ -25,14 +28,14 @@
         <span class="brand-name">Nukesaku Audio</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
         <span></span><span></span><span></span>
       </button>
 
       <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
         <a href="index.html#plugins">Plugins</a>
         <a href="index.html#dtmer">DTMerへの道！</a>
-        <a href="knowledge.html">基礎知識</a>
+        <a href="knowledge.html" aria-current="page">基礎知識</a>
         <a href="index.html#lab">Nukesaku Lab</a>
         <a href="index.html#about">About</a>
         <a href="index.html#contact" class="nav-cta">Contact</a>
@@ -40,7 +43,7 @@
     </div>
   </header>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
 
     <!-- ======== パンくず ======== -->
     <nav class="article-breadcrumb" aria-label="パンくずリスト">
@@ -119,15 +122,7 @@
     </div>
   </footer>
 
-  <script>
-    // モバイルメニュー
-    const navToggle = document.getElementById('navToggle');
-    const siteNav = document.getElementById('siteNav');
-    navToggle.addEventListener('click', () => {
-      const isOpen = siteNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-  </script>
+  <script src="script.js?v=2"></script>
 
 </body>
 </html>

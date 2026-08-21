@@ -13,40 +13,81 @@
   var navToggle = document.getElementById("navToggle");
   var siteNav = document.getElementById("siteNav");
 
-  function closeNav() {
-    navToggle.classList.remove("open");
-    siteNav.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
+  function setNavOpen(isOpen, restoreFocus) {
+    if (!navToggle || !siteNav) return;
+
+    navToggle.classList.toggle("open", isOpen);
+    siteNav.classList.toggle("open", isOpen);
+    document.body.classList.toggle("nav-open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+
+    if (!isOpen && restoreFocus) navToggle.focus();
   }
 
-  navToggle.addEventListener("click", function () {
-    var isOpen = siteNav.classList.toggle("open");
-    navToggle.classList.toggle("open", isOpen);
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-  });
+  function closeNav(restoreFocus) {
+    setNavOpen(false, restoreFocus === true);
+  }
 
-  /* メニュー内リンクを押したら閉じる */
-  siteNav.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", closeNav);
-  });
+  if (navToggle && siteNav) {
+    navToggle.addEventListener("click", function () {
+      setNavOpen(!siteNav.classList.contains("open"), false);
+    });
 
-  /* 画面外クリックで閉じる */
-  document.addEventListener("click", function (e) {
-    if (
-      siteNav.classList.contains("open") &&
-      !siteNav.contains(e.target) &&
-      !navToggle.contains(e.target)
-    ) {
-      closeNav();
-    }
-  });
+    /* メニュー内リンクを押したら閉じる */
+    siteNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { closeNav(false); });
+    });
+
+    /* 画面外クリックと Escape キーで閉じる */
+    document.addEventListener("click", function (e) {
+      if (
+        siteNav.classList.contains("open") &&
+        !siteNav.contains(e.target) &&
+        !navToggle.contains(e.target)
+      ) {
+        closeNav(false);
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && siteNav.classList.contains("open")) {
+        closeNav(true);
+        return;
+      }
+
+      if (e.key === "Tab" && siteNav.classList.contains("open")) {
+        var navFocusable = [navToggle].concat(Array.from(siteNav.querySelectorAll("a[href]")));
+        var firstFocusable = navFocusable[0];
+        var lastFocusable = navFocusable[navFocusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    });
+
+    /* PC幅に戻ったとき、モバイル用の開閉状態を残さない */
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 900 && siteNav.classList.contains("open")) {
+        closeNav(false);
+      }
+    }, { passive: true });
+  }
 
   /* ---------- 2) スクロール時のヘッダー影 ---------- */
   var header = document.getElementById("siteHeader");
 
-  window.addEventListener("scroll", function () {
-    header.classList.toggle("scrolled", window.scrollY > 10);
-  }, { passive: true });
+  function updateHeaderShadow() {
+    if (header) header.classList.toggle("scrolled", window.scrollY > 10);
+  }
+
+  updateHeaderShadow();
+  window.addEventListener("scroll", updateHeaderShadow, { passive: true });
 
   /* ---------- 3) フェードインアニメーション ---------- */
   /* .reveal を自動付与して IntersectionObserver で表示 ---------- */
@@ -54,7 +95,9 @@
     ".section-head, .card"
   );
 
-  if ("IntersectionObserver" in window) {
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if ("IntersectionObserver" in window && !reduceMotion) {
     revealTargets.forEach(function (el) { el.classList.add("reveal"); });
 
     var observer = new IntersectionObserver(function (entries) {

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6ee">
+  <title>Beta版から進化させたところ | NukesakuCOMPOSE | Nukesaku Audio</title>
+  <meta name="description" content="NukesakuCOMPOSEが無料Beta版から正式版に向けてどのように進化しているかを紹介する開発記録。生成品質、編集機能、UI、安定性の改善をわかりやすくまとめています。">
+  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
+</head>
+<body class="evolution-page">
+
+  <a class="skip-link" href="#top">本文へ移動</a>
+
+  <div class="bg-decor" aria-hidden="true">
+    <div class="bg-orb orb-pink"></div>
+    <div class="bg-orb orb-lavender"></div>
+    <div class="bg-orb orb-mint"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-knob" aria-hidden="true"></span>
+        <span class="brand-name">Nukesaku Audio</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
+        <a href="index.html#plugins">Plugins</a>
+        <a href="index.html#dtmer">DTMerへの道！</a>
+        <a href="knowledge.html">基礎知識</a>
+        <a href="index.html#lab" aria-current="page">Nukesaku Lab</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" tabindex="-1">
+
+    <nav class="article-breadcrumb" aria-label="パンくずリスト">
+      <a href="index.html">ホーム</a>
+      <span aria-hidden="true">/</span>
+      <a href="index.html#lab">Nukesaku Lab</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Beta版からの進化</span>
+    </nav>
+
+    <section class="section article-hero evolution-hero">
+      <div class="section-head">
+        <p class="section-kicker kicker-keep-case">Nukesaku Lab / Development Log</p>
+        <h1 class="section-title">NukesakuCOMPOSE<br>Beta版から進化させたところ</h1>
+        <p class="section-desc">「アイデアを生成する」だけだったBeta版から、<br>良い部分を残し、直し、曲へ育てられる作曲補助ツールへ。</p>
+        <p class="article-meta">2026年8月 ・ 正式版に向けて開発中</p>
+      </div>
+    </section>
+
+    <div class="evolution-status" role="note">
+      <strong>このページは開発記録です</strong>
+      <p>ここで紹介している内容は、正式版に向けて開発中のNukesakuCOMPOSE 1.0についてのものです。現在無料配布中のBeta版とは機能・画面が異なり、正式版はまだ販売開始していません。</p>
+    </div>
+
+    <section class="evolution-visual-section" aria-labelledby="visual-heading">
+      <div class="section-head compact-head">
+        <p class="section-kicker">Before / After</p>
+        <h2 class="section-title" id="visual-heading">まず、見た目が大きく変わりました</h2>
+        <p class="section-desc">どちらもモックアップではなく、実際に動作しているプラグイン画面です。</p>
+      </div>
+
+      <div class="evolution-visual-grid">
+        <figure class="evolution-shot-card">
+          <div class="evolution-shot-frame beta-shot">
+            <img src="NukesakuCOMPOSE-UI-UX.png" alt="無料Beta版NukesakuCOMPOSEの明るい配色の操作画面" width="1180" height="780" loading="lazy" decoding="async">
+          </div>
+          <figcaption>
+            <span class="evolution-label beta-label">無料Beta版</span>
+            <strong>アイデアを素早く生成する試作版</strong>
+            <p>初心者でも迷いにくい明るいUIで、5レーンのMIDI生成と試聴を形にしました。</p>
+          </figcaption>
+        </figure>
+
+        <figure class="evolution-shot-card evolution-shot-current">
+          <div class="evolution-shot-frame">
+            <img src="NukesakuCOMPOSE-1.0-development.png" alt="正式版に向けて開発中のNukesakuCOMPOSE 1.0 Premium Dark操作画面" width="1280" height="820" loading="lazy" decoding="async">
+          </div>
+          <figcaption>
+            <span class="evolution-label development-label">1.0 開発版</span>
+            <strong>選び、編集し、曲へ育てる製品へ</strong>
+            <p>生成品質と編集性を強化し、長時間の制作でも見やすいPremium Dark UIへ進化しています。</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <article class="article-body evolution-body">
+
+      <section class="article-section evolution-intro">
+        <h2>Beta版で見えた課題から始めました</h2>
+        <p>Beta版を完成させたことで、「生成できる」だけでは本当の作曲支援にならないことが見えてきました。良いメロディは残したい。気になる小節だけ直したい。続きを自然につなげたい。そして、DAWへ送る前に少しだけ手直ししたい。</p>
+        <p>正式版では、この実際の作曲の流れを中心に設計を見直しています。</p>
+      </section>
+
+      <section class="article-section">
+        <div class="section-head compact-head">
+          <p class="section-kicker">Evolution Highlights</p>
+          <h2 class="section-title">主な進化ポイント</h2>
+        </div>
+
+        <div class="evolution-feature-grid">
+          <section class="evolution-feature feature-lavender">
+            <span class="evolution-number">01</span>
+            <p class="feature-kicker">Generation Engine 2.0</p>
+            <h3>5つのレーンが、ひとつの曲としてつながる</h3>
+            <p>コード、メロディ、ベース、アルペジオ、リズムが別々にランダム生成されるのではなく、同じハーモニー・フレーズ・セクションを共有する設計へ変更しました。</p>
+          </section>
+
+          <section class="evolution-feature feature-pink">
+            <span class="evolution-number">02</span>
+            <p class="feature-kicker">Melody Engine 2.0</p>
+            <h3>音の並びから、覚えられるフレーズへ</h3>
+            <p>短いモチーフを作り、繰り返し、変化、呼びかけと応答、クライマックス、解決を考えて発展させます。複数候補から、歌いやすさやコードとの相性が良いものを選びます。</p>
+          </section>
+
+          <section class="evolution-feature feature-mint">
+            <span class="evolution-number">03</span>
+            <p class="feature-kicker">Keep the Good Parts</p>
+            <h3>良いところを残し、悪いところだけ直せる</h3>
+            <p>レーンや小節のLockに加えて、選択した小節だけの再生成・Variationに対応。気に入った部分を壊さずに試行錯誤できます。</p>
+          </section>
+
+          <section class="evolution-feature feature-amber">
+            <span class="evolution-number">04</span>
+            <p class="feature-kicker">Continue</p>
+            <h3>現在の曲らしさを保ったまま続きを作る</h3>
+            <p>選んだLengthに合わせて続きを生成。元のモチーフ、リズム、音域、コードの流れを受け継ぎ、無関係なフレーズを後ろへ付け足さないよう改善しました。</p>
+          </section>
+
+          <section class="evolution-feature feature-lavender">
+            <span class="evolution-number">05</span>
+            <p class="feature-kicker">Chord &amp; Piano Roll Editing</p>
+            <h3>DAWへ送る前の「もう少し」を直せる</h3>
+            <p>コードの置き換え、響きの提案、転回形やテンション変更に対応。Piano RollではVelocity、縦横Zoom、複数選択、複製、Quantize、Transposeなどを追加しました。</p>
+          </section>
+
+          <section class="evolution-feature feature-mint">
+            <span class="evolution-number">06</span>
+            <p class="feature-kicker">Premium UI / UX</p>
+            <h3>機能は深く、最初の操作はシンプルに</h3>
+            <p>Key、Genre、Mood、Sectionを選んでGENERATEする基本の流れはそのまま。詳細設定はAdvancedへ整理し、必要な人だけが深く調整できるUIにしました。</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <h2>Beta版と1.0開発版の違い</h2>
+        <p class="evolution-scroll-hint">表は横にスクロールできます →</p>
+        <div class="evolution-table-wrap">
+          <table class="evolution-table">
+            <thead>
+              <tr>
+                <th scope="col">項目</th>
+                <th scope="col">無料Beta版</th>
+                <th scope="col">1.0開発版</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">生成の考え方</th>
+                <td>5レーンのアイデアを生成</td>
+                <td>曲全体の関係を共有して生成</td>
+              </tr>
+              <tr>
+                <th scope="row">メロディ</th>
+                <td>スケール・コードを考慮</td>
+                <td>モチーフとフレーズ構造まで評価</td>
+              </tr>
+              <tr>
+                <th scope="row">直し方</th>
+                <td>レーン単位の再生成</td>
+                <td>選択した小節だけ再生成・変化</td>
+              </tr>
+              <tr>
+                <th scope="row">曲の続き</th>
+                <td>―</td>
+                <td>元の特徴を引き継いでContinue</td>
+              </tr>
+              <tr>
+                <th scope="row">コード</th>
+                <td>表示・試聴</td>
+                <td>置き換え・提案・響きの編集</td>
+              </tr>
+              <tr>
+                <th scope="row">Piano Roll</th>
+                <td>基本的なノート編集</td>
+                <td>複数選択、Velocity、Zoom、編集ツール</td>
+              </tr>
+              <tr>
+                <th scope="row">画面</th>
+                <td>明るく親しみやすい試作UI</td>
+                <td>作業性を重視したPremium Dark UI</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <h2>見えない部分も作り直しています</h2>
+        <ul class="evolution-check-list">
+          <li><strong>State保存：</strong>生成したノート、コード、Lock、履歴、A/B、設定を復元できる構造を強化</li>
+          <li><strong>Realtime Safety：</strong>重い生成処理をAudio Threadから分離し、再生の安定性を優先</li>
+          <li><strong>Regression Tests：</strong>固定Seed、Lock、MIDI、Undo、State、Preview、Stress Generateなどを継続確認</li>
+          <li><strong>macOS：</strong>VST3・AU・Standaloneの開発版をApple Silicon／Intel対応のUniversal 2で検証</li>
+          <li><strong>Windows：</strong>Windows x64 VST3対応を進行中。ネイティブWindows環境での最終検証はこれから</li>
+        </ul>
+      </section>
+
+      <section class="article-section article-summary evolution-summary">
+        <h2>目指しているのは「生成して終わり」ではありません</h2>
+        <p>Beta版は、作曲アイデアを生み出す最初の一歩でした。</p>
+        <p>正式版では、<strong>アイデアを生み、良い部分を選び、気になるところを直し、曲として育て、DAWへ持っていけること</strong>を目標にしています。</p>
+        <p>まだ開発途中ですが、無料Beta版で得た経験を一つずつ製品へ反映しています。</p>
+      </section>
+
+      <section class="evolution-cta" aria-labelledby="evolution-cta-title">
+        <p class="section-kicker">Try the Current Beta</p>
+        <h2 id="evolution-cta-title">現在の無料Beta版を試せます</h2>
+        <p>1.0は準備中ですが、作曲アイデアを生成するBeta版は現在もBOOTHで配布しています。</p>
+        <div class="hero-cta">
+          <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-primary" target="_blank" rel="noopener">BOOTHでBeta版を試す</a>
+          <a href="index.html#lab" class="btn btn-ghost">Nukesaku Labへ戻る</a>
+        </div>
+      </section>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-knob" aria-hidden="true"></span>
+          <span class="brand-name">Nukesaku Audio</span>
+        </a>
+        <p>曲作りを、もっと楽しく、もっと気軽に。</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Site</h4>
+          <a href="index.html#plugins">Plugins</a>
+          <a href="index.html#dtmer">DTMerへの道！</a>
+          <a href="knowledge.html">基礎知識</a>
+          <a href="index.html#lab">Nukesaku Lab</a>
+          <a href="index.html#about">About</a>
+        </div>
+        <div class="footer-col">
+          <h4>Links</h4>
+          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH</a>
+          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube</a>
+          <a href="mailto:nukesakuaudio@proton.me">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nukesaku Audio. Made with love and lots of practice. 🎹</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>

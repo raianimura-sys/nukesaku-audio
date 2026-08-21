@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf6ee">
   <title>Nukesaku Audio - （作曲初心者による！）DTMerへの道！</title>
   <meta name="description" content="曲作りを、もっと楽しく、もっと気軽に。作曲初心者がAIと一緒にDTM・作曲・プラグイン制作を学びながら成長していくプロジェクト。自作プラグインの無料配布とYouTubeシリーズ『DTMerへの道！』を公開中。">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=9">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body>
+
+  <a class="skip-link" href="#top">本文へ移動</a>
 
   <!-- ======== 背景装飾 ======== -->
   <div class="bg-decor" aria-hidden="true">
@@ -26,7 +29,7 @@
         <span class="brand-name">Nukesaku Audio</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
         <span></span><span></span><span></span>
       </button>
 
@@ -41,7 +44,7 @@
     </div>
   </header>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
 
     <!-- ======== Hero ======== -->
     <section class="hero">
@@ -183,7 +186,7 @@
 
         <article class="card plugin-card plugin-card-featured">
           <div class="plugin-visual visual-comp">
-            <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="visual-image" width="962" height="651" loading="lazy" decoding="async">
+            <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="visual-image" width="1180" height="780" loading="lazy" decoding="async">
             <span class="visual-version">v0.3.0 β</span>
           </div>
           <div class="card-body">
@@ -206,7 +209,7 @@
             <div class="card-actions">
               <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-small btn-primary" target="_blank" rel="noopener">β版 Download</a>
               <a href="nukesakucompose.html" class="btn btn-small btn-ghost">詳しく見る</a>
-              <a href="nukesakucompose.html#download" class="btn btn-small btn-ghost">販売ページ</a>
+              <a href="compose-evolution.html" class="btn btn-small btn-ghost">1.0への進化</a>
             </div>
           </div>
         </article>
@@ -220,7 +223,7 @@
       <div class="section-head">
         <p class="section-kicker">Experiments / R&amp;D</p>
         <h2 class="section-title">Nukesaku Lab</h2>
-        <p class="section-desc">ここは実験室。試作も失敗も、全部まるごと成長の記録として公開しています。</p>
+        <p class="section-desc">ここは実験室。開発中の機能、試作、失敗も含めて、製品が育っていく過程を公開しています。</p>
       </div>
 
       <div class="lab-grid">
@@ -233,20 +236,20 @@
         </article>
 
         <article class="card lab-card lab-lavender lab-card-featured">
-          <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="lab-image" width="962" height="651" loading="lazy" decoding="async">
+          <img src="NukesakuCOMPOSE-1.0-development.png" alt="正式版に向けて開発中のNukesakuCOMPOSE 1.0 Premium Dark操作画面" class="lab-image" width="1280" height="820" loading="lazy" decoding="async">
           <div class="lab-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48"><path d="M10 30 L18 16 L26 32 L34 12 L40 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h3 class="card-title">Nukesaku COMPOSE β 配布中</h3>
-          <p class="card-text">自作の作曲補助プラグイン「Nukesaku COMPOSE」のベータ版を無料配布中。気になった方は触って、感想を送ってください。製品版の機能改善に活かします。</p>
+          <h3 class="card-title">NukesakuCOMPOSE 1.0 開発進捗</h3>
+          <p class="card-text">無料Beta版で見えた課題をもとに、生成品質、編集機能、操作性、UIを改善中。正式版へ向けてどこが進化したのかを開発記録として公開しています。</p>
           <div class="lab-meta">
-            <span class="lab-version">v0.3.0 β</span>
-            <span class="lab-format">VST3 / AU</span>
-            <span class="lab-format">Win / Mac</span>
+            <span class="lab-version">1.0 開発中</span>
+            <span class="lab-format">macOS RC</span>
+            <span class="lab-format">Windows 検証前</span>
           </div>
           <div class="card-actions lab-actions">
-            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-small btn-primary" target="_blank" rel="noopener">β版を試す</a>
-            <a href="nukesakucompose.html#download" class="btn btn-small btn-ghost">販売ページ</a>
+            <a href="compose-evolution.html" class="btn btn-small btn-primary">開発進捗を見る</a>
+            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-small btn-ghost" target="_blank" rel="noopener">現在のβ版を試す</a>
             <a href="#" class="btn btn-small btn-ghost" data-link="NukesakuCOMPOSE フィードバックフォームURL">フィードバック</a>
           </div>
         </article>
@@ -260,7 +263,7 @@
         </article>
 
         <article class="card lab-card lab-first">
-          <img src="Nukesakudrive.png" alt="NukesakuDrive プラグインの画面" class="lab-image" width="962" height="651" loading="lazy" decoding="async">
+          <img src="Nukesakudrive.png" alt="NukesakuDrive プラグインの画面" class="lab-image" width="366" height="290" loading="lazy" decoding="async">
           <div class="lab-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 15 V24 L30 27" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
           </div>
@@ -373,6 +376,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
