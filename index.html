@@ -3,17 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#faf6ee">
-  <title>Nukesaku Audio - （作曲初心者による！）DTMerへの道！</title>
-  <meta name="description" content="曲作りを、もっと楽しく、もっと気軽に。作曲初心者がAIと一緒にDTM・作曲・プラグイン制作を学びながら成長していくプロジェクト。自作プラグインの無料配布とYouTubeシリーズ『DTMerへの道！』を公開中。">
-  <link rel="stylesheet" href="style.css?v=9">
+  <meta name="theme-color" content="#faf7f1">
+  <meta name="color-scheme" content="light">
+  <title>Nukesaku Audio | つくりながら、音楽がわかっていく。</title>
+  <meta name="description" content="作曲初心者の視点から、音楽プラグインを作り、DTMの基礎を学び、その過程まで公開するNukesaku Audio。NukesakuCOMPOSE Betaを無料配布中です。">
+  <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="Nukesaku Audio">
+  <meta property="og:title" content="Nukesaku Audio | つくりながら、音楽がわかっていく。">
+  <meta property="og:description" content="作曲を学びながら、音楽プラグインを作る。初心者の疑問と開発の過程を、作品・記事・動画で公開しています。">
+  <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/">
+  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/nukesaku-audio-social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nukesaku Audio — つくりながら、音楽がわかっていく。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nukesaku Audio">
+  <meta name="twitter:description" content="つくりながら、音楽がわかっていく。">
+  <meta name="twitter:image" content="https://raianimura-sys.github.io/nukesaku-audio/nukesaku-audio-social-card.jpg">
+  <link rel="preload" as="image" href="NukesakuCOMPOSE-1.0-development.png" fetchpriority="high">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://raianimura-sys.github.io/nukesaku-audio/#website",
+        "url": "https://raianimura-sys.github.io/nukesaku-audio/",
+        "name": "Nukesaku Audio",
+        "description": "作曲初心者の視点から音楽プラグインとDTMの学びを発信するプロジェクト",
+        "inLanguage": "ja"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://raianimura-sys.github.io/nukesaku-audio/#organization",
+        "name": "Nukesaku Audio",
+        "url": "https://raianimura-sys.github.io/nukesaku-audio/",
+        "email": "nukesakuaudio@proton.me",
+        "sameAs": [
+          "https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ",
+          "https://nukesakuaudio.booth.pm/"
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
-<body>
+<body class="home-page">
+  <a class="skip-link" href="#main-content">本文へ移動</a>
 
-  <a class="skip-link" href="#top">本文へ移動</a>
-
-  <!-- ======== 背景装飾 ======== -->
   <div class="bg-decor" aria-hidden="true">
     <div class="bg-grid"></div>
     <div class="bg-orb orb-pink"></div>
@@ -21,12 +62,11 @@
     <div class="bg-orb orb-mint"></div>
   </div>
 
-  <!-- ======== Header / Navigation ======== -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="#top" class="brand">
+      <a href="#top" class="brand" aria-label="Nukesaku Audio ホーム">
         <span class="brand-knob" aria-hidden="true"></span>
-        <span class="brand-name">Nukesaku Audio</span>
+        <span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music-tech studio</span></span>
       </a>
 
       <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
@@ -34,348 +74,261 @@
       </button>
 
       <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
-        <a href="#plugins">Plugins</a>
-        <a href="#dtmer">DTMerへの道！</a>
-        <a href="knowledge.html">基礎知識</a>
-        <a href="#lab">Nukesaku Lab</a>
+        <a href="nukesakucompose.html">COMPOSE</a>
+        <a href="knowledge.html">学ぶ</a>
+        <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a>
+        <a href="#lab">開発進捗</a>
         <a href="#about">About</a>
-        <a href="#contact" class="nav-cta">Contact</a>
+        <a href="https://nukesakuaudio.booth.pm/items/8725510" class="nav-cta" target="_blank" rel="noopener">無料Betaを試す</a>
       </nav>
     </div>
   </header>
 
-  <main id="top" tabindex="-1">
-
-    <!-- ======== Hero ======== -->
-    <section class="hero">
-      <div class="hero-visual" aria-hidden="true">
-        <svg class="hero-wave" viewBox="0 0 900 220" preserveAspectRatio="none">
-          <path class="wave wave-1" d="M0,110 C150,30 300,190 450,110 C600,30 750,190 900,110 L900,220 L0,220 Z"/>
-          <path class="wave wave-2" d="M0,130 C150,60 300,200 450,130 C600,60 750,200 900,130 L900,220 L0,220 Z"/>
-          <path class="eq-curve" d="M40,150 L160,150 L190,90 L250,160 L330,40 L410,170 L500,110 L560,60 L640,150 L700,120 L780,150 L860,70"/>
-        </svg>
-      </div>
-
-      <div class="hero-inner">
-        <p class="hero-eyebrow">for beginners, by a beginner</p>
-        <h1 class="hero-title">Nukesaku&nbsp;Audio</h1>
-        <p class="hero-catch">曲作りを、もっと楽しく、もっと気軽に。</p>
-        <p class="hero-sub">作曲初心者が、DTM・作曲・プラグイン制作を学びながら成長していくプロジェクト。失敗も成功も、全部ここに記録していきます。</p>
-        <div class="hero-cta">
-          <a href="#plugins" class="btn btn-primary">プラグインを見る</a>
-          <a href="#dtmer" class="btn btn-ghost">DTMerへの道！を見る</a>
-        </div>
-        <ul class="hero-tags">
-          <li>For Beginners</li>
-          <li>Free Plugins</li>
-          <li>DIY Music Tech</li>
-          <li>Growth Log</li>
-        </ul>
-      </div>
-
-      <div class="mascot" aria-hidden="true">
-        <span class="mascot-eye eye-l"></span>
-        <span class="mascot-eye eye-r"></span>
-        <span class="mascot-smile"></span>
-        <span class="mascot-blush blush-l"></span>
-        <span class="mascot-blush blush-r"></span>
-        <span class="mascot-note note-1">♪</span>
-        <span class="mascot-note note-2">♫</span>
-      </div>
-    </section>
-
-    <!-- ======== DTMerへの道！ ======== -->
-    <section class="section" id="dtmer">
-      <div class="section-head">
-        <p class="section-kicker">YouTube Series / Articles / Growth Log</p>
-        <h2 class="section-title">（作曲初心者による！）<br class="sp-only">DTMerへの道！</h2>
-        <p class="section-desc">作曲初心者の私が、DTMを学びながら曲作りに挑戦していく記録。<br>
-        YouTube動画だけでなく、基礎知識の記事も交えながら、少しずつ成長していく過程を発信します。</p>
-      </div>
-
-      <div class="video-grid">
-        <a class="card video-card accent-pink" href="https://youtube.com/playlist?list=PLCp8cBz1DiLQDEYYA5c5iQZjApuktl8zF" target="_blank" rel="noopener">
-          <span class="card-icon" aria-hidden="true">🎬</span>
-          <div class="card-body">
-            <p class="card-status">New!</p>
-            <h3 class="card-title">DTMerへの道！ 再生リスト</h3>
-            <p class="card-text">曲作りやプラグイン開発のいまがわかる、成長記録シリーズ。</p>
+  <main id="main-content" tabindex="-1">
+    <section class="home-hero" id="top">
+      <div class="home-hero-grid">
+        <div class="home-hero-copy">
+          <p class="hero-eyebrow">Create · Learn · Share</p>
+          <h1 class="home-hero-title">つくりながら、<br><span>音楽がわかっていく。</span></h1>
+          <p class="home-hero-lead">作曲初心者の「わからない」を出発点に、音楽プラグインを作り、DTMを学び、その過程まで公開するプロジェクトです。</p>
+          <div class="home-hero-actions">
+            <a href="compose-evolution.html" class="btn btn-primary">NukesakuCOMPOSE 1.0 開発を見る <span aria-hidden="true">→</span></a>
+            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-ghost" target="_blank" rel="noopener">現在の無料Betaを試す <span aria-hidden="true">↗</span></a>
           </div>
-          <span class="card-arrow" aria-hidden="true">→</span>
-        </a>
-
-        <a class="card video-card accent-lavender" href="https://www.youtube.com/playlist?list=PLKj49O7Pxzgk" target="_blank" rel="noopener">
-          <span class="card-icon" aria-hidden="true">🎛️</span>
-          <div class="card-body">
-            <p class="card-status">人気</p>
-            <h3 class="card-title">自作プラグイン紹介</h3>
-            <p class="card-text">自作プラグインの紹介・解説動画をまとめた再生リスト。</p>
-          </div>
-          <span class="card-arrow" aria-hidden="true">→</span>
-        </a>
-
-        <a class="card video-card accent-mint" href="knowledge.html">
-          <span class="card-icon" aria-hidden="true">📝</span>
-          <div class="card-body">
-            <p class="card-status">基礎知識</p>
-            <h3 class="card-title">基礎知識 記事一覧</h3>
-            <p class="card-text">DTMの「これって何？」をやさしく解説する記事シリーズ。MIDIって何？ からはじまります。</p>
-          </div>
-          <span class="card-arrow" aria-hidden="true">→</span>
-        </a>
-
-      </div>
-
-      <p class="section-note">
-        <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" class="channel-link" target="_blank" rel="noopener">
-          <img src="channel-icon.png" alt="Nukesaku Audio YouTubeチャンネルアイコン" class="channel-avatar" width="256" height="256" loading="lazy" decoding="async">
-          <span>YouTubeチャンネルは<strong>こちら</strong>で配信中です！</span>
-        </a>
-      </p>
-    </section>
-
-    <!-- ======== Plugins ======== -->
-    <section class="section" id="plugins">
-      <div class="section-head">
-        <p class="section-kicker">Handmade Plugins</p>
-        <h2 class="section-title">Plugins</h2>
-        <p class="section-desc">初心者にもわかりやすく、でもプロにも通用するものを目指して作っている自作プラグインたち。</p>
-      </div>
-
-      <div class="plugin-grid">
-        <article class="card plugin-card">
-          <div class="plugin-visual" aria-hidden="true">
-            <span class="plugin-knob"></span>
-            <svg class="plugin-eq" viewBox="0 0 200 90" preserveAspectRatio="none">
-              <path d="M5,60 L45,60 L60,25 L85,70 L110,35 L135,60 L195,60"/>
-            </svg>
-          </div>
-          <div class="card-body">
-            <div class="card-badges">
-              <span class="badge badge-beta">Beta</span>
-              <span class="badge badge-free">Free</span>
-            </div>
-            <h3 class="card-title">NukesakuEQ</h3>
-            <p class="card-text">初心者にもわかりやすい、でもプロ品質を目指すEQプラグイン。</p>
-            <div class="card-actions">
-              <a href="#" class="btn btn-small btn-primary" data-link="NukesakuEQ ダウンロードURL">Download</a>
-              <a href="#" class="btn btn-small btn-ghost" data-link="NukesakuEQ 詳細ページURL">Learn More</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card plugin-card">
-          <div class="plugin-visual visual-chop" aria-hidden="true">
-            <div class="chop-blocks">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-badges">
-              <span class="badge badge-prototype">Prototype</span>
-              <span class="badge badge-free">Free</span>
-            </div>
-            <h3 class="card-title">NukesakuCHOP</h3>
-            <p class="card-text">ヴォーカルチョップ制作を助けるプラグイン。カット・配置・雰囲気づくりまで。</p>
-            <div class="card-actions">
-              <a href="#" class="btn btn-small btn-primary" data-link="NukesakuCHOP ダウンロードURL">Download</a>
-              <a href="#" class="btn btn-small btn-ghost" data-link="NukesakuCHOP 詳細ページURL">Learn More</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card plugin-card plugin-card-featured">
-          <div class="plugin-visual visual-comp">
-            <img src="NukesakuCOMPOSE-UI-UX.png" alt="NukesakuCOMPOSE プラグインの操作画面" class="visual-image" width="1180" height="780" loading="lazy" decoding="async">
-            <span class="visual-version">v0.3.0 β</span>
-          </div>
-          <div class="card-body">
-            <div class="card-badges">
-              <span class="badge badge-beta">Beta 配布中</span>
-              <span class="badge badge-free">Free β版</span>
-            </div>
-            <h3 class="card-title">NukesakuCOMPOSE</h3>
-            <p class="card-text">キー・スケール・ジャンル・ムードを選ぶだけで、コード進行・メロディ・ベース・アルペジオ・リズムの MIDI を自動生成。作曲の「最初の一歩」が踏み出せないときに、頼れる相棒になるプラグインです。</p>
-            <ul class="card-features">
-              <li>5トラック同時生成（CHORDS / MELODY / BASS / ARP / RHYTHM）</li>
-              <li>8ジャンル × 6ムード、組み合わせはほぼ無限</li>
-              <li>複雑さ・意外性・テンションなど 8 パラメータで微調整</li>
-            </ul>
-            <div class="card-meta">
-              <span>VST3</span>
-              <span>AU</span>
-              <span>Win / Mac</span>
-            </div>
-            <div class="card-actions">
-              <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-small btn-primary" target="_blank" rel="noopener">β版 Download</a>
-              <a href="nukesakucompose.html" class="btn btn-small btn-ghost">詳しく見る</a>
-              <a href="compose-evolution.html" class="btn btn-small btn-ghost">1.0への進化</a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <p class="section-note">NukesakuCOMPOSE ベータ版を <a href="https://nukesakuaudio.booth.pm/" class="note-link" target="_blank" rel="noopener">BOOTH</a> で無料配布中！他のプラグインも順次公開予定です。</p>
-    </section>
-
-    <!-- ======== Nukesaku Lab ======== -->
-    <section class="section" id="lab">
-      <div class="section-head">
-        <p class="section-kicker">Experiments / R&amp;D</p>
-        <h2 class="section-title">Nukesaku Lab</h2>
-        <p class="section-desc">ここは実験室。開発中の機能、試作、失敗も含めて、製品が育っていく過程を公開しています。</p>
-      </div>
-
-      <div class="lab-grid">
-        <article class="card lab-card lab-pink">
-          <div class="lab-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><path d="M8 40 Q24 8 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="22" r="4" fill="currentColor"/></svg>
-          </div>
-          <h3 class="card-title">試作品 / Experiments</h3>
-          <p class="card-text">アイデアを形にした試作品たち。動くもの、動かないものも全部ここに。</p>
-        </article>
-
-        <article class="card lab-card lab-lavender lab-card-featured">
-          <img src="NukesakuCOMPOSE-1.0-development.png" alt="正式版に向けて開発中のNukesakuCOMPOSE 1.0 Premium Dark操作画面" class="lab-image" width="1280" height="820" loading="lazy" decoding="async">
-          <div class="lab-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><path d="M10 30 L18 16 L26 32 L34 12 L40 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="card-title">NukesakuCOMPOSE 1.0 開発進捗</h3>
-          <p class="card-text">無料Beta版で見えた課題をもとに、生成品質、編集機能、操作性、UIを改善中。正式版へ向けてどこが進化したのかを開発記録として公開しています。</p>
-          <div class="lab-meta">
-            <span class="lab-version">1.0 開発中</span>
-            <span class="lab-format">macOS RC</span>
-            <span class="lab-format">Windows 検証前</span>
-          </div>
-          <div class="card-actions lab-actions">
-            <a href="compose-evolution.html" class="btn btn-small btn-primary">開発進捗を見る</a>
-            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-small btn-ghost" target="_blank" rel="noopener">現在のβ版を試す</a>
-            <a href="#" class="btn btn-small btn-ghost" data-link="NukesakuCOMPOSE フィードバックフォームURL">フィードバック</a>
-          </div>
-        </article>
-
-        <article class="card lab-card lab-amber">
-          <div class="lab-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><path d="M24 6 L28 20 L42 24 L28 28 L24 42 L20 28 L6 24 L20 20 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
-          </div>
-          <h3 class="card-title">失敗も含めた成長記録 / Log</h3>
-          <p class="card-text">失敗したこと、うまくいかなかったこと。それも大切なコンテンツです。</p>
-        </article>
-
-        <article class="card lab-card lab-first">
-          <img src="Nukesakudrive.png" alt="NukesakuDrive プラグインの画面" class="lab-image" width="366" height="290" loading="lazy" decoding="async">
-          <div class="lab-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 15 V24 L30 27" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-          </div>
-          <h3 class="card-title">最初に作ったプラグイン / NukesakuDrive</h3>
-          <p class="card-text">ここがすべての始まり。DRIVE と OUTPUT の2つだけのサチュレーション系ドライブエフェクトです。配布はしていませんが、今の Nukesaku Audio はここから始まりました。</p>
-          <div class="lab-meta">
-            <span class="lab-version">1st Plugin</span>
-            <span class="lab-format">Not for distribution</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======== About ======== -->
-    <section class="section" id="about">
-      <div class="section-head">
-        <p class="section-kicker">About</p>
-        <h2 class="section-title">About</h2>
-      </div>
-
-      <div class="about-grid">
-        <div class="card about-card">
-          <h3 class="card-title">Nukesaku Audio とは</h3>
-          <p class="card-text">音楽制作をもっと楽しく、もっと気軽にするためのDTMツール・成長記録プロジェクトです。</p>
-          <p class="card-text">作曲初心者の視点から、初心者にもわかりやすいプラグインや制作ツールを作っていきます。</p>
+          <p class="availability-note"><span class="status-dot" aria-hidden="true"></span>Beta v0.3.0 配布中 <span aria-hidden="true">·</span> macOS / Apple Silicon</p>
         </div>
 
-        <div class="card about-card">
-          <h3 class="card-title">オリジナルであることを大切に</h3>
-          <p class="card-text">開発のサポートにAIを使うこともありますが、アイデアもデザインも<b>独自設計</b>。</p>
-          <p class="card-text">このサイトにあるものは、全部Nukesaku Audioオリジナルです。</p>
+        <figure class="hero-product-figure">
+          <div class="product-window-bar" aria-hidden="true">
+            <span class="window-dots"><i></i><i></i><i></i></span>
+            <span>NukesakuCOMPOSE</span>
+            <span class="development-chip">1.0 DEVELOPMENT</span>
+          </div>
+          <img src="NukesakuCOMPOSE-1.0-development.png" alt="正式版に向けて開発中のNukesakuCOMPOSE 1.0の操作画面" width="1280" height="820" decoding="async" fetchpriority="high">
+          <figcaption>
+            <span><strong>正式版1.0</strong> 開発中</span>
+            <a href="compose-evolution.html">Betaからの進化を見る <span aria-hidden="true">→</span></a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <nav class="quick-routes" aria-label="おすすめの入口">
+      <a class="route-card route-compose" href="nukesakucompose.html">
+        <span class="route-index">01 / TRY</span>
+        <span class="route-title">作曲アイデアを生成する</span>
+        <span class="route-copy">無料Betaの機能と始め方</span>
+        <span class="route-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="route-card route-learn" href="knowledge.html">
+        <span class="route-index">02 / LEARN</span>
+        <span class="route-title">DTMの基礎を知る</span>
+        <span class="route-copy">MIDIとコードからやさしく</span>
+        <span class="route-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="route-card route-watch" href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">
+        <span class="route-index">03 / WATCH</span>
+        <span class="route-title">成長の過程を見る</span>
+        <span class="route-copy">制作・開発のYouTube記録</span>
+        <span class="route-arrow" aria-hidden="true">↗</span>
+      </a>
+    </nav>
+
+    <section class="section section-wide" id="lab">
+      <div class="section-head section-head-split">
+        <div>
+          <p class="section-kicker">Now in Nukesaku Lab</p>
+          <h2 class="section-title">いま、育てているもの。</h2>
+        </div>
+        <p class="section-desc">無料Betaで見えた課題を一つずつ解き、NukesakuCOMPOSEを“生成して終わり”ではない作曲環境へ進化させています。</p>
+      </div>
+
+      <article class="dev-showcase">
+        <a class="dev-showcase-visual" href="compose-evolution.html" aria-label="NukesakuCOMPOSE 1.0 開発進捗を見る">
+          <img src="NukesakuCOMPOSE-1.0-development.png" alt="NukesakuCOMPOSE 1.0開発版のPremium Dark UI" width="1280" height="820" loading="lazy" decoding="async">
+          <span class="image-label">Actual development build</span>
+        </a>
+        <div class="dev-showcase-copy">
+          <div class="card-badges">
+            <span class="badge badge-development">1.0 開発中</span>
+            <span class="badge badge-verified">macOS RC</span>
+            <span class="badge badge-pending">Windows 未検証</span>
+          </div>
+          <p class="dev-overline">NukesakuCOMPOSE 1.0</p>
+          <h3>アイデアを生み、<br>曲へ育てられる製品へ。</h3>
+          <p>5レーンの関係を共有するGeneration Engine 2.0、モチーフを発展させるMelody Engine 2.0、Continue、部分再生成、コード編集、正式版Piano Rollを実装。操作画面もPremium Dark UIへ刷新しています。</p>
+          <ul class="progress-list">
+            <li><span>生成品質</span><strong>Engine 2.0 実装</strong></li>
+            <li><span>編集</span><strong>Continue / 部分編集</strong></li>
+            <li><span>macOS</span><strong>Release Candidate</strong></li>
+            <li><span>Windows</span><strong>ネイティブ検証前</strong></li>
+          </ul>
+          <div class="card-actions">
+            <a href="compose-evolution.html" class="btn btn-primary">Betaからの進化を詳しく見る</a>
+            <a href="nukesakucompose.html" class="btn btn-quiet">現在のBetaを見る</a>
+          </div>
+          <p class="truth-note">※ 正式版1.0はまだ販売開始していません。Windows版もネイティブ環境での検証前です。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="section section-wide" id="plugins">
+      <div class="section-head section-head-split">
+        <div>
+          <p class="section-kicker">Handmade Music Tools</p>
+          <h2 class="section-title">Plugins</h2>
+        </div>
+        <p class="section-desc">難しいことを隠すのではなく、触りながら自然に理解できる道具を目指しています。</p>
+      </div>
+
+      <article class="compose-feature-card">
+        <div class="compose-feature-copy">
+          <div class="card-badges">
+            <span class="badge badge-beta">Beta v0.3.0</span>
+            <span class="badge badge-free">無料配布中</span>
+          </div>
+          <p class="dev-overline">Theory-aware MIDI composer</p>
+          <h3>NukesakuCOMPOSE</h3>
+          <p class="compose-feature-lead">Key・Scale・Genre・Moodを選ぶだけ。コード、メロディ、ベース、アルペジオ、リズムを一つの作曲アイデアとして生成します。</p>
+          <div class="product-facts" aria-label="主な機能">
+            <span><strong>5</strong> MIDIレーン</span>
+            <span><strong>Seed</strong> で再現</span>
+            <span><strong>Drag</strong> してDAWへ</span>
+          </div>
+          <div class="card-meta">
+            <span>VST3</span><span>AU</span><span>macOS</span><span>Apple Silicon</span>
+          </div>
+          <div class="card-actions">
+            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-primary" target="_blank" rel="noopener">無料Betaをダウンロード <span aria-hidden="true">↗</span></a>
+            <a href="nukesakucompose.html" class="btn btn-ghost">機能と使い方</a>
+          </div>
+        </div>
+        <div class="compose-feature-image">
+          <img src="NukesakuCOMPOSE-UI-UX.png" alt="無料配布中のNukesakuCOMPOSE Beta操作画面" width="1180" height="780" loading="lazy" decoding="async">
+          <span class="visual-version">CURRENT BETA</span>
+        </div>
+      </article>
+
+      <div class="research-grid" aria-label="研究中のプラグイン">
+        <article class="research-card research-eq">
+          <span class="research-state">RESEARCH</span>
+          <div class="research-glyph" aria-hidden="true"><i></i><i></i><i></i></div>
+          <h3>NukesakuEQ</h3>
+          <p>音の変化を見て、聴いて、理解しやすいEQを研究中。</p>
+          <span class="research-note">公開時期未定</span>
+        </article>
+        <article class="research-card research-chop">
+          <span class="research-state">PROTOTYPE</span>
+          <div class="research-glyph chop-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <h3>NukesakuCHOP</h3>
+          <p>ヴォーカルチョップ制作を、もっと直感的にする方法を試作中。</p>
+          <span class="research-note">公開時期未定</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-wide learn-watch-section" id="dtmer">
+      <div class="section-head section-head-split">
+        <div>
+          <p class="section-kicker">Learn &amp; Follow</p>
+          <h2 class="section-title">わかったことも、<br>迷ったことも共有する。</h2>
+        </div>
+        <p class="section-desc">専門用語を知っている前提にしません。初心者だった自分が欲しかった説明を、記事と動画にしていきます。</p>
+      </div>
+
+      <div class="learn-watch-grid">
+        <div class="learning-panel">
+          <div class="panel-heading">
+            <span class="panel-number">01</span>
+            <div><p>BEGINNER'S NOTES</p><h3>基礎知識</h3></div>
+            <a href="knowledge.html">記事一覧 <span aria-hidden="true">→</span></a>
+          </div>
+          <a class="editorial-link" href="article-midi.html">
+            <span class="editorial-category">MIDI / 約4分</span>
+            <strong>MIDIって何？ 音との違いからやさしく理解する</strong>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="editorial-link" href="article-chord.html">
+            <span class="editorial-category">CHORD / 約3分</span>
+            <strong>コード進行とは？ 曲の感情を支える仕組み</strong>
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
-        <div class="card about-card">
-          <h3 class="card-title">成長過程もコンテンツに</h3>
-          <p class="card-text">完成品だけではありません。試行錯誤の成長過程もすべて発信していきます。</p>
-          <p class="card-text">「うまくいかない」から「できた」までの道のりが、誰かの役に立つと信じています。</p>
+        <div class="youtube-panel">
+          <div class="channel-lockup">
+            <img src="channel-icon.png" alt="Nukesaku Audio YouTubeチャンネルアイコン" width="256" height="256" loading="lazy" decoding="async">
+            <div><p>YOUTUBE CHANNEL</p><h3>DTMerへの道！</h3></div>
+          </div>
+          <p>曲作りとプラグイン開発の成長記録。完成した結果だけでなく、試行錯誤の途中も公開しています。</p>
+          <div class="youtube-actions">
+            <a href="https://youtube.com/playlist?list=PLCp8cBz1DiLQDEYYA5c5iQZjApuktl8zF" class="btn btn-dark" target="_blank" rel="noopener">シリーズを見る <span aria-hidden="true">↗</span></a>
+            <a href="https://www.youtube.com/playlist?list=PLKj49O7Pxzgk" class="text-link" target="_blank" rel="noopener">プラグイン紹介を見る <span aria-hidden="true">↗</span></a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ======== Contact ======== -->
-    <section class="section section-narrow" id="contact">
-      <div class="section-head">
-        <p class="section-kicker">Contact</p>
-        <h2 class="section-title">Contact</h2>
-        <p class="section-desc">質問・感想・フィードバック、お待ちしています。</p>
+    <section class="section section-wide" id="about">
+      <div class="manifesto-card">
+        <div class="manifesto-heading">
+          <p class="section-kicker">About Nukesaku Audio</p>
+          <h2>初心者の疑問を、<br>開発の出発点に。</h2>
+        </div>
+        <div class="manifesto-copy">
+          <p>わからないからこそ、わかりにくい場所に気づける。Nukesaku Audioは、作曲を学ぶ人と同じ目線で、音楽を始めるハードルを少し下げる道具と説明を作る個人プロジェクトです。</p>
+          <dl class="principles">
+            <div><dt>01</dt><dd><strong>使いながら学べる</strong><span>専門知識がなくても始められ、あとから深く触れられる。</span></dd></div>
+            <div><dt>02</dt><dd><strong>過程まで正直に</strong><span>できたことも、未検証のことも、区別して伝える。</span></dd></div>
+            <div><dt>03</dt><dd><strong>小さくても本気で</strong><span>個人制作だからこそ、使う人の声に近い製品を目指す。</span></dd></div>
+          </dl>
+        </div>
       </div>
+    </section>
 
-      <div class="contact-grid">
-        <a class="card contact-card" href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">
-          <img src="channel-icon.png" alt="Nukesaku Audio YouTubeチャンネルアイコン" class="contact-avatar" width="256" height="256" loading="lazy" decoding="async">
-          <div>
-            <h3 class="card-title">YouTube</h3>
-            <p class="card-text">DTMerへの道！ 配信中</p>
-          </div>
-        </a>
-        <a class="card contact-card" href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">
-          <span class="contact-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><path d="M8 26 L24 10 L40 26 L34 38 L14 38 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 38 V28 H30 V38" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
-          </span>
-          <div>
-            <h3 class="card-title">BOOTH</h3>
-            <p class="card-text">プラグイン無料配布中</p>
-          </div>
-        </a>
-        <a class="card contact-card" href="mailto:nukesakuaudio@proton.me">
-          <span class="contact-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 15 L24 27 L40 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-          </span>
-          <div>
-            <h3 class="card-title">Contact</h3>
-            <p class="card-text">お問い合わせ・ご意見はこちら</p>
-          </div>
-        </a>
+    <section class="section section-wide contact-section" id="contact">
+      <div class="contact-callout">
+        <p class="section-kicker">Contact / Feedback</p>
+        <h2>気づいたことを、<br>次の改善につなげたい。</h2>
+        <p>不具合、使いにくかったところ、こんな機能が欲しいという声を歓迎しています。</p>
+        <div class="contact-actions">
+          <a href="mailto:nukesakuaudio@proton.me" class="btn btn-primary">メールで連絡する</a>
+          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" class="btn btn-ghost" target="_blank" rel="noopener">YouTubeへ <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- ======== Footer ======== -->
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-v2">
     <div class="footer-inner">
       <div class="footer-brand">
-        <span class="brand-knob" aria-hidden="true"></span>
-        <span class="brand-name">Nukesaku Audio</span>
-        <p>曲作りを、もっと楽しく、もっと気軽に。</p>
+        <a href="#top" class="brand">
+          <span class="brand-knob" aria-hidden="true"></span>
+          <span class="brand-name">Nukesaku Audio</span>
+        </a>
+        <p>つくりながら、音楽がわかっていく。</p>
       </div>
-
       <div class="footer-links">
         <div class="footer-col">
-          <h4>Site</h4>
-          <a href="#plugins">Plugins</a>
-          <a href="#dtmer">DTMerへの道！</a>
+          <h4>Explore</h4>
+          <a href="nukesakucompose.html">NukesakuCOMPOSE</a>
+          <a href="compose-evolution.html">1.0 開発進捗</a>
           <a href="knowledge.html">基礎知識</a>
-          <a href="#lab">Nukesaku Lab</a>
-          <a href="#about">About</a>
         </div>
         <div class="footer-col">
-          <h4>Links</h4>
-          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH</a>
-          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://www.youtube.com/playlist?list=PLKj49O7Pxzgk" target="_blank" rel="noopener">プラグイン紹介動画</a>
+          <h4>Elsewhere</h4>
+          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a>
+          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a>
           <a href="mailto:nukesakuaudio@proton.me">Contact</a>
         </div>
       </div>
     </div>
-
     <div class="footer-bottom">
-      <p>&copy; 2026 Nukesaku Audio. Made with love and lots of practice. 🎹</p>
+      <p>&copy; 2026 Nukesaku Audio.</p>
+      <p>Independent music-tech project from Japan.</p>
     </div>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

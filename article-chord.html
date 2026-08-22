@@ -3,10 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#faf6ee">
+  <meta name="theme-color" content="#faf7f1">
   <title>コード進行とは？ 〜曲の感情を決める仕組み〜 | Nukesaku Audio</title>
   <meta name="description" content="コード進行とは何かを初心者向けに解説。コードは複数の音を同時に鳴らしたもので、それを順番に並べたのがコード進行です。定番進行の例と、曲の雰囲気との関係をわかりやすく説明します。">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/article-chord.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="Nukesaku Audio">
+  <meta property="og:title" content="コード進行とは？ 曲の感情を支える仕組み">
+  <meta property="og:description" content="コードとコード進行の違い、曲の雰囲気との関係、初心者向けの定番進行をやさしく解説します。">
+  <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/article-chord.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -23,9 +31,9 @@
   <!-- ======== Header / Navigation ======== -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="index.html" class="brand">
+      <a href="index.html" class="brand" aria-label="Nukesaku Audio ホーム">
         <span class="brand-knob" aria-hidden="true"></span>
-        <span class="brand-name">Nukesaku Audio</span>
+        <span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music-tech studio</span></span>
       </a>
 
       <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
@@ -33,12 +41,12 @@
       </button>
 
       <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
-        <a href="index.html#plugins">Plugins</a>
-        <a href="index.html#dtmer">DTMerへの道！</a>
-        <a href="knowledge.html" aria-current="page">基礎知識</a>
-        <a href="index.html#lab">Nukesaku Lab</a>
+        <a href="nukesakucompose.html">COMPOSE</a>
+        <a href="knowledge.html" aria-current="page">学ぶ</a>
+        <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a>
+        <a href="compose-evolution.html">開発進捗</a>
         <a href="index.html#about">About</a>
-        <a href="index.html#contact" class="nav-cta">Contact</a>
+        <a href="https://nukesakuaudio.booth.pm/items/8725510" class="nav-cta" target="_blank" rel="noopener">無料Betaを試す</a>
       </nav>
     </div>
   </header>
@@ -104,7 +112,7 @@
         <h2>3. 進行で曲の感情が変わる</h2>
         <p>同じメロディーでも、コード進行を変えると曲の印象が大きく変わります。</p>
         <p>例えば、メジャーコード（明るい響き）を中心に進むと<strong>明るく軽やか</strong>な雰囲気に、マイナーコード（暗い響き）を中心に進むと<strong>切なく・落ち着いた</strong>雰囲気になります。</p>
-        <p>「この場面は爽やかに」「ここは涙を誘う感じに」というのは、実はほとんどコード進行の設計で決まっています。</p>
+        <p>「この場面は爽やかに」「ここは切ない感じに」といった印象は、メロディー、リズム、音色などとともに、コード進行からも大きな影響を受けます。</p>
         <div class="article-note">
           <p><strong>POINT</strong>：曲の「明るい・切ない・かっこいい」は、コード進行が握っている</p>
         </div>
@@ -124,9 +132,9 @@
 
       <section class="article-section" id="sec5">
         <h2>5. NukesakuCOMPOSEでもコード進行が作れる</h2>
-        <p>私が開発中の <strong>NukesakuCOMPOSE</strong> は、MIDIをベースに作曲をサポートするツールです。</p>
-        <p>コード進行の候補を自動で提示する機能を考えているので、「何から始めればいいかわからない」という人でも、定番進行から試すだけで曲作りをスタートできます。</p>
-        <p>まずはコード進行の感覚をつかんで、自由に並べ替えてみるのがおすすめです。</p>
+        <p>無料Beta版を配布中の <strong>NukesakuCOMPOSE</strong> は、MIDIをベースに作曲をサポートするツールです。</p>
+        <p>Key、Scale、Genre、Moodを選ぶと、コード進行を含む5つのパートを生成します。「何から始めればいいかわからない」ときに、まず音を聴いて考えるための材料にできます。</p>
+        <p>生成結果は完成品ではなく出発点です。響きを聴き比べながら、気に入った進行を自分の曲へ育ててみてください。</p>
       </section>
 
       <section class="article-section article-summary" id="sec6">
@@ -157,38 +165,36 @@
   </main>
 
   <!-- ======== Footer ======== -->
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-v2">
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="brand-knob" aria-hidden="true"></span>
         <span class="brand-name">Nukesaku Audio</span>
-        <p>曲作りを、もっと楽しく、もっと気軽に。</p>
+        <p>つくりながら、音楽がわかっていく。</p>
       </div>
 
       <div class="footer-links">
         <div class="footer-col">
-          <h4>Site</h4>
-          <a href="index.html#plugins">Plugins</a>
-          <a href="index.html#dtmer">DTMerへの道！</a>
+          <h4>Explore</h4>
+          <a href="nukesakucompose.html">NukesakuCOMPOSE</a>
+          <a href="compose-evolution.html">1.0 開発進捗</a>
           <a href="knowledge.html">基礎知識</a>
-          <a href="index.html#lab">Nukesaku Lab</a>
-          <a href="index.html#about">About</a>
         </div>
         <div class="footer-col">
-          <h4>Links</h4>
-          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH</a>
-          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube</a>
+          <h4>Elsewhere</h4>
+          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a>
+          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a>
           <a href="mailto:nukesakuaudio@proton.me">Contact</a>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 Nukesaku Audio. Made with love and lots of practice. 🎹</p>
+      <p>&copy; 2026 Nukesaku Audio.</p><p>Independent music-tech project from Japan.</p>
     </div>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 
 </body>
 </html>

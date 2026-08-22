@@ -4,10 +4,13 @@
    2) スクロール時のヘッダー影
    3) フェードインアニメーション
    4) リンク準備中のトースト表示
+   5) 記事の読了位置インジケーター
    ============================================================ */
 
 (function () {
   "use strict";
+
+  document.documentElement.classList.add("js");
 
   /* ---------- 1) モバイルナビの開閉 ---------- */
   var navToggle = document.getElementById("navToggle");
@@ -92,7 +95,10 @@
   /* ---------- 3) フェードインアニメーション ---------- */
   /* .reveal を自動付与して IntersectionObserver で表示 ---------- */
   var revealTargets = document.querySelectorAll(
-    ".section-head, .card"
+    ".section-head, .card, .route-card, .dev-showcase, .compose-feature-card, " +
+    ".research-card, .learning-panel, .youtube-panel, .manifesto-card, " +
+    ".contact-callout, .lane-feature, .quickstart-grid li, .knowledge-article-card, " +
+    ".knowledge-next-panel, .knowledge-product-bridge"
   );
 
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -152,4 +158,28 @@
       });
     }
   });
+
+  /* ---------- 5) 記事の読了位置 ---------- */
+  var articleBody = document.querySelector(".article-body");
+
+  if (articleBody) {
+    var progress = document.createElement("div");
+    var progressBar = document.createElement("span");
+    progress.className = "reading-progress";
+    progress.setAttribute("aria-hidden", "true");
+    progress.appendChild(progressBar);
+    document.body.appendChild(progress);
+
+    function updateReadingProgress() {
+      var rect = articleBody.getBoundingClientRect();
+      var start = window.scrollY + rect.top;
+      var readableDistance = Math.max(articleBody.offsetHeight - window.innerHeight * 0.5, 1);
+      var amount = Math.min(Math.max((window.scrollY - start + window.innerHeight * 0.24) / readableDistance, 0), 1);
+      progressBar.style.transform = "scaleX(" + amount.toFixed(4) + ")";
+    }
+
+    updateReadingProgress();
+    window.addEventListener("scroll", updateReadingProgress, { passive: true });
+    window.addEventListener("resize", updateReadingProgress, { passive: true });
+  }
 })();
