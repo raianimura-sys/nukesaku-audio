@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#faf7f1">
+  <meta name="color-scheme" content="light">
+  <title>NukesakuCHOP | 音を切って、並べて、フレーズへ。</title>
+  <meta name="description" content="読み込んだ音を4・8・16・32スライスへ分割し、並べ替え、変形、試聴、WAV書き出しまで行えるフレーズコラージュ・インストゥルメントNukesakuCHOP。現在、公開に向けて最終調整中です。">
+  <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/nukesakuchop.html">
+  <meta property="og:type" content="product">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="Nukesaku Audio">
+  <meta property="og:title" content="NukesakuCHOP | Phrase Collage Instrument">
+  <meta property="og:description" content="ひとつの音をスライスし、良い部分を残しながら、思いがけないフレーズへ。公開に向けて最終調整中。">
+  <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/nukesakuchop.html">
+  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/NukesakuCHOP-ui.jpg">
+  <meta property="og:image:width" content="1102">
+  <meta property="og:image:height" content="678">
+  <meta property="og:image:alt" content="NukesakuCHOP開発版の操作画面">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="NukesakuCHOP-ui.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NukesakuCHOP",
+    "applicationCategory": "MultimediaApplication",
+    "softwareVersion": "Development Preview",
+    "description": "音声をスライスし、並べ替えと変形からフレーズを作るフレーズコラージュ・インストゥルメント",
+    "url": "https://raianimura-sys.github.io/nukesaku-audio/nukesakuchop.html",
+    "publisher": {"@type": "Organization", "name": "Nukesaku Audio"}
+  }
+  </script>
+</head>
+<body class="chop-page">
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+  <div class="bg-decor" aria-hidden="true"><div class="bg-orb orb-pink"></div><div class="bg-orb orb-lavender"></div><div class="bg-orb orb-mint"></div></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="brand" aria-label="Nukesaku Audio ホーム"><span class="brand-knob" aria-hidden="true"></span><span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music-tech studio</span></span></a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
+      <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
+        <a href="nukesakucompose.html">COMPOSE</a>
+        <a href="nukesakuchop.html" aria-current="page">CHOP</a>
+        <a href="knowledge.html">学ぶ</a>
+        <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a>
+        <a href="index.html#lab">開発進捗</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="compose-hero chop-hero">
+      <div class="compose-hero-grid">
+        <div class="compose-hero-copy chop-hero-copy">
+          <div class="card-badges"><span class="badge badge-chop">完成間近</span><span class="badge badge-development">配布準備中</span></div>
+          <p class="hero-eyebrow">Phrase collage instrument</p>
+          <h1>Nukesaku<span>CHOP</span></h1>
+          <p class="compose-catch">音を切って、並べて、フレーズへ。</p>
+          <p class="compose-lead">ひとつの音声を小さなスライスへ分け、順番・Pitch・Reverse・音色を変えながら、新しいフレーズを見つけるための音楽ツールです。</p>
+          <div class="home-hero-actions"><a href="#workflow" class="btn btn-primary">作り方を見る <span aria-hidden="true">↓</span></a><a href="#features" class="btn btn-ghost">機能を見る</a></div>
+          <ul class="compose-platform-list" aria-label="主な特徴"><li>4 / 8 / 16 / 32 Slices</li><li>MIDI Trigger</li><li>WAV Drag</li><li>Standalone</li></ul>
+        </div>
+
+        <figure class="compose-hero-shot chop-hero-shot">
+          <img src="NukesakuCHOP-ui.jpg" alt="NukesakuCHOP開発版。Phrase Canvas、Slice Inspector、Pattern Desk、Output Shelfを備えた操作画面" width="1102" height="678" decoding="async" fetchpriority="high">
+          <figcaption><span>Actual development UI</span><strong>FINAL TUNING</strong></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <aside class="release-notice chop-release-notice" aria-label="NukesakuCHOPの開発状況">
+      <span class="release-notice-label">COMING SOON</span>
+      <p><strong>主要機能の実装を終え、公開に向けて最終調整中です。</strong> 対応OS、価格、配布日は確定後に案内します。</p>
+      <a href="mailto:nukesakuaudio@proton.me?subject=NukesakuCHOPについて">CHOPについて問い合わせる <span aria-hidden="true">→</span></a>
+    </aside>
+
+    <section class="section section-wide" id="features" aria-labelledby="features-title">
+      <div class="section-head section-head-split">
+        <div><p class="section-kicker">Four Work Areas</p><h2 class="section-title" id="features-title">切る、選ぶ、変える、<br>持ち出す。</h2></div>
+        <p class="section-desc">操作を4つの場所へ整理。素材の読み込みからDAWへ渡すまで、左から右へ自然に進めます。</p>
+      </div>
+
+      <div class="chop-module-grid">
+        <article class="chop-module module-canvas"><span class="module-number">01</span><p class="module-label">ARRANGE</p><h3>Phrase Canvas</h3><p>分割されたスライスをクリックして試聴。タイルをドラッグして、フレーズの順番を直接組み替えます。</p></article>
+        <article class="chop-module module-inspector"><span class="module-number">02</span><p class="module-label">SHAPE</p><h3>Slice Inspector</h3><p>選択したスライスのLevel、Pitch、Reverseを調整。残したい場所はPin、音色はFreezeで保護できます。</p></article>
+        <article class="chop-module module-pattern"><span class="module-number">03</span><p class="module-label">DISCOVER</p><h3>Pattern Desk</h3><p>Mutate AllとShuffle Stepsで新しい並びを探索。変化幅とTimbre Variationで偶然性をコントロールします。</p></article>
+        <article class="chop-module module-output"><span class="module-number">04</span><p class="module-label">EXPORT</p><h3>Output Shelf</h3><p>Edgeでクリックノイズを整え、Global PitchとMIDI Triggerを設定。Phrase全体またはSlice単体をDAWへ渡せます。</p></article>
+      </div>
+    </section>
+
+    <section class="section section-wide chop-protect-section" aria-labelledby="protect-title">
+      <div class="chop-protect-copy">
+        <p class="section-kicker">Keep the Good Parts</p>
+        <h2 class="section-title" id="protect-title">良い偶然は残して、<br>ほかだけ変える。</h2>
+        <p>全部をランダムにしてやり直すのではなく、気に入った要素を保護しながら次の候補を探せます。</p>
+      </div>
+      <div class="chop-protect-grid">
+        <article><span aria-hidden="true">P</span><div><h3>PIN SLICE</h3><p>気に入ったスライスの位置を固定。Shuffle StepsやMutate Allを実行しても、その場所を残します。</p></div></article>
+        <article><span aria-hidden="true">T</span><div><h3>FREEZE SOUND</h3><p>PitchやReverseなど、気に入った音の状態を固定。並びを変えながら音色の特徴を守ります。</p></div></article>
+      </div>
+    </section>
+
+    <section class="section section-wide" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-head section-head-split">
+        <div><p class="section-kicker">Quick Workflow</p><h2 class="section-title" id="workflow-title">ひとつの素材から、<br>6ステップ。</h2></div>
+        <p class="section-desc">最初からすべての機能を理解する必要はありません。まずは読み込んで、聴いて、並べ替えるところから始められます。</p>
+      </div>
+      <ol class="quickstart-grid chop-workflow-grid">
+        <li><span>01</span><h3>LOAD SOUND</h3><p>WAV、AIFF / AIF、MP3、FLACの音声を読み込みます。</p></li>
+        <li><span>02</span><h3>SLICE</h3><p>素材を4、8、16、32個のスライスへ分割します。</p></li>
+        <li><span>03</span><h3>AUDITION</h3><p>Canvasのタイルを選び、ひとつずつ音を確認します。</p></li>
+        <li><span>04</span><h3>ARRANGE</h3><p>ドラッグで順番を変更。ShuffleやMutateも試します。</p></li>
+        <li><span>05</span><h3>PROTECT</h3><p>良い場所をPin、良い音色をFreezeして次を探索します。</p></li>
+        <li><span>06</span><h3>DRAG</h3><p>Phrase全体または選択SliceをWAVとしてDAWへ渡します。</p></li>
+      </ol>
+    </section>
+
+    <section class="section section-wide" aria-labelledby="control-title">
+      <div class="section-head section-head-split">
+        <div><p class="section-kicker">Controlled Mutation</p><h2 class="section-title" id="control-title">変化の大きさまで、<br>自分で選べる。</h2></div>
+        <p class="section-desc">派手に崩すだけでなく、元の素材を感じる小さな変化まで。目的に合わせてMutateの範囲を選択できます。</p>
+      </div>
+      <div class="chop-range-grid">
+        <article><span>WIDE</span><strong>±12</strong><p>1オクターブまで動く、大胆な変化。</p></article>
+        <article><span>MUSICAL</span><strong>±7</strong><p>音楽的な関係を意識した広めの変化。</p></article>
+        <article><span>GENTLE</span><strong>±5</strong><p>素材の印象を残しやすい穏やかな変化。</p></article>
+        <article><span>SUBTLE</span><strong>±3</strong><p>近い音域で試す、控えめな変化。</p></article>
+      </div>
+    </section>
+
+    <section class="section section-wide" id="spec">
+      <div class="section-head section-head-split">
+        <div><p class="section-kicker">Development Specification</p><h2 class="section-title">現在確認できる仕様。</h2></div>
+        <p class="section-desc">以下は開発版マニュアルに基づく内容です。配布版では変更される可能性があります。</p>
+      </div>
+      <div class="spec-layout">
+        <div class="spec-box spec-box-v2">
+          <h3 class="spec-title">INPUT / EDIT</h3>
+          <ul class="spec-list">
+            <li><span>読込形式</span><span>WAV / AIFF / AIF / MP3 / FLAC</span></li>
+            <li><span>素材の長さ</span><span>最大30秒</span></li>
+            <li><span>Slice数</span><span>4 / 8 / 16 / 32</span></li>
+            <li><span>Slice Pitch</span><span>-12〜+12 semitones</span></li>
+            <li><span>Global Pitch</span><span>-12〜+12 semitones</span></li>
+            <li><span>EDGE</span><span>0〜30 ms</span></li>
+          </ul>
+        </div>
+        <div class="compatibility-card chop-output-card">
+          <p class="compatibility-label">PLAY / OUTPUT</p>
+          <h3>MIDIで演奏し、WAVで持ち出す。</h3>
+          <p>C4から各スライスをMIDI Trigger。One Shot / Holdを選択できます。完成したPhraseは24-bit WAVとして保存でき、Phrase全体と選択Sliceを直接ドラッグできます。</p>
+          <p class="chop-spec-note">対応OS・価格・配布方法は最終確認後に掲載します。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-wide download-section">
+      <div class="download-box download-box-v2 chop-coming-soon">
+        <p class="section-kicker">NukesakuCHOP / Coming Soon</p>
+        <h2 class="section-title">完成まで、あと少し。</h2>
+        <p class="section-desc">配布準備が整い次第、このページとYouTubeでお知らせします。</p>
+        <div class="home-hero-actions"><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" class="btn btn-primary" target="_blank" rel="noopener">YouTubeで開発を追う <span aria-hidden="true">↗</span></a><a href="mailto:nukesakuaudio@proton.me?subject=NukesakuCHOPについて" class="btn btn-ghost">問い合わせる</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer site-footer-v2"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="brand"><span class="brand-knob" aria-hidden="true"></span><span class="brand-name">Nukesaku Audio</span></a><p>曲作りを、もっと楽しく、もっと気軽に。</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="nukesakuchop.html">NukesakuCHOP</a><a href="compose-evolution.html">1.0 開発進捗</a><a href="knowledge.html">基礎知識</a></div><div class="footer-col"><h4>Elsewhere</h4><a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a><a href="mailto:nukesakuaudio@proton.me">Contact</a></div></div></div><div class="footer-bottom"><p>&copy; 2026 Nukesaku Audio.</p><p>Independent music-tech project from Japan.</p></div></footer>
+  <script src="script.js?v=4"></script>
+</body>
+</html>

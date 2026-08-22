@@ -3254,3 +3254,115 @@ body {
   .article-series-nav { grid-template-columns: 1fr; }
   .article-series-nav .next { text-align: left; }
 }
+
+/* ============================================================
+   NukesakuCHOP — product preview
+   ============================================================ */
+.badge-chop {
+  color: #8e463f;
+  border-color: rgba(228, 126, 116, .34);
+  background: rgba(241, 157, 146, .18);
+}
+
+.chop-hero {
+  background:
+    radial-gradient(48% 60% at 78% 18%, rgba(236, 135, 125, .17), transparent 68%),
+    radial-gradient(38% 48% at 14% 82%, rgba(131, 184, 164, .15), transparent 70%);
+}
+
+.chop-hero-copy h1 span { color: #cf7067; }
+.chop-hero-copy .compose-catch { color: #805294; }
+.chop-hero-shot { border-color: rgba(228, 126, 116, .25); }
+.chop-hero-shot figcaption strong { color: #f1a196; }
+.chop-release-notice { border-color: rgba(228, 126, 116, .28); background: linear-gradient(120deg, rgba(238, 142, 132, .12), rgba(166, 152, 200, .09)); }
+.chop-release-notice .release-notice-label,
+.chop-release-notice a { color: #a14e48; }
+
+.chop-module-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.chop-module {
+  position: relative;
+  min-height: 290px;
+  padding: 27px 24px;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  background: rgba(255, 253, 250, .82);
+  box-shadow: 0 9px 28px rgba(48, 44, 53, .045);
+}
+
+.chop-module::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--pink);
+}
+
+.module-inspector::before { background: var(--lavender); }
+.module-pattern::before { background: var(--mint); }
+.module-output::before { background: #e7b773; }
+.module-number { color: rgba(48, 44, 53, .09); font-family: var(--font-en); font-size: 2.2rem; font-weight: 800; line-height: 1; }
+.module-label { margin-top: 58px; color: var(--text-faint); font-family: var(--font-en); font-size: .57rem; font-weight: 800; letter-spacing: .15em; }
+.chop-module h3 { margin: 6px 0 11px; font-family: var(--font-en); font-size: 1rem; letter-spacing: -.01em; }
+.chop-module > p:last-child { color: var(--text-dim); font-size: .77rem; line-height: 1.8; }
+
+.chop-protect-section {
+  display: grid;
+  grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: clamp(45px, 7vw, 92px);
+}
+
+.chop-protect-copy > p:last-child { margin-top: 18px; color: var(--text-dim); font-size: .88rem; line-height: 1.9; }
+.chop-protect-grid { display: grid; gap: 13px; }
+.chop-protect-grid article { min-height: 142px; padding: 23px 25px; display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 19px; border: 1px solid var(--line-soft); border-radius: 16px; background: var(--card); }
+.chop-protect-grid article > span { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; color: #9b4f49; background: rgba(238, 142, 132, .17); font-family: var(--font-en); font-size: .75rem; font-weight: 900; }
+.chop-protect-grid article:last-child > span { color: var(--lav-deep); background: var(--lav-soft); }
+.chop-protect-grid h3 { margin-bottom: 6px; font-family: var(--font-en); font-size: .88rem; letter-spacing: .04em; }
+.chop-protect-grid p { color: var(--text-dim); font-size: .76rem; line-height: 1.75; }
+
+.chop-workflow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.chop-workflow-grid li { min-height: 220px; }
+.chop-workflow-grid li > span { color: #9b4f49; background: rgba(238, 142, 132, .16); }
+
+.chop-range-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
+.chop-range-grid article { padding: 25px 22px; border: 1px solid var(--line-soft); border-radius: 16px; background: var(--card); }
+.chop-range-grid span { display: block; color: var(--text-faint); font-family: var(--font-en); font-size: .58rem; font-weight: 800; letter-spacing: .13em; }
+.chop-range-grid strong { display: block; margin: 28px 0 9px; color: #b75e56; font-family: var(--font-en); font-size: 1.75rem; line-height: 1; }
+.chop-range-grid p { color: var(--text-dim); font-size: .73rem; line-height: 1.7; }
+
+.chop-output-card { background: linear-gradient(145deg, #282533, #18191f); }
+.chop-output-card .compatibility-label,
+.chop-output-card a { color: #f1a196; }
+.chop-spec-note { padding-top: 17px; border-top: 1px solid rgba(255, 255, 255, .11); color: rgba(255, 255, 255, .48) !important; font-size: .72rem !important; }
+.chop-coming-soon { background: radial-gradient(80% 160% at 50% 100%, rgba(238, 142, 132, .13), transparent 70%), var(--card); }
+
+.research-card[href] { display: block; }
+.research-card[href] .research-note { color: #9b4f49; }
+.research-card[href]::after { content: "→"; position: absolute; right: 29px; bottom: 27px; color: var(--text-faint); transition: transform .2s, color .2s; }
+.research-card[href]:hover::after { color: #9b4f49; transform: translateX(4px); }
+
+@media (max-width: 1040px) {
+  .chop-module-grid,
+  .chop-range-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .chop-protect-section { grid-template-columns: 1fr; gap: 30px; }
+  .chop-workflow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .chop-module-grid,
+  .chop-range-grid,
+  .chop-workflow-grid { grid-template-columns: 1fr; }
+  .chop-module { min-height: 235px; }
+  .module-label { margin-top: 38px; }
+  .chop-protect-grid article { grid-template-columns: 40px 1fr; padding: 20px; }
+  .chop-protect-grid article > span { width: 40px; height: 40px; }
+}

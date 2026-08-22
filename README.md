@@ -10,6 +10,7 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 
 - `index.html` — brand home and primary routes
 - `nukesakucompose.html` — currently distributed Beta product page
+- `nukesakuchop.html` — upcoming phrase collage instrument product preview
 - `compose-evolution.html` — formal 1.0 development log
 - `knowledge.html` — 15-article beginner curriculum across three courses
 - `article-*.html` — DAW, composition theory, MIDI editing and mixing fundamentals
@@ -32,6 +33,7 @@ Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social
 ## Content accuracy rules
 
 - The currently distributed Beta is macOS / Apple Silicon only.
+- NukesakuCHOP is in final development; its OS, price and release date are not yet published.
 - Formal 1.0 is in development and must not be described as released.
 - Windows remains unverified until a native build and DAW acceptance pass are complete.
 - When CSS or JavaScript changes, bump the `?v=` query in every HTML page.
