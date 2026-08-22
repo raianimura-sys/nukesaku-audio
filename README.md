@@ -27,7 +27,7 @@ Then open `http://localhost:8080/`.
 
 The editable color, spacing, type and radius tokens are at the top of `style.css`. The current direction is “Warm Editorial × Music Tech”: warm and approachable at brand level, dark and precise around product imagery.
 
-Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social-card.jpg` is used only for social sharing, not as a page UI.
+Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social-card-v2.jpg` is used only for social sharing, not as a page UI.
 
 ## Content accuracy rules
 
