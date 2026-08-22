@@ -25,15 +25,28 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://raianimura-sys.github.io/nukesaku-audio/article-midi.html</loc>
+    <loc>https://raianimura-sys.github.io/nukesaku-audio/article-daw.html</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://raianimura-sys.github.io/nukesaku-audio/article-chord.html</loc>
+    <loc>https://raianimura-sys.github.io/nukesaku-audio/article-audio.html</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-midi.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-plugin.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-tempo.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-beat.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-rhythm.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-key-scale.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-chord.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-melody.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-velocity-quantize.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-gain-volume.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-eq.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-compressor.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://raianimura-sys.github.io/nukesaku-audio/article-reverb-delay.html</loc><lastmod>2026-08-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

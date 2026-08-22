@@ -11,8 +11,8 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 - `index.html` — brand home and primary routes
 - `nukesakucompose.html` — currently distributed Beta product page
 - `compose-evolution.html` — formal 1.0 development log
-- `knowledge.html` — beginner learning hub
-- `article-*.html` — individual learning articles
+- `knowledge.html` — 15-article beginner curriculum across three courses
+- `article-*.html` — DAW, composition theory, MIDI editing and mixing fundamentals
 - `404.html` — GitHub Pages fallback
 
 ## Local preview

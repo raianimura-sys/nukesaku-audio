@@ -14,7 +14,7 @@
   <meta property="og:description" content="MIDIは音ではなく演奏情報。オーディオとの違いや、DTMでできることをやさしく解説します。">
   <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/article-midi.html">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -82,7 +82,7 @@
           <li><a href="#sec1">MIDIは「音のデータ」ではない</a></li>
           <li><a href="#sec2">MIDIは「楽譜みたいなもの」</a></li>
           <li><a href="#sec3">音を鳴らすのは「楽器」</a></li>
-          <li><a href="#sec4">DTMでMIDIがないと作曲は成り立たない</a></li>
+          <li><a href="#sec4">MIDIがDTMでよく使われる理由</a></li>
           <li><a href="#sec5">NukesakuCOMPOSEでもMIDIで作曲</a></li>
           <li><a href="#sec6">まとめ</a></li>
         </ol>
@@ -121,9 +121,9 @@
       </section>
 
       <section class="article-section" id="sec4">
-        <h2>4. DTMでMIDIがないと作曲は成り立たない</h2>
-        <p>現代のDTMでは、<strong>MIDIがあってこそ作曲が成立しています</strong>。</p>
-        <p>ピアノロールに並ぶ音符、コード進行、ドラムのリズム、メロディーの高低――これらはすべてMIDIデータです。音源に「いつ、どの音を、どれくらいの強さで鳴らすか」を伝える情報がなければ、DAWは何も音を出せません。</p>
+        <h2>4. MIDIがDTMでよく使われる理由</h2>
+        <p>現代のDTMでは、<strong>MIDIが打ち込みや演奏編集の中心的な仕組み</strong>として使われています。もちろん、録音したAudioやLoopだけで曲を作ることもできます。</p>
+        <p>ピアノロールに並ぶ音符や、ソフト音源で鳴らすコード、ドラム、メロディーは、通常MIDIの演奏情報として扱われます。音源は「いつ、どの音を、どれくらいの強さで鳴らすか」を受け取り、実際の音へ変換します。</p>
         <p>MIDIがあるからこそできること：</p>
         <ul>
           <li>間違えた音を後から自在に修正できる</li>
@@ -131,7 +131,7 @@
           <li>同じメロディーをピアノでもシンセでも別の音源で試せる</li>
           <li>鍵盤がなくても、マウスで音符を打ち込める</li>
         </ul>
-        <p>つまり、MIDIは作曲の<strong>土台となる言語</strong>です。便利なツールではなく、DTM作曲には欠かせない基盤なのです。</p>
+        <p>つまり、MIDIはDTMで広く共有できる<strong>演奏情報の共通言語</strong>です。Audioと役割を分けて理解すると、打ち込みと録音を組み合わせやすくなります。</p>
       </section>
 
       <section class="article-section" id="sec5">
@@ -162,6 +162,10 @@
             <span class="card-arrow" aria-hidden="true">→</span>
           </a>
         </div>
+        <nav class="article-series-nav" aria-label="前後の記事">
+          <a href="article-audio.html"><span>PREV 02</span><strong>← オーディオデータ</strong></a>
+          <a class="next" href="article-plugin.html"><span>NEXT 04</span><strong>プラグインとは？ →</strong></a>
+        </nav>
         <p class="article-back"><a href="knowledge.html">← 基礎知識 記事一覧に戻る</a></p>
       </section>
 
@@ -199,7 +203,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 
 </body>
 </html>

@@ -98,7 +98,8 @@
     ".section-head, .card, .route-card, .dev-showcase, .compose-feature-card, " +
     ".research-card, .learning-panel, .youtube-panel, .manifesto-card, " +
     ".contact-callout, .lane-feature, .quickstart-grid li, .knowledge-article-card, " +
-    ".knowledge-next-panel, .knowledge-product-bridge"
+    ".knowledge-next-panel, .knowledge-product-bridge, .curriculum-head, " +
+    ".lesson-card, .article-lead-note, .concept-card, .article-series-nav"
   );
 
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;

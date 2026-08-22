@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf7f1">
-  <title>DTM・作曲の基礎知識 | Nukesaku Audio</title>
-  <meta name="description" content="MIDIやコード進行など、DTMと作曲の基礎を初心者向けにやさしく解説。専門用語を知っている前提にしないNukesaku Audioの入門記事です。">
+  <title>DTM・作曲の基礎知識 | 初心者向け15記事</title>
+  <meta name="description" content="DAW、MIDI、テンポ、リズム、スケール、コード、メロディ、EQ、コンプレッサーまで。DTMと作曲の基礎を初心者向けに順番に学べる15記事。">
   <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/knowledge.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:site_name" content="Nukesaku Audio">
-  <meta property="og:title" content="DTM・作曲の基礎知識 | Nukesaku Audio">
-  <meta property="og:description" content="MIDIとコードから、音楽のしくみを一つずつ。初心者向けのやさしい入門記事。">
+  <meta property="og:title" content="DTM・作曲の基礎知識 | 初心者向け15記事">
+  <meta property="og:description" content="何から覚えればいいか迷わない。DTMの準備、曲作り、音作りを3段階で学ぶ入門ライブラリ。">
   <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/knowledge.html">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body class="knowledge-page">
@@ -25,9 +25,7 @@
     <div class="header-inner">
       <a href="index.html" class="brand" aria-label="Nukesaku Audio ホーム"><span class="brand-knob" aria-hidden="true"></span><span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music-tech studio</span></span></a>
       <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
-      <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
-        <a href="nukesakucompose.html">COMPOSE</a><a href="knowledge.html" aria-current="page">学ぶ</a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a><a href="compose-evolution.html">開発進捗</a><a href="index.html#about">About</a><a href="https://nukesakuaudio.booth.pm/items/8725510" class="nav-cta" target="_blank" rel="noopener">無料Betaを試す</a>
-      </nav>
+      <nav class="site-nav" id="siteNav" aria-label="メインメニュー"><a href="nukesakucompose.html">COMPOSE</a><a href="knowledge.html" aria-current="page">学ぶ</a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a><a href="compose-evolution.html">開発進捗</a><a href="index.html#about">About</a><a href="https://nukesakuaudio.booth.pm/items/8725510" class="nav-cta" target="_blank" rel="noopener">無料Betaを試す</a></nav>
     </div>
   </header>
 
@@ -38,43 +36,60 @@
       <div class="knowledge-hero-copy">
         <p class="section-kicker">Beginner's Notes</p>
         <h1>音楽のしくみを、<br><span>ひとつずつ。</span></h1>
-        <p>「MIDIって音なの？」「コード進行って何を進めるの？」そんな最初の疑問を、専門用語を知っている前提にせず解説します。</p>
+        <p>「何から覚えればいい？」で止まらないように、DTMの準備、曲の作り方、音の整え方を3段階に分けました。上から順番でも、気になる記事だけでも読めます。</p>
+        <a class="btn btn-primary" href="#course-1">最初の記事から読む <span aria-hidden="true">↓</span></a>
       </div>
       <div class="knowledge-visual" aria-hidden="true">
         <div class="knowledge-staff"><i></i><i></i><i></i><i></i><i></i><span class="staff-note note-a"></span><span class="staff-note note-b"></span><span class="staff-note note-c"></span></div>
-        <p><strong>2</strong><span>articles available</span></p>
+        <p><strong>15</strong><span>beginner articles</span></p>
       </div>
     </section>
 
-    <section class="section section-wide knowledge-library" aria-labelledby="library-title">
-      <div class="section-head section-head-split">
-        <div><p class="section-kicker">Start Here</p><h2 class="section-title" id="library-title">まずは、この2本から。</h2></div>
-        <p class="section-desc">MIDIは「曲をどう鳴らすか」、コード進行は「曲をどう感じさせるか」。作曲ツールを使うときにも役立つ土台です。</p>
-      </div>
-      <div class="knowledge-article-grid">
-        <article class="knowledge-article-card knowledge-midi">
-          <a href="article-midi.html" class="knowledge-card-link" aria-label="MIDIって何？を読む"></a>
-          <div class="knowledge-card-top"><span class="knowledge-topic">MIDI</span><span class="read-time">約4分</span></div>
-          <div class="knowledge-diagram midi-diagram" aria-hidden="true"><span></span><span></span><span></span><span></span><i></i></div>
-          <h2>MIDIって何？</h2>
-          <p>音そのものではなく、音を鳴らすための「設計図」。オーディオとの違いから理解します。</p>
-          <span class="knowledge-read">記事を読む <span aria-hidden="true">→</span></span>
-        </article>
-        <article class="knowledge-article-card knowledge-chord">
-          <a href="article-chord.html" class="knowledge-card-link" aria-label="コード進行とは？を読む"></a>
-          <div class="knowledge-card-top"><span class="knowledge-topic">CHORD</span><span class="read-time">約3分</span></div>
-          <div class="knowledge-diagram chord-diagram" aria-hidden="true"><span>C</span><i></i><span>Am</span><i></i><span>F</span><i></i><span>G</span></div>
-          <h2>コード進行とは？</h2>
-          <p>曲の明るさや切なさを支える、和音の並び。定番の例から仕組みを理解します。</p>
-          <span class="knowledge-read">記事を読む <span aria-hidden="true">→</span></span>
-        </article>
+    <nav class="course-overview" aria-label="学習コース">
+      <a href="#course-1"><span>COURSE 01</span><strong>DTMを始める</strong><small>4記事</small></a>
+      <a href="#course-2"><span>COURSE 02</span><strong>曲を作る</strong><small>7記事</small></a>
+      <a href="#course-3"><span>COURSE 03</span><strong>音を整える</strong><small>4記事</small></a>
+    </nav>
+
+    <section class="section section-wide curriculum-section" id="course-1" aria-labelledby="course-1-title">
+      <header class="curriculum-head curriculum-lavender">
+        <div class="curriculum-number">01</div>
+        <div><p class="section-kicker">Getting Started</p><h2 id="course-1-title">DTMを始める</h2><p>まずは道具とデータの違いを理解します。ここがわかると、DAWの画面が急に読みやすくなります。</p></div>
+      </header>
+      <div class="lesson-grid">
+        <article class="lesson-card lesson-recommended"><a href="article-daw.html" aria-label="DAWって何？を読む"></a><span class="lesson-order">01</span><div class="lesson-meta"><span>DAW</span><span>約4分</span></div><h3>DAWって何？</h3><p>録音、打ち込み、編集、ミックスを行う「音楽制作の作業机」を理解します。</p><span class="lesson-link">ここから始める →</span></article>
+        <article class="lesson-card"><a href="article-audio.html" aria-label="オーディオデータとは？を読む"></a><span class="lesson-order">02</span><div class="lesson-meta"><span>AUDIO</span><span>約4分</span></div><h3>オーディオデータとは？</h3><p>波形として記録された音。MIDIとの違いと、それぞれの得意分野を整理します。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-midi.html" aria-label="MIDIって何？を読む"></a><span class="lesson-order">03</span><div class="lesson-meta"><span>MIDI</span><span>約3分</span></div><h3>MIDIって何？</h3><p>音ではなく、音を鳴らすための設計図。DTMで自由に編集できる理由がわかります。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-plugin.html" aria-label="プラグインって何？を読む"></a><span class="lesson-order">04</span><div class="lesson-meta"><span>PLUGIN</span><span>約4分</span></div><h3>プラグインって何？</h3><p>DAWに楽器やエフェクトを追加する仕組み。音源とエフェクトの違いも解説します。</p><span class="lesson-link">記事を読む →</span></article>
       </div>
     </section>
 
-    <section class="section section-wide knowledge-next" aria-labelledby="next-title">
-      <div class="knowledge-next-panel">
-        <div><p class="section-kicker">Coming Topics</p><h2 id="next-title">次に、こんなテーマを増やします。</h2><p>記事は少しずつ追加します。準備中の内容を完成済みのようには見せません。</p></div>
-        <ul aria-label="今後の記事テーマ"><li>テンポとBPM</li><li>リズムと拍子</li><li>スケール</li><li>メロディの作り方</li><li>DAWの基本</li><li>プラグインとは</li></ul>
+    <section class="section section-wide curriculum-section" id="course-2" aria-labelledby="course-2-title">
+      <header class="curriculum-head curriculum-pink">
+        <div class="curriculum-number">02</div>
+        <div><p class="section-kicker">Making Music</p><h2 id="course-2-title">曲を作る</h2><p>速さ、拍、音の材料、フレーズ。バラバラに見える知識を「1曲を作る流れ」としてつなげます。</p></div>
+      </header>
+      <div class="lesson-grid">
+        <article class="lesson-card"><a href="article-tempo.html" aria-label="テンポとBPMを読む"></a><span class="lesson-order">05</span><div class="lesson-meta"><span>TEMPO</span><span>約4分</span></div><h3>テンポとBPM</h3><p>BPMの数字が何を表し、曲の速さやノリにどう関係するのかを理解します。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-beat.html" aria-label="拍子と小節を読む"></a><span class="lesson-order">06</span><div class="lesson-meta"><span>BEAT</span><span>約4分</span></div><h3>拍・拍子・小節とは？</h3><p>4分の4拍子や「1小節」の意味を、DAWのグリッドと結びつけます。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-rhythm.html" aria-label="リズムの作り方を読む"></a><span class="lesson-order">07</span><div class="lesson-meta"><span>RHYTHM</span><span>約5分</span></div><h3>リズムの作り方</h3><p>音符、休符、強拍、裏拍、シンコペーションから気持ちいい反復を作ります。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-key-scale.html" aria-label="キーとスケールを読む"></a><span class="lesson-order">08</span><div class="lesson-meta"><span>KEY / SCALE</span><span>約5分</span></div><h3>キーとスケール</h3><p>曲の「帰る場所」と、使いやすい音の集合。MajorとMinorから始めます。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-chord.html" aria-label="コード進行とは？を読む"></a><span class="lesson-order">09</span><div class="lesson-meta"><span>CHORD</span><span>約3分</span></div><h3>コード進行とは？</h3><p>複数の音を重ねた和音と、その並びが曲の感情を支える仕組みを学びます。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-melody.html" aria-label="メロディの作り方を読む"></a><span class="lesson-order">10</span><div class="lesson-meta"><span>MELODY</span><span>約6分</span></div><h3>メロディの作り方</h3><p>モチーフ、反復、変化、休符、着地。覚えやすいフレーズの考え方を解説します。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-velocity-quantize.html" aria-label="VelocityとQuantizeを読む"></a><span class="lesson-order">11</span><div class="lesson-meta"><span>MIDI EDIT</span><span>約5分</span></div><h3>VelocityとQuantize</h3><p>音の強さとタイミングを整えつつ、機械的になりすぎない編集方法を学びます。</p><span class="lesson-link">記事を読む →</span></article>
+      </div>
+    </section>
+
+    <section class="section section-wide curriculum-section" id="course-3" aria-labelledby="course-3-title">
+      <header class="curriculum-head curriculum-mint">
+        <div class="curriculum-number">03</div>
+        <div><p class="section-kicker">Shaping Sound</p><h2 id="course-3-title">音を整える</h2><p>音を派手に加工する前に、「何を直したいか」を聴き分けるための基本を学びます。</p></div>
+      </header>
+      <div class="lesson-grid">
+        <article class="lesson-card"><a href="article-gain-volume.html" aria-label="GainとVolumeを読む"></a><span class="lesson-order">12</span><div class="lesson-meta"><span>LEVEL</span><span>約4分</span></div><h3>GainとVolumeの違い</h3><p>入力段階と最終的な音量の違い、クリッピングを避ける基本を整理します。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-eq.html" aria-label="EQの基本を読む"></a><span class="lesson-order">13</span><div class="lesson-meta"><span>EQ</span><span>約6分</span></div><h3>EQの基本</h3><p>低域・中域・高域のバランスを整える道具。周波数と主要パラメータを学びます。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-compressor.html" aria-label="コンプレッサーの基本を読む"></a><span class="lesson-order">14</span><div class="lesson-meta"><span>COMPRESSOR</span><span>約6分</span></div><h3>コンプレッサーの基本</h3><p>大きすぎる音を抑え、強弱を整える仕組みを5つのパラメータから理解します。</p><span class="lesson-link">記事を読む →</span></article>
+        <article class="lesson-card"><a href="article-reverb-delay.html" aria-label="ReverbとDelayを読む"></a><span class="lesson-order">15</span><div class="lesson-meta"><span>SPACE</span><span>約5分</span></div><h3>ReverbとDelay</h3><p>空間の響きと繰り返し。奥行きや広がりを作る2つのエフェクトを使い分けます。</p><span class="lesson-link">記事を読む →</span></article>
       </div>
     </section>
 
@@ -84,10 +99,7 @@
     </section>
   </main>
 
-  <footer class="site-footer site-footer-v2">
-    <div class="footer-inner"><div class="footer-brand"><a href="index.html" class="brand"><span class="brand-knob" aria-hidden="true"></span><span class="brand-name">Nukesaku Audio</span></a><p>曲作りを、もっと楽しく、もっと気軽に。</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="compose-evolution.html">1.0 開発進捗</a><a href="knowledge.html">基礎知識</a></div><div class="footer-col"><h4>Elsewhere</h4><a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a><a href="mailto:nukesakuaudio@proton.me">Contact</a></div></div></div>
-    <div class="footer-bottom"><p>&copy; 2026 Nukesaku Audio.</p><p>Independent music-tech project from Japan.</p></div>
-  </footer>
-  <script src="script.js?v=3"></script>
+  <footer class="site-footer site-footer-v2"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="brand"><span class="brand-knob" aria-hidden="true"></span><span class="brand-name">Nukesaku Audio</span></a><p>曲作りを、もっと楽しく、もっと気軽に。</p></div><div class="footer-links"><div class="footer-col"><h4>Explore</h4><a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="compose-evolution.html">1.0 開発進捗</a><a href="knowledge.html">基礎知識</a></div><div class="footer-col"><h4>Elsewhere</h4><a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a><a href="mailto:nukesakuaudio@proton.me">Contact</a></div></div></div><div class="footer-bottom"><p>&copy; 2026 Nukesaku Audio.</p><p>Independent music-tech project from Japan.</p></div></footer>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
