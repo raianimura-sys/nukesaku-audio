@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf7f1">
-  <title>Beta版から進化させたところ | NukesakuCOMPOSE | Nukesaku Audio</title>
-  <meta name="description" content="NukesakuCOMPOSEが無料Beta版から正式版に向けてどのように進化しているかを紹介する開発記録。生成品質、編集機能、UI、安定性の改善をわかりやすくまとめています。">
+  <title>Beta版から1.1.0までの進化 | NukesakuCOMPOSE | Nukesaku Audio</title>
+  <meta name="description" content="NukesakuCOMPOSEが無料Beta版から1.1.0へどう進化したかを紹介。コード変更、Piano Roll編集、生成品質の改善と、1.1.0 Hybrid Visual Finishの詳細をまとめています。">
   <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/compose-evolution.html">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:site_name" content="Nukesaku Audio">
-  <meta property="og:title" content="NukesakuCOMPOSE — Beta版から進化させたところ">
-  <meta property="og:description" content="生成品質、Continue、部分編集、Chord Editor、Piano Roll、Premium UI。正式版1.0へ向けた進化を実画面とともに紹介します。">
+  <meta property="og:title" content="NukesakuCOMPOSE — Beta版から1.1.0までの進化">
+  <meta property="og:description" content="Betaではできなかったコード変更とPiano Roll編集に対応。1.1.0では操作を変えず、Hybrid Visual Finishで商用品質の見た目へ磨きました。">
   <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/compose-evolution.html">
-  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/NukesakuCOMPOSE-1.0-development.png">
+  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/NukesakuCOMPOSE-1.1.0-development.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="820">
-  <meta property="og:image:alt" content="NukesakuCOMPOSE 1.0開発版の操作画面">
+  <meta property="og:image:alt" content="NukesakuCOMPOSE 1.1.0 Hybrid Visual Finishの操作画面">
   <meta property="article:published_time" content="2026-08-21T00:00:00+09:00">
+  <meta property="article:modified_time" content="2026-08-23T00:00:00+09:00">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=14">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body class="evolution-page">
@@ -61,21 +62,21 @@
       <span aria-hidden="true">/</span>
       <a href="index.html#lab">Nukesaku Lab</a>
       <span aria-hidden="true">/</span>
-      <span aria-current="page">Beta版からの進化</span>
+      <span aria-current="page">Beta版から1.1.0への進化</span>
     </nav>
 
     <section class="section article-hero evolution-hero">
       <div class="section-head">
         <p class="section-kicker kicker-keep-case">Nukesaku Lab / Development Log</p>
-        <h1 class="section-title">NukesakuCOMPOSE<br>Beta版から進化させたところ</h1>
-        <p class="section-desc">「アイデアを生成する」だけだったBeta版から、<br>良い部分を残し、直し、曲へ育てられる作曲補助ツールへ。</p>
-        <p class="article-meta">2026年8月 ・ 正式版に向けて開発中</p>
+        <h1 class="section-title">NukesakuCOMPOSE<br>Beta版から1.1.0への進化</h1>
+        <p class="section-desc">「アイデアを生成する」Beta版から、選び、直し、育てられる製品へ。<br>1.1.0では、その操作を変えずに見た目の完成度をもう一段磨きました。</p>
+        <p class="article-meta">2026年8月23日 更新 ・ 1.1.0 開発記録</p>
       </div>
     </section>
 
     <div class="evolution-status" role="note">
       <strong>このページは開発記録です</strong>
-      <p>ここで紹介している内容は、正式版に向けて開発中のNukesakuCOMPOSE 1.0についてのものです。現在無料配布中のBeta版とは機能・画面が異なり、正式版はまだ販売開始していません。</p>
+      <p>ここで紹介している内容は、正式版に向けて開発中のNukesakuCOMPOSE 1.0〜1.1.0についてのものです。現在無料配布中のBeta版とは機能・画面が異なり、正式版はまだ販売開始していません。</p>
     </div>
 
     <section class="evolution-visual-section" aria-labelledby="visual-heading">
@@ -99,12 +100,12 @@
 
         <figure class="evolution-shot-card evolution-shot-current">
           <div class="evolution-shot-frame">
-            <img src="NukesakuCOMPOSE-1.0-development.png" alt="正式版に向けて開発中のNukesakuCOMPOSE 1.0 Premium Dark操作画面" width="1280" height="820" loading="lazy" decoding="async">
+            <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="NukesakuCOMPOSE 1.1.0 Hybrid Visual Finishの実際の操作画面" width="1280" height="820" loading="lazy" decoding="async">
           </div>
           <figcaption>
-            <span class="evolution-label development-label">1.0 開発版</span>
-            <strong>選び、編集し、曲へ育てる製品へ</strong>
-            <p>生成品質と編集性を強化し、長時間の制作でも見やすいPremium Dark UIへ進化しています。</p>
+            <span class="evolution-label development-label">1.1.0 UI UPDATE</span>
+            <strong>編集できる製品を、さらに商用品質のUIへ</strong>
+            <p>1.0までの生成・編集機能はそのままに、生成テクスチャとJUCE描画を組み合わせたHybrid Visual Finishへ進化しました。</p>
           </figcaption>
         </figure>
       </div>
@@ -112,16 +113,32 @@
 
     <article class="article-body evolution-body">
 
+      <section class="article-section update-110-overview" id="version-1-1-0">
+        <div class="update-110-heading">
+          <p class="section-kicker kicker-keep-case">Latest Update / 1.1.0</p>
+          <h2>見た目を深く。操作は、これまでどおり。</h2>
+          <p>NukesakuCOMPOSE 1.1.0は、直前の正式版UIを土台にしたVisual Polishです。作曲機能や操作フローを変えず、生成画像の繊細な質感とJUCEの操作性を両立する<strong>Hybrid Visual Finish</strong>へ進化しました。</p>
+        </div>
+        <div class="update-110-points" aria-label="1.1.0の主なUI改善">
+          <div><span>01</span><strong>Velvet Navy</strong><p>オリジナルの抽象テクスチャを低濃度で使用</p></div>
+          <div><span>02</span><strong>Button Material</strong><p>重要Actionに控えめな奥行きとクリック感</p></div>
+          <div><span>03</span><strong>Surface Hierarchy</strong><p>Panel・Lane・Chordを薄い差で整理</p></div>
+          <div><span>04</span><strong>Live JUCE</strong><p>文字・状態・Hit Areaは従来どおりネイティブ描画</p></div>
+        </div>
+        <p class="update-110-jump"><a href="#ui-update-report">1.1.0 UIアップデート詳細を読む <span aria-hidden="true">↓</span></a></p>
+      </section>
+
       <section class="article-section evolution-intro">
-        <h2>Beta版で見えた課題から始めました</h2>
-        <p>Beta版を完成させたことで、「生成できる」だけでは本当の作曲支援にならないことが見えてきました。良いメロディは残したい。気になる小節だけ直したい。続きを自然につなげたい。そして、DAWへ送る前に少しだけ手直ししたい。</p>
-        <p>正式版では、この実際の作曲の流れを中心に設計を見直しています。</p>
+        <p class="section-kicker kicker-keep-case">1.0 / Feature Evolution</p>
+        <h2>まず、Beta版で見えた課題から始めました</h2>
+        <p>Beta版を完成させたことで、「生成できる」だけでは本当の作曲支援にならないことが見えてきました。Beta版では、コードは表示と試聴までで、自分で別のコードへ変更することはできませんでした。Piano Rollも生成されたノートを見るための画面で、ノートを直接編集することはできませんでした。</p>
+        <p>正式版では、良いメロディは残す、気になる小節だけ直す、コードを自分で選び直す、ノートをマウスで自然に編集する、続きをつなげる、という実際の作曲の流れを中心に設計を見直しています。</p>
       </section>
 
       <section class="article-section">
         <div class="section-head compact-head">
           <p class="section-kicker">Evolution Highlights</p>
-          <h2 class="section-title">主な進化ポイント</h2>
+          <h2 class="section-title">1.0で加わった主な進化</h2>
         </div>
 
         <div class="evolution-feature-grid">
@@ -156,8 +173,8 @@
           <section class="evolution-feature feature-lavender">
             <span class="evolution-number">05</span>
             <p class="feature-kicker">Chord &amp; Piano Roll Editing</p>
-            <h3>DAWへ送る前の「もう少し」を直せる</h3>
-            <p>コードの置き換え、響きの提案、転回形やテンション変更に対応。Piano RollではVelocity、縦横Zoom、複数選択、複製、Quantize、Transposeなどを追加しました。</p>
+            <h3>「見るだけ」から、自分の手で直せる画面へ</h3>
+            <p>Beta版ではできなかったコードの直接変更に対応し、候補からの置き換え、響きの提案、転回形やテンション変更が可能になりました。Piano Rollも正式に編集できるようになり、ノートの作成・移動・長さ・Velocity、縦横Zoom、複数選択、Copy、Paste、Duplicate、Quantize、Transposeに対応。選択を保ったままPitchを動かせるなど、マウス操作も改善しています。</p>
           </section>
 
           <section class="evolution-feature feature-mint">
@@ -170,7 +187,7 @@
       </section>
 
       <section class="article-section">
-        <h2>Beta版と1.0開発版の違い</h2>
+        <h2>Beta版と1.0以降の違い</h2>
         <p class="evolution-scroll-hint">表は横にスクロールできます →</p>
         <div class="evolution-table-wrap">
           <table class="evolution-table">
@@ -178,7 +195,7 @@
               <tr>
                 <th scope="col">項目</th>
                 <th scope="col">無料Beta版</th>
-                <th scope="col">1.0開発版</th>
+                <th scope="col">1.0以降</th>
               </tr>
             </thead>
             <tbody>
@@ -204,13 +221,18 @@
               </tr>
               <tr>
                 <th scope="row">コード</th>
-                <td>表示・試聴</td>
-                <td>置き換え・提案・響きの編集</td>
+                <td>表示・試聴のみ（変更不可）</td>
+                <td>自分で置き換え・候補選択・響きを編集</td>
               </tr>
               <tr>
                 <th scope="row">Piano Roll</th>
-                <td>基本的なノート編集</td>
-                <td>複数選択、Velocity、Zoom、編集ツール</td>
+                <td>ノート表示・試聴のみ（編集不可）</td>
+                <td>ノート作成・移動・長さ・Velocity・複数編集</td>
+              </tr>
+              <tr>
+                <th scope="row">編集の操作性</th>
+                <td>生成結果の確認が中心</td>
+                <td>縦横Zoom、選択維持、Drag操作、編集ツール</td>
               </tr>
               <tr>
                 <th scope="row">画面</th>
@@ -236,14 +258,782 @@
       <section class="article-section article-summary evolution-summary">
         <h2>目指しているのは「生成して終わり」ではありません</h2>
         <p>Beta版は、作曲アイデアを生み出す最初の一歩でした。</p>
-        <p>正式版では、<strong>アイデアを生み、良い部分を選び、気になるところを直し、曲として育て、DAWへ持っていけること</strong>を目標にしています。</p>
+        <p>正式版では、<strong>アイデアを生み、良い部分を選び、コードやノートを自分で直し、曲として育て、DAWへ持っていけること</strong>を目標にしています。</p>
         <p>まだ開発途中ですが、無料Beta版で得た経験を一つずつ製品へ反映しています。</p>
+      </section>
+
+      <!-- MANUAL-1.0-BEGIN -->
+      <section class="article-section manual-100" id="manual-1-0" aria-labelledby="manual-100-title">
+        <header class="manual-100-cover">
+          <p class="manual-overline">Official User Manual</p>
+          <h2 id="manual-100-title">NukesakuCOMPOSE<br>取扱説明書</h2>
+          <p class="manual-100-version">Version 1.0.0 / Production Release</p>
+          <p>生成から試聴、コード・Piano Roll編集、MIDI Drag、DAW保存まで。1.0.0の全操作をまとめた取扱説明書です。</p>
+        </header>
+
+        <nav class="manual-100-toc" aria-label="NukesakuCOMPOSE 1.0.0取扱説明書の目次">
+          <a href="#manual-100-chapter-1">01<span>COMPOSEとは</span></a>
+          <a href="#manual-100-chapter-2">02<span>対応形式</span></a>
+          <a href="#manual-100-chapter-3">03<span>最初の1曲</span></a>
+          <a href="#manual-100-chapter-4">04<span>基本設定</span></a>
+          <a href="#manual-100-chapter-5">05<span>生成と変化</span></a>
+          <a href="#manual-100-chapter-6">06<span>Macro</span></a>
+          <a href="#manual-100-chapter-7">07<span>ARPとテンポ</span></a>
+          <a href="#manual-100-chapter-8">08<span>Transport</span></a>
+          <a href="#manual-100-chapter-9">09<span>レーン操作</span></a>
+          <a href="#manual-100-chapter-10">10<span>Chord Timeline</span></a>
+          <a href="#manual-100-chapter-11">11<span>Piano Roll</span></a>
+          <a href="#manual-100-chapter-12">12<span>履歴とA/B</span></a>
+          <a href="#manual-100-chapter-13">13<span>MIDIを渡す</span></a>
+          <a href="#manual-100-chapter-14">14<span>作曲フロー</span></a>
+          <a href="#manual-100-chapter-15">15<span>プロジェクト保存</span></a>
+          <a href="#manual-100-chapter-16">16<span>困ったとき</span></a>
+          <a href="#manual-100-chapter-17">17<span>補足と制限</span></a>
+          <a href="#manual-100-chapter-18">18<span>安全な終了</span></a>
+        </nav>
+
+        <div class="manual-100-body">
+          <h2 id="manual-100-chapter-1">1. NukesakuCOMPOSEとは</h2>
+          <p>NukesakuCOMPOSEは、コード、メロディ、ベース、アルペジオ、リズムをまとめて生成し、その場で試聴・編集してDAWへ渡せる作曲補助プラグインです。</p>
+          <p>単純なランダム音列ではなく、調性、機能和声、ボイスリーディング、モチーフ、フレーズ構造、反復、変化、緊張と解決を考慮して作曲アイデアを生成します。</p>
+          <p>生成される5レーンは次のとおりです。</p>
+          <div class="manual-100-table-wrap"><table>
+          <thead>
+          <tr>
+          <th>レーン</th>
+          <th>内容</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td>CHORDS</td>
+          <td>コード進行とボイシング</td>
+          </tr>
+          <tr>
+          <td>MELODY</td>
+          <td>モチーフを発展させたメインメロディ</td>
+          </tr>
+          <tr>
+          <td>BASS</td>
+          <td>ルート、5度、オクターブ、経過音などを含むベース</td>
+          </tr>
+          <tr>
+          <td>ARP</td>
+          <td>コード構成音を使ったアルペジオ</td>
+          </tr>
+          <tr>
+          <td>RHYTHM</td>
+          <td>Kick、Snare、Closed Hat、Open HatによるGMドラム</td>
+          </tr>
+          </tbody></table></div>
+          <h2 id="manual-100-chapter-2">2. 対応形式</h2>
+          <ul>
+          <li>VST3 Instrument</li>
+          <li>Audio Unit v2 Instrument</li>
+          <li>Standalone Application</li>
+          <li>macOS Universal 2（Apple Silicon arm64 / Intel x86_64）</li>
+          </ul>
+          <p>インストール先は通常、次の場所です。</p>
+          <ul>
+          <li>VST3: <code>~/Library/Audio/Plug-Ins/VST3/NukesakuCOMPOSE.vst3</code></li>
+          <li>AU: <code>~/Library/Audio/Plug-Ins/Components/NukesakuCOMPOSE.component</code></li>
+          </ul>
+          <p>BitwigではAudio FXではなく、Instrumentとして検索してください。</p>
+          <h2 id="manual-100-chapter-3">3. 最初の1曲を作る</h2>
+          <p>初心者は、まず次の操作だけで使えます。</p>
+          <ol>
+          <li>DAWのInstrument TrackへNukesakuCOMPOSEを挿入します。</li>
+          <li><code>KEY</code>を選びます。迷った場合は<code>C</code>のままで構いません。</li>
+          <li><code>SCALE</code>を選びます。明るい曲は<code>Major</code>、暗めの曲は<code>Natural Minor</code>が基本です。</li>
+          <li><code>GENRE</code>、<code>MOOD</code>、<code>SECTION</code>を選びます。</li>
+          <li>大きな<code>GENERATE</code>ボタンを押します。</li>
+          <li>右上の状態表示が生成完了を示すまで待ちます。</li>
+          <li>プラグイン内の<code>&gt; PLAY</code>を押して聴きます。</li>
+          <li>気に入ったレーンの<code>LOCK</code>をオンにします。</li>
+          <li>変えたいレーンだけ<code>REGEN</code>を押します。</li>
+          <li>完成したら各レーンの<code>MIDI DRAG</code>、または<code>DRAG ALL</code>をDAWへドラッグします。</li>
+          </ol>
+          <p>現在の曲を続きを作る材料にしたい場合は、<code>LENGTH</code>で追加したい4／8／16小節を選び、<code>CONTINUE</code>を押します。良い部分だけ残したい場合はTrack Lock、Bar Lock、Piano Rollの選択編集を組み合わせます。</p>
+          <h2 id="manual-100-chapter-4">4. 画面上部の基本設定</h2>
+          <h3>KEY</h3>
+          <p>曲の中心となる音を12音から選びます。</p>
+          <p>例:</p>
+          <ul>
+          <li><code>C</code> + <code>Major</code>: 明るく素直</li>
+          <li><code>A</code> + <code>Natural Minor</code>: 暗く感情的</li>
+          <li><code>D</code> + <code>Dorian</code>: マイナー感と前向きさが共存</li>
+          </ul>
+          <h3>SCALE</h3>
+          <div class="manual-100-table-wrap"><table>
+          <thead>
+          <tr>
+          <th>Scale</th>
+          <th>特徴</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td>Major</td>
+          <td>明るく安定した基本スケール</td>
+          </tr>
+          <tr>
+          <td>Natural Minor</td>
+          <td>自然な暗さ、悲しさ</td>
+          </tr>
+          <tr>
+          <td>Harmonic Minor</td>
+          <td>強い導音とドラマチックな響き</td>
+          </tr>
+          <tr>
+          <td>Dorian</td>
+          <td>マイナーだが少し前向き</td>
+          </tr>
+          <tr>
+          <td>Phrygian</td>
+          <td>暗く異国的</td>
+          </tr>
+          <tr>
+          <td>Lydian</td>
+          <td>浮遊感、幻想的</td>
+          </tr>
+          <tr>
+          <td>Mixolydian</td>
+          <td>明るく開放的、少しブルージー</td>
+          </tr>
+          <tr>
+          <td>Major Pentatonic</td>
+          <td>シンプルで歌いやすい</td>
+          </tr>
+          <tr>
+          <td>Minor Pentatonic</td>
+          <td>ロック、Hip-Hopにも使いやすい</td>
+          </tr>
+          </tbody></table></div>
+          <h3>LENGTH</h3>
+          <ul>
+          <li><code>4 Bars</code>: 短いループやモチーフ確認向け</li>
+          <li><code>8 Bars</code>: 標準的なフレーズ</li>
+          <li><code>16 Bars</code>: 展開を含む長めのアイデア</li>
+          </ul>
+          <h3>GENRE</h3>
+          <p>EDM、Future Bass、House、Pop、Rock、Synthwave、Lo-fi、Hip-Hop、Game、Cinematicから選択します。</p>
+          <p>Genreは主に、リズムパターン、ベースの動き、音域、音数、アクセントへ影響します。</p>
+          <h3>MOOD</h3>
+          <p>Happy、Emotional、Sad、Dark、Dreamy、Energetic、Epic、Cute、Mysteriousから選択します。</p>
+          <p>Moodはコードの選択、メロディの動き、緊張感などへ影響します。</p>
+          <h3>SECTION</h3>
+          <div class="manual-100-table-wrap"><table>
+          <thead>
+          <tr>
+          <th>Section</th>
+          <th>主な傾向</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td>Intro</td>
+          <td>控えめな密度、導入向け</td>
+          </tr>
+          <tr>
+          <td>Verse</td>
+          <td>歌や展開を置きやすい標準構成</td>
+          </tr>
+          <tr>
+          <td>Chorus</td>
+          <td>音域・密度・エネルギーが高め</td>
+          </tr>
+          <tr>
+          <td>Build Up</td>
+          <td>徐々に盛り上がる傾向</td>
+          </tr>
+          <tr>
+          <td>Drop</td>
+          <td>強いリズムとエネルギー</td>
+          </tr>
+          <tr>
+          <td>Break</td>
+          <td>密度を下げた休息部分</td>
+          </tr>
+          <tr>
+          <td>Outro</td>
+          <td>終了へ向かう落ち着いた構成</td>
+          </tr>
+          </tbody></table></div>
+          <h3>FACTORY PRESET</h3>
+          <p>プリセットは完成済みMIDIではなく、Key、Scale、Genre、Mood、Section、Macro、BPMの組み合わせです。</p>
+          <ul>
+          <li>Emotional EDM</li>
+          <li>Future Bass Dream</li>
+          <li>Dark Synthwave</li>
+          <li>Cute Game</li>
+          <li>Epic Adventure</li>
+          <li>Simple Pop</li>
+          <li>Lo-fi Evening</li>
+          </ul>
+          <p>プリセットを選んだあと、<code>GENERATE</code>を押してください。</p>
+          <h3>USER PRESETS</h3>
+          <p>現在のKey、Scale、Length、Genre、Mood、Section、BPM、Macro、ARP、Advanced設定を名前付きで保存・読込・削除できます。生成済みのノートやコードは保存しないため、同じ作曲方針から新しいSeedを試す用途に向いています。</p>
+          <h3>SEEDとRANDOM</h3>
+          <p>Seedは生成結果を再現するための番号です。</p>
+          <ul>
+          <li>同じ設定と同じSeedなら、同じCompositionを再生成できます。</li>
+          <li>数字を入力した場合はReturnキーで確定します。</li>
+          <li><code>RANDOM</code>は新しいSeedを作ります。</li>
+          <li>Track LockやBar Lockを使用中は、ロック済み素材が優先されます。</li>
+          </ul>
+          <h2 id="manual-100-chapter-5">5. GENERATEとVARIATION</h2>
+          <h3>GENERATE</h3>
+          <p>5レーンすべての新しいCompositionをバックグラウンドで生成します。生成中もオーディオスレッドで重い処理は行いません。</p>
+          <p>Track LockまたはBar Lockされた素材は維持されます。</p>
+          <h3>VARIATIONボタン</h3>
+          <p>現在のCompositionを完全に捨てず、特徴を残した別案を作ります。変化の大きさは上部の<code>Variation</code>ノブで決まります。</p>
+          <ul>
+          <li>低い値: 元のフレーズに近い</li>
+          <li>中間値: 特徴を残してほどよく変化</li>
+          <li>高い値: 大きく変化するが、元のフレーズ感を維持</li>
+          </ul>
+          <h3>CONTINUE +4 / +8 / +16</h3>
+          <p>現在のCompositionへ、<code>LENGTH</code>で選択した4／8／16小節を追加します。ボタン表示も選択に合わせて<code>CONTINUE +4</code>、<code>CONTINUE +8</code>、<code>CONTINUE +16</code>へ変わります。元の小節は一切変更せず、モチーフ、コードの流れ、リズム、音域、Genre、Mood、Sectionを引き継いだ続きを生成します。Composition全体は最大32小節です。選択量を足すと32小節を超える場合、CONTINUEは無効になります。</p>
+          <p>無関係な別フレーズを連結するのではなく、前半の特徴を材料として後半を作ります。続きが気に入らない場合はUndoで戻せます。</p>
+          <h3>ADVANCED</h3>
+          <p>初心者向けMain画面を保ったまま、必要な場合だけ次の詳細設定を開きます。</p>
+          <ul>
+          <li>Harmony: Voicing Width、Extensions、Chord Changes</li>
+          <li>Melody: Note Density、Leap Amount、Rhythm Detail、音域</li>
+          <li>Bass / ARP: Bass Movement、Root Bias、Bass Octave、ARP Gate、ARP Octaves</li>
+          <li>Rhythm: Kick Density、Hat Density、Phrase Fills</li>
+          </ul>
+          <p>これらはDAW StateとUser Presetに保存されます。</p>
+          <h2 id="manual-100-chapter-6">6. Macro Controls</h2>
+          <p>ノブにマウスを約0.5秒置くと、日本語の詳しい説明が表示されます。ノブの下には、現在値に応じた短い説明も表示されます。</p>
+          <h3>HARMONY</h3>
+          <h4>Surprise</h4>
+          <p>予想外のコード進行や展開を増やします。</p>
+          <ul>
+          <li>低い: 安定した定番進行</li>
+          <li>高い: 意外性のある進行や展開</li>
+          </ul>
+          <h4>Tension</h4>
+          <p>7th、9thなどの響きや、緊張感の強さを調整します。</p>
+          <ul>
+          <li>低い: 安定した素直な響き</li>
+          <li>高い: テンションを多く含む緊張感のある響き</li>
+          </ul>
+          <h3>MELODY</h3>
+          <h4>Complexity</h4>
+          <p>メロディ、コード、リズムの複雑さを調整します。</p>
+          <ul>
+          <li>低い: シンプルで覚えやすい</li>
+          <li>高い: 音数や変化が増える</li>
+          </ul>
+          <h4>Variation</h4>
+          <p><code>VARIATION</code>実行時の変化量を調整します。通常の<code>GENERATE</code>とは役割が異なります。</p>
+          <h4>Repetition</h4>
+          <p>同じモチーフを繰り返す量を調整します。</p>
+          <ul>
+          <li>低い: 変化が多い</li>
+          <li>高い: 反復が多く覚えやすい</li>
+          </ul>
+          <h3>RHYTHM</h3>
+          <h4>Density</h4>
+          <p>時間内の音の詰まり具合を調整します。</p>
+          <ul>
+          <li>低い: 余白が多くゆったり</li>
+          <li>高い: 音数が多く密</li>
+          </ul>
+          <h4>Syncopation</h4>
+          <p>裏拍やアクセントのずれを増やします。</p>
+          <ul>
+          <li>低い: ストレート</li>
+          <li>高い: 跳ねるような裏拍が増える</li>
+          </ul>
+          <h4>Humanize</h4>
+          <p>タイミングとVelocityへ揺れを加え、人間らしい演奏にします。</p>
+          <ul>
+          <li>低い: タイト</li>
+          <li>高い: 揺れが大きい</li>
+          </ul>
+          <h3>EXPRESSION</h3>
+          <h4>Energy</h4>
+          <p>曲の勢いと盛り上がりを調整します。</p>
+          <ul>
+          <li>低い: 穏やか</li>
+          <li>高い: 強い演奏と盛り上がり</li>
+          </ul>
+          <h2 id="manual-100-chapter-7">7. ARPとテンポ</h2>
+          <h3>ARP Pattern</h3>
+          <ul>
+          <li><code>Up</code>: 低音から高音へ</li>
+          <li><code>Down</code>: 高音から低音へ</li>
+          <li><code>Up / Down</code>: 上昇と下降を往復</li>
+          <li><code>Musical Random</code>: コード内で音楽的に制約されたランダム順</li>
+          </ul>
+          <h3>ARP Rate</h3>
+          <ul>
+          <li><code>1/8</code>: 8分音符</li>
+          <li><code>1/16</code>: 16分音符</li>
+          </ul>
+          <h3>Internal BPM</h3>
+          <p>DAWを停止してプラグイン内PLAYを使うときのテンポです。</p>
+          <p>DAWのTransportが再生中の場合は、DAWのBPMと位置が優先されます。</p>
+          <h2 id="manual-100-chapter-8">8. Internal Transport</h2>
+          <div class="manual-100-table-wrap"><table>
+          <thead>
+          <tr>
+          <th>操作</th>
+          <th>内容</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td><code>&gt; PLAY</code></td>
+          <td>内部プレビューを開始</td>
+          </tr>
+          <tr>
+          <td><code>STOP</code></td>
+          <td>停止し、鳴っているVoiceを消す</td>
+          </tr>
+          <tr>
+          <td><code>LOOP</code></td>
+          <td>Compositionの終端から先頭へ戻る</td>
+          </tr>
+          <tr>
+          <td>`BAR n</td>
+          <td>n`</td>
+          </tr>
+          </tbody></table></div>
+          <p>DAWを止めたままでも試聴できます。<code>STOP</code>後は完全な無音になります。</p>
+          <h2 id="manual-100-chapter-9">9. レーン操作</h2>
+          <p>各レーンのボタンは同じ順番です。</p>
+          <h3>レーン名</h3>
+          <p><code>CHORDS 12</code>のようなボタンを押すと、そのレーンをPiano Rollへ表示します。数字は現在のノート数です。</p>
+          <h3><code>&gt;</code></h3>
+          <p>内部プレビューを開始します。そのレーンだけを聴く場合は、先に<code>S</code>をオンにしてください。</p>
+          <h3><code>M</code></h3>
+          <p>Muteです。そのレーンの内部Preview音を消します。</p>
+          <h3><code>S</code></h3>
+          <p>Soloです。Soloされたレーンだけを内部Previewで鳴らします。複数レーンをSoloにすることもできます。</p>
+          <h3><code>LOCK</code></h3>
+          <p>Track Lockです。オンにすると、そのレーン全体を次のGenerate、Regenerate、Variationから保護します。</p>
+          <h3>VOLUME</h3>
+          <p>内部Previewのレーン音量です。値はdBで表示されます。</p>
+          <ul>
+          <li>左右ドラッグ: 音量調整</li>
+          <li>ダブルクリック: 標準値へ戻す</li>
+          <li>マウスホイール: 誤操作防止のため無効</li>
+          </ul>
+          <p>VolumeはPreview Mixer用です。書き出すMIDIノートのVelocity自体は変更しません。</p>
+          <h3>Octave</h3>
+          <p><code>-2</code>から<code>+2</code>オクターブの範囲で、内部Previewの音域を変更します。RHYTHMには適用されません。</p>
+          <p>OctaveもPreview用であり、MIDI書き出し時の生成ノートは元のピッチを保ちます。</p>
+          <h3><code>REGEN</code></h3>
+          <p>そのレーンだけを再生成します。他レーンは維持されます。レーン自身がTrack Lockされている場合は変化しません。</p>
+          <p>CHORDSを維持したままMELODYだけ作り直す、といった使い方ができます。</p>
+          <h3><code>MIDI DRAG</code></h3>
+          <p>そのレーンだけのStandard MIDI FileをDAWへドラッグします。ボタンを押したまま外へドラッグしてください。</p>
+          <h2 id="manual-100-chapter-10">10. Chord Timeline</h2>
+          <p>Generate後、コードがカードとして表示されます。</p>
+          <p>例: <code>Dm7 | BbMaj7 | F | C</code></p>
+          <ul>
+          <li>カードをクリック: そのコードを選択して試聴</li>
+          <li>カードを右クリック: Chord Editorを開く</li>
+          <li><code>[L]</code>表示: Track LockまたはBar Lockで保護中</li>
+          </ul>
+          <p>コード試聴は自動的に終了し、Voiceが残り続けることはありません。</p>
+          <p>Chord Editorでは、初心者向けの<code>Similar</code>、<code>Brighter</code>、<code>Darker</code>、<code>More Tension</code>、<code>More Stable</code>から候補を選べます。さらにI〜VIIのDegree、Inversion、Triad / 7th / 9th / susを直接選べます。変更後はコードボイシングを作り直し、Bass/ArpとMelodyの整合も修正します。Lockされたコードは変更されません。</p>
+          <h2 id="manual-100-chapter-11">11. Piano Roll</h2>
+          <h3>レーン表示</h3>
+          <p>左のレーン名をクリックして、編集対象を切り替えます。</p>
+          <h3>ノート試聴と複数選択</h3>
+          <p>ノートをクリックすると選択され、その音を試聴します。</p>
+          <ul>
+          <li><code>Command</code>（Windowsでは<code>Ctrl</code>）を押しながらクリック: 選択を追加／解除</li>
+          <li>空白からドラッグ: 範囲内の複数ノートを選択</li>
+          <li><code>Command/Ctrl + A</code>: 表示レーンの全ノートを選択</li>
+          </ul>
+          <h3>ノート追加</h3>
+          <p>空いているGridをダブルクリックします。ノートは1/16 Gridへスナップします。</p>
+          <h3>ノート移動</h3>
+          <p>ノート本体をドラッグすると、時間位置と音程を変更できます。クリックだけでは移動扱いにならず、選択中のノートは移動、Transpose、Quantize、Velocity編集後も選択されたままです。</p>
+          <ul>
+          <li><code>Shift</code>を押しながらドラッグ: 時間位置を固定して音程だけを移動</li>
+          <li><code>Option</code>（Windowsでは<code>Alt</code>）を押しながらドラッグ: 音程を固定して時間位置だけを移動</li>
+          </ul>
+          <h3>ノート長変更</h3>
+          <p>ノートの右端付近をドラッグします。</p>
+          <h3>ノート削除</h3>
+          <ul>
+          <li>ノートを右クリック</li>
+          <li>またはノートを選択し、Delete／Backspaceキー</li>
+          </ul>
+          <h3>Velocity</h3>
+          <p>Piano Roll下部のVelocity領域でノートの棒を上下へドラッグします。複数選択中は選択ノートをまとめて調整できます。</p>
+          <h3>編集ツール</h3>
+          <div class="manual-100-table-wrap"><table>
+          <thead>
+          <tr>
+          <th>操作</th>
+          <th>内容</th>
+          </tr>
+          </thead>
+          <tbody><tr>
+          <td><code>COPY</code> / <code>PASTE</code></td>
+          <td>選択ノートをコピーし、後ろへ貼り付け</td>
+          </tr>
+          <tr>
+          <td><code>DUP</code></td>
+          <td>選択ノートを複製</td>
+          </tr>
+          <tr>
+          <td><code>QNTZ</code></td>
+          <td>選択ノートを1/16 GridへQuantize</td>
+          </tr>
+          <tr>
+          <td><code>-1</code> / <code>+1</code></td>
+          <td>選択ノートを半音単位でTranspose</td>
+          </tr>
+          <tr>
+          <td><code>FIT</code></td>
+          <td>横・縦ともComposition全体が見えるZoomへ戻す</td>
+          </tr>
+          <tr>
+          <td><code>H</code> Zoom</td>
+          <td>横方向を1～16倍に拡大</td>
+          </tr>
+          <tr>
+          <td><code>V</code> Zoom</td>
+          <td>縦方向を1～6倍に拡大</td>
+          </tr>
+          </tbody></table></div>
+          <p>標準ショートカットとして<code>Command/Ctrl+C</code>、<code>Command/Ctrl+V</code>、<code>Command/Ctrl+D</code>も使用できます。</p>
+          <ul>
+          <li><code>Command/Ctrl + ホイール</code>: カーソル位置を中心に横Zoom</li>
+          <li><code>Option/Alt + ホイール</code>: カーソル位置を中心に縦Zoom</li>
+          <li>縦Zoom後のホイール: 音域を上下へ移動</li>
+          <li><code>Shift + ホイール</code>またはトラックパッドの横スクロール: 時間方向へ移動</li>
+          </ul>
+          <h3>Selection Regenerate / Variation</h3>
+          <p>Piano Roll上部の小節を選択し、<code>SEL REGEN</code>でその小節だけを作り直せます。<code>SEL VARY</code>は同じ範囲をVariation量に応じて変化させます。Track LockされたレーンとBar Lockされた小節は必ず維持されます。</p>
+          <h3>Bar Lock</h3>
+          <p>Piano Roll上部の小節番号をクリックします。<code>LOCK 1</code>のように表示された小節は、次のGenerate、Regenerate、Variationでも維持されます。</p>
+          <p>ノートが小節をまたぐ場合は、ノートの開始位置がある小節に所属します。</p>
+          <h2 id="manual-100-chapter-12">12. Undo、History、Favorite、A/B</h2>
+          <h3>UNDO / REDO</h3>
+          <p>Generate、Regenerate、Variation、Lock、Piano Roll編集、Volumeなどを複数段階で戻したり進めたりできます。</p>
+          <h3>HISTORY</h3>
+          <p>生成した結果を最大32件保持します。メニューから以前のCompositionを選ぶと、Seedを含めてその状態へ戻ります。</p>
+          <h3>FAVORITE</h3>
+          <p><code>* FAVORITE</code>は、History内の最新結果をFavoriteとして保護します。FavoriteはHistoryの自動整理で削除されにくくなります。</p>
+          <h3>A/B</h3>
+          <ul>
+          <li><code>SAVE A</code>: 現在のCompositionをAへ保存</li>
+          <li><code>A</code>: Aを呼び出す</li>
+          <li><code>SAVE B</code>: 現在のCompositionをBへ保存</li>
+          <li><code>B</code>: Bを呼び出す</li>
+          </ul>
+          <p>例:</p>
+          <ol>
+          <li>気に入った原案を<code>SAVE A</code></li>
+          <li>VariationまたはRegenerateを実行</li>
+          <li>新案を<code>SAVE B</code></li>
+          <li><code>A</code>と<code>B</code>を切り替えて比較</li>
+          </ol>
+          <h2 id="manual-100-chapter-13">13. MIDIをDAWへ渡す</h2>
+          <h3>レーン別Drag</h3>
+          <p>各レーンの<code>MIDI DRAG</code>を、DAWの空いているTrackまたはClip領域へドラッグします。</p>
+          <h3>DRAG ALL</h3>
+          <p>5レーンを分離したType 1 MIDIとしてまとめてドラッグします。</p>
+          <h3>EXPORT MIDI...</h3>
+          <p>保存先を選び、Standard MIDI Fileとして書き出します。</p>
+          <p>全レーン書き出しには次が含まれます。</p>
+          <ul>
+          <li>Conductor Track</li>
+          <li>Chords</li>
+          <li>Melody</li>
+          <li>Bass</li>
+          <li>Arp</li>
+          <li>Rhythm</li>
+          <li>Tempoと拍子情報</li>
+          </ul>
+          <p>RhythmはGeneral MIDIの主なノート番号を使用します。</p>
+          <ul>
+          <li>Kick: 36</li>
+          <li>Snare: 38</li>
+          <li>Closed Hat: 42</li>
+          <li>Open Hat: 46</li>
+          </ul>
+          <h2 id="manual-100-chapter-14">14. おすすめ作曲ワークフロー</h2>
+          <ol>
+          <li>Factory PresetまたはMaster Settingsを選びます。</li>
+          <li><code>GENERATE</code>します。</li>
+          <li><code>&gt; PLAY</code>で全体を聴きます。</li>
+          <li>各レーンを<code>S</code>でSolo確認します。</li>
+          <li>気に入ったレーンまたは小節をLockします。</li>
+          <li>変えたいレーンだけ<code>REGEN</code>します。</li>
+          <li>別案が欲しい場合はVariation量を決めて<code>VARIATION</code>します。</li>
+          <li>ChordカードとPiano Rollで細部を確認・編集します。</li>
+          <li>A/Bへ候補を保存して比較します。</li>
+          <li><code>MIDI DRAG</code>または<code>DRAG ALL</code>でDAWへ移します。</li>
+          <li>DAW側の音源へ差し替えて制作を続けます。</li>
+          </ol>
+          <h2 id="manual-100-chapter-15">15. DAWプロジェクト保存</h2>
+          <p>DAWプロジェクトには次の状態が保存されます。</p>
+          <ul>
+          <li>Compositionと全Generated Notes</li>
+          <li>Chords</li>
+          <li>Seed</li>
+          <li>Master SettingsとMacro Parameters</li>
+          <li>Track LockとBar Lock</li>
+          <li>HistoryとFavorite</li>
+          <li>A/B候補</li>
+          <li>Lane Volume、Mute、Solo、Octave</li>
+          <li>Advanced Generation設定</li>
+          </ul>
+          <p>プロジェクトを再度開いた直後は安全のため無音です。必要なときにPLAYまたはAuditionしてください。</p>
+          <h2 id="manual-100-chapter-16">16. 困ったとき</h2>
+          <h3>Bitwigに表示されない</h3>
+          <ol>
+          <li>Bitwigを終了します。</li>
+          <li><code>~/Library/Audio/Plug-Ins/VST3</code>にbundle全体があることを確認します。</li>
+          <li>Bitwigを起動します。</li>
+          <li><code>Settings &gt; Locations &gt; Plug-ins</code>でVST3フォルダを確認します。</li>
+          <li>Rescanを実行します。</li>
+          <li>BrowserのInstrumentカテゴリで<code>NukesakuCOMPOSE</code>を検索します。</li>
+          </ol>
+          <h3>Generateしても音が出ない</h3>
+          <p>Generateだけでは自動再生されません。プラグイン内の<code>&gt; PLAY</code>を押してください。</p>
+          <p>あわせて次を確認します。</p>
+          <ul>
+          <li>DAW TrackがMuteされていない</li>
+          <li>全レーンがMuteされていない</li>
+          <li>意図しないSoloが残っていない</li>
+          <li>Volumeが<code>-inf dB</code>になっていない</li>
+          <li>オーディオ出力先が正しい</li>
+          </ul>
+          <h3>DAW再生時にInternal BPMが効かない</h3>
+          <p>正常な動作です。DAW Transport再生中はHost BPMが優先されます。</p>
+          <h3>MIDI Dragできない</h3>
+          <ul>
+          <li>ボタンをクリックするだけでなく、押したままDAWまで移動します。</li>
+          <li>DAWの空いているTrack／Clip領域へドロップします。</li>
+          <li>うまくいかない場合は<code>EXPORT MIDI...</code>を使用します。</li>
+          </ul>
+          <h3>Variationで変化しない</h3>
+          <ul>
+          <li>Variationノブを上げます。</li>
+          <li>Track LockとBar Lockを確認します。</li>
+          <li>Variationが低い場合、元に近い結果になるのは仕様です。</li>
+          </ul>
+          <h3>Generateで気に入った部分まで変わる</h3>
+          <p>残したいレーンは<code>LOCK</code>、残したい小節はPiano Roll上部のBar LockをオンにしてからGenerateしてください。</p>
+          <h2 id="manual-100-chapter-17">17. 補足と制限</h2>
+          <ul>
+          <li>Preview音源は作曲確認用の軽量音源です。最終音色はDAW側の音源へ差し替えることを推奨します。</li>
+          <li>Chord Editorは候補、Degree、Inversion、Extensionを編集できますが、任意のコード記号をキーボードで直接入力する方式ではありません。</li>
+          <li>ContinueはLengthに連動した4／8／16小節追加で、Composition全体は最大32小節です。複数Sectionを並べるSong Structure Builderは1.1以降の候補です。</li>
+          <li>Preview MixerのPanは内部状態に存在しますが、現在のUIには表示されません。</li>
+          <li>macOS配布bundleはad-hoc署名で、Developer ID notarization済みInstallerではありません。初回起動時にmacOSの案内が出る場合があります。</li>
+          <li>Windows用VS2022 x64プロジェクトは用意されていますが、このMac上ではWindows VST3の実ビルド・DAW検証はできていません。</li>
+          </ul>
+          <h2 id="manual-100-chapter-18">18. 安全な終了</h2>
+          <p>再生中は先に<code>STOP</code>を押し、必要であればDAWプロジェクトを保存してからプラグイン画面またはDAWを閉じてください。DAWのState SaveによりCompositionは復元されますが、DAWへドラッグ済みのMIDIも通常どおりプロジェクトへ保存しておくことを推奨します。</p>
+        </div>
+      </section>
+      <!-- MANUAL-1.0-END -->
+
+      <section class="article-section update-manual" id="ui-update-report" aria-labelledby="ui-update-title">
+        <header class="update-manual-cover">
+          <div>
+            <p class="manual-overline">Product UI Update Report</p>
+            <h2 id="ui-update-title">NukesakuCOMPOSE 1.1.0</h2>
+            <p class="manual-subtitle">Hybrid Visual Finish</p>
+            <p>生成画像の質感と、JUCEの操作性を両立したUIアップデート</p>
+          </div>
+          <div class="manual-cover-note">
+            <strong>1.1.0の到達点</strong>
+            <p>Modern Composerの構成を変えず、Velvet Navyの生成テクスチャ、抑制されたボタン素材感、薄い立体階層を追加。見た目は深く、操作は従来どおりです。</p>
+          </div>
+          <div class="manual-tags" aria-label="アップデートの特徴">
+            <span>UI ONLY</span><span>JUCE HYBRID</span><span>RETINA / HIDPI</span>
+          </div>
+          <p class="manual-date">Release positioning: 1.1.0 <span aria-hidden="true">|</span> Report date: 2026-08-23 JST</p>
+        </header>
+
+        <nav class="manual-toc" aria-label="1.1.0 UIアップデート目次">
+          <a href="#update-overview"><span>01</span>今回のアップデート</a>
+          <a href="#update-before-after"><span>02</span>Before / After</a>
+          <a href="#update-exploration"><span>03</span>生成画像の使い方</a>
+          <a href="#update-architecture"><span>04</span>Hybrid UIの構造</a>
+          <a href="#update-qa"><span>05</span>品質確認</a>
+        </nav>
+
+        <section class="manual-chapter" id="update-overview">
+          <p class="manual-chapter-label">01 / Update Overview</p>
+          <h3>今回のアップデート</h3>
+          <p>NukesakuCOMPOSE 1.1.0は、直前の正式版UIを土台にしたVisual Polishです。作曲機能や操作フローは変更せず、商用製品としての質感と画面のまとまりを強化しました。</p>
+
+          <div class="manual-feature-grid">
+            <div><span>01</span><strong>生成テクスチャ</strong><p>オリジナルのVelvet Navy素材を低濃度で使用</p></div>
+            <div><span>02</span><strong>ボタン素材感</strong><p>Primary / Strong Actionに控えめな奥行きを追加</p></div>
+            <div><span>03</span><strong>Surface階層</strong><p>Panel / Lane / Chordを薄い差で整理</p></div>
+            <div><span>04</span><strong>操作性を維持</strong><p>文字・状態・Hit AreaはすべてLive JUCE</p></div>
+          </div>
+
+          <h4>変更したもの / 変更していないもの</h4>
+          <dl class="manual-definition-list">
+            <div><dt>変更</dt><dd>背景の質感、ボタンとCombo BoxのSurface、1 px Highlight、Subtle Shadow、Accent Wash</dd></div>
+            <div><dt>維持</dt><dd>レイアウト、機能位置、生成、MIDI、State、Parameter ID、Bundle / Product ID、操作フロー</dd></div>
+            <div><dt>方針</dt><dd>1枚画像UIにはせず、生成画像は抽象素材だけ。文字と操作状態はJUCEで描画</dd></div>
+          </dl>
+
+          <aside class="manual-callout callout-blue">
+            <strong>バージョンの位置づけ</strong>
+            <p>今回のHybrid Visual FinishをNukesakuCOMPOSE 1.1.0のUIアップデートとして整理しています。1.0全体の機能紹介ではありません。</p>
+          </aside>
+        </section>
+
+        <section class="manual-chapter" id="update-before-after">
+          <p class="manual-chapter-label">02 / Before / After</p>
+          <h3>配置を変えず、質感だけを深く</h3>
+          <p>配置や情報量は変えず、背景とSurfaceの微細な質感だけを足しています。差を強く見せる加工ではなく、長時間使える落ち着きを優先しました。</p>
+
+          <div class="manual-before-after">
+            <figure>
+              <img src="NukesakuCOMPOSE-1.0-development.png" alt="1.1.0更新前のFlat Premium Dark UI" width="1280" height="820" loading="lazy" decoding="async">
+              <figcaption>Before — Flat Premium Dark</figcaption>
+            </figure>
+            <figure>
+              <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="1.1.0更新後のHybrid Material Finish UI" width="1280" height="820" loading="lazy" decoding="async">
+              <figcaption>After — Hybrid Material Finish</figcaption>
+            </figure>
+          </div>
+
+          <h4>見た目の進化</h4>
+          <ul class="manual-bullet-list">
+            <li>背景にMidnight NavyからCharcoalへつながる微細なMicrograinと静かなVignetteを追加。</li>
+            <li>GENERATE、PLAY、MIDI DRAGなど重要Actionへ同系素材を低濃度で重ね、役割の差を補強。</li>
+            <li>Panel、Lane Card、Chord Cardに抑えたGradient、1 pxの上面Highlight、最小限のShadowを追加。</li>
+            <li>派手なGlowやMetallic表現を避け、Violet / Cyan / Greenの既存Accentを維持。</li>
+            <li>Piano Rollは装飾を増やさず、Note、Grid、Velocity、Selectionの視認性を最優先。</li>
+          </ul>
+
+          <aside class="manual-callout">
+            <strong>ポイント</strong>
+            <p>Afterは画像を前面に見せるUIではありません。質感は気づくか気づかないかの強さに抑え、階層・可読性・クリック感を支える下地として使っています。</p>
+          </aside>
+        </section>
+
+        <section class="manual-chapter" id="update-exploration">
+          <p class="manual-chapter-label">03 / Visual Exploration</p>
+          <h3>生成画像をどう使ったか</h3>
+          <p>実UIスクリーンショットを基準に3方向を検討し、Velvet Navyの柔らかな奥行きとModern Studioの操作階層を組み合わせました。</p>
+
+          <div class="manual-concept-grid">
+            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-graphite.jpg" alt="NukesakuCOMPOSE Minimal Graphite UIコンセプト" width="960" height="615" loading="lazy" decoding="async"><figcaption>Minimal Graphite</figcaption></figure>
+            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-velvet.jpg" alt="NukesakuCOMPOSE Velvet Navy UIコンセプト" width="960" height="614" loading="lazy" decoding="async"><figcaption>Velvet Navy</figcaption></figure>
+            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-studio.jpg" alt="NukesakuCOMPOSE Modern Studio UIコンセプト" width="960" height="615" loading="lazy" decoding="async"><figcaption>Modern Studio</figcaption></figure>
+          </div>
+
+          <h4>採用と不採用の境界</h4>
+          <dl class="manual-decision-list">
+            <div class="decision-use"><dt>実装に採用</dt><dd>文字を含まない抽象Surface Texture 1点。背景と一部Button内へ低濃度で使用。</dd></div>
+            <div><dt>参考のみ</dt><dd>3つの全画面Concept。完成UI画像としては読み込まず、色・奥行き・階層の判断材料に限定。</dd></div>
+            <div class="decision-avoid"><dt>画像化しない</dt><dd>Button geometry、Label、Value、Chord名、Note、Hover / Pressed / Lockedなどの動的状態。</dd></div>
+          </dl>
+
+          <aside class="manual-callout">
+            <strong>独自性と安全性</strong>
+            <p>特定プラグインのUIをコピーせず、NukesakuCOMPOSE用に生成した抽象素材のみを使用。UI文字の焼き込みや透明ボタン方式は採用していません。</p>
+          </aside>
+        </section>
+
+        <section class="manual-chapter" id="update-architecture">
+          <p class="manual-chapter-label">04 / Hybrid Architecture</p>
+          <h3>Hybrid UIの実装構造</h3>
+          <p>見た目は画像の質感を利用しつつ、操作は従来どおりJUCE Componentが担当します。Retina / HiDPI、Resize、状態変化を壊さない構造です。</p>
+
+          <div class="manual-runtime-grid">
+            <figure>
+              <img src="NukesakuCOMPOSE-1.1.0-velvet-texture.jpg" alt="UI背景に低濃度で使用したVelvet Navy抽象テクスチャ" width="900" height="900" loading="lazy" decoding="async">
+              <figcaption>Generated Velvet Navy Surface</figcaption>
+            </figure>
+            <div>
+              <h4>Runtime Asset</h4>
+              <ul class="manual-bullet-list">
+                <li>Master: lossless PNG</li>
+                <li>Runtime: optimized JPEG / 268 KB</li>
+                <li>Decoded once in LookAndFeel</li>
+                <li>GUI painting only</li>
+                <li>Text / controls / state: not baked</li>
+              </ul>
+            </div>
+          </div>
+
+          <h4>描画パイプライン</h4>
+          <ol class="manual-pipeline" aria-label="Hybrid UI描画パイプライン">
+            <li><span>Generated Asset</span><strong>抽象Texture</strong></li>
+            <li><span>Look &amp; Feel</span><strong>Decode once</strong></li>
+            <li><span>Live JUCE</span><strong>Component / State</strong></li>
+            <li><span>Final UI</span><strong>Scalable Hybrid</strong></li>
+          </ol>
+
+          <h4>JUCE側に残したもの</h4>
+          <ul class="manual-bullet-list">
+            <li>文字、数値、Hit Area、Keyboard Focus、Tooltip</li>
+            <li>Hover、Pressed、Toggle、Disabled、Selected、Locked、Generating</li>
+            <li>Button / Combo Box / Lane / Chord CardのGeometryとVector描画</li>
+          </ul>
+
+          <aside class="manual-callout callout-green">
+            <strong>結果</strong>
+            <p>画像の雰囲気と、ネイティブUIの保守性・操作性を分離。将来のDPI対応やレイアウト変更でも、背景画像に縛られません。</p>
+          </aside>
+        </section>
+
+        <section class="manual-chapter" id="update-qa">
+          <p class="manual-chapter-label">05 / QA / Release Notes</p>
+          <h3>品質確認と1.1.0の範囲</h3>
+          <p>Hybrid finish適用後、生成済みCompositionを表示した状態でメインサイズと最小サイズを確認しました。機能Regressionを避けるため、既存のBuild / Testも再確認されています。</p>
+
+          <div class="manual-before-after manual-qa-shots">
+            <figure>
+              <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="1280×820で表示したNukesakuCOMPOSE 1.1.0" width="1280" height="820" loading="lazy" decoding="async">
+              <figcaption>1280 × 820 — PASS</figcaption>
+            </figure>
+            <figure>
+              <img src="NukesakuCOMPOSE-1.1.0-minimum.png" alt="1040×700の最小サイズで表示したNukesakuCOMPOSE 1.1.0" width="1040" height="700" loading="lazy" decoding="async">
+              <figcaption>1040 × 700 — PASS</figcaption>
+            </figure>
+          </div>
+
+          <h4>Screenshot QA</h4>
+          <ul class="manual-bullet-list">
+            <li>Clipping / overlapなし。日本語Tooltip、Lane、Chord、Piano Rollの可読性を維持。</li>
+            <li>Textureの繰り返し感、過剰なGlow、Pixel artifact、焼き込み文字なし。</li>
+            <li>Primary / Strong / Secondary / UtilityのButton hierarchyを維持。</li>
+          </ul>
+
+          <h4>Build / Regression</h4>
+          <div class="evolution-table-wrap">
+            <table class="evolution-table manual-build-table">
+              <thead><tr><th scope="col">確認項目</th><th scope="col">内容</th><th scope="col">結果</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Debug</th><td>VST3 / AUv2 / Standalone</td><td><strong>PASS</strong></td></tr>
+                <tr><th scope="row">Release</th><td>VST3 / AUv2 / Standalone</td><td><strong>PASS</strong></td></tr>
+                <tr><th scope="row">Core Tests</th><td>Debug 50/50 / Release 50/50</td><td><strong>PASS</strong></td></tr>
+                <tr><th scope="row">Hosted VST3</th><td>12/12</td><td><strong>PASS</strong></td></tr>
+                <tr><th scope="row">Warnings</th><td>Compiler warning</td><td><strong>0</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="manual-callout">
+            <strong>1.1.0まとめ</strong>
+            <p>機能を増やす更新ではなく、生成画像を安全に取り入れ、見た目の完成度だけを一段引き上げたUIリリースです。</p>
+          </aside>
+        </section>
       </section>
 
       <section class="evolution-cta" aria-labelledby="evolution-cta-title">
         <p class="section-kicker">Try the Current Beta</p>
         <h2 id="evolution-cta-title">現在の無料Beta版を試せます</h2>
-        <p>1.0は準備中ですが、作曲アイデアを生成するBeta版は現在もBOOTHで配布しています。</p>
+        <p>正式版は準備中ですが、作曲アイデアを生成するBeta版は現在もBOOTHで配布しています。</p>
         <div class="hero-cta">
           <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-primary" target="_blank" rel="noopener">BOOTHでBeta版を試す</a>
           <a href="index.html#lab" class="btn btn-ghost">Nukesaku Labへ戻る</a>
@@ -268,7 +1058,7 @@
         <div class="footer-col">
           <h4>Explore</h4>
           <a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="nukesakuchop.html">NukesakuCHOP</a>
-          <a href="compose-evolution.html">1.0 開発進捗</a>
+          <a href="compose-evolution.html">1.1.0 開発進捗</a>
           <a href="knowledge.html">基礎知識</a>
         </div>
         <div class="footer-col">
