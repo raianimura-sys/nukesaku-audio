@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#faf7f1">
-  <title>Beta版から1.1.0までの進化 | NukesakuCOMPOSE | Nukesaku Audio</title>
-  <meta name="description" content="NukesakuCOMPOSEが無料Beta版から1.1.0へどう進化したかを紹介。コード変更、Piano Roll編集、生成品質の改善と、1.1.0 Hybrid Visual Finishの詳細をまとめています。">
+  <title>Beta版から1.5.0までの進化 | NukesakuCOMPOSE | Nukesaku Audio</title>
+  <meta name="description" content="NukesakuCOMPOSEが無料Beta版から1.5.0へどう進化したかを紹介。コード・Piano Roll編集、Composer Canvas、ホイール／ピンチ操作、鍵盤試聴までを見やすくまとめています。">
   <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/compose-evolution.html">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:site_name" content="Nukesaku Audio">
-  <meta property="og:title" content="NukesakuCOMPOSE — Beta版から1.1.0までの進化">
-  <meta property="og:description" content="Betaではできなかったコード変更とPiano Roll編集に対応。1.1.0では操作を変えず、Hybrid Visual Finishで商用品質の見た目へ磨きました。">
+  <meta property="og:title" content="NukesakuCOMPOSE — Beta版から1.5.0までの進化">
+  <meta property="og:description" content="Betaではできなかったコード変更とPiano Roll編集に対応。1.5.0では編集中心のComposer Canvasと直感的なズーム・鍵盤試聴へ進化しました。">
   <meta property="og:url" content="https://raianimura-sys.github.io/nukesaku-audio/compose-evolution.html">
-  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/NukesakuCOMPOSE-1.1.0-development.png">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="820">
-  <meta property="og:image:alt" content="NukesakuCOMPOSE 1.1.0 Hybrid Visual Finishの操作画面">
+  <meta property="og:image" content="https://raianimura-sys.github.io/nukesaku-audio/NukesakuCOMPOSE-1.5.0-composer-canvas.png">
+  <meta property="og:image:width" content="1162">
+  <meta property="og:image:height" content="768">
+  <meta property="og:image:alt" content="NukesakuCOMPOSE 1.5.0 Composer Canvasの操作画面">
   <meta property="article:published_time" content="2026-08-21T00:00:00+09:00">
   <meta property="article:modified_time" content="2026-08-23T00:00:00+09:00">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="style.css?v=17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body class="evolution-page">
@@ -62,22 +62,33 @@
       <span aria-hidden="true">/</span>
       <a href="index.html#lab">Nukesaku Lab</a>
       <span aria-hidden="true">/</span>
-      <span aria-current="page">Beta版から1.1.0への進化</span>
+      <span aria-current="page">Beta版から1.5.0への進化</span>
     </nav>
 
     <section class="section article-hero evolution-hero">
       <div class="section-head">
         <p class="section-kicker kicker-keep-case">Nukesaku Lab / Development Log</p>
-        <h1 class="section-title">NukesakuCOMPOSE<br>Beta版から1.1.0への進化</h1>
-        <p class="section-desc">「アイデアを生成する」Beta版から、選び、直し、育てられる製品へ。<br>1.1.0では、その操作を変えずに見た目の完成度をもう一段磨きました。</p>
-        <p class="article-meta">2026年8月23日 更新 ・ 1.1.0 開発記録</p>
+        <h1 class="section-title">NukesakuCOMPOSE<br>Beta版から1.5.0への進化</h1>
+        <p class="section-desc">「アイデアを生成する」Beta版から、選び、直し、育てられる製品へ。<br>1.5.0では、編集そのものが中心になるComposer Canvasへ進化しました。</p>
+        <p class="article-meta">2026年8月23日 更新 ・ 1.5.0 開発記録</p>
       </div>
     </section>
 
     <div class="evolution-status" role="note">
       <strong>このページは開発記録です</strong>
-      <p>ここで紹介している内容は、正式版に向けて開発中のNukesakuCOMPOSE 1.0〜1.1.0についてのものです。現在無料配布中のBeta版とは機能・画面が異なり、正式版はまだ販売開始していません。</p>
+      <p>ここで紹介している内容は、正式版に向けて開発中のNukesakuCOMPOSE 1.0〜1.5.0についてのものです。現在無料配布中のBeta版とは機能・画面が異なり、正式版はまだ販売開始していません。</p>
     </div>
+
+    <nav class="evolution-page-nav" aria-label="このページの案内">
+      <p><span>QUICK GUIDE</span>知りたいところから読めます</p>
+      <div>
+        <a href="#version-1-5-0"><span>Latest</span><strong>1.5.0 Canvas</strong></a>
+        <a href="#version-1-1-0"><span>Visual</span><strong>1.1.0 UI更新</strong></a>
+        <a href="#version-1-0"><span>Features</span><strong>1.0の進化</strong></a>
+        <a href="#feature-comparison"><span>Compare</span><strong>Betaとの違い</strong></a>
+        <a href="#manual-1-0"><span>Manual</span><strong>1.0説明書</strong></a>
+      </div>
+    </nav>
 
     <section class="evolution-visual-section" aria-labelledby="visual-heading">
       <div class="section-head compact-head">
@@ -100,12 +111,12 @@
 
         <figure class="evolution-shot-card evolution-shot-current">
           <div class="evolution-shot-frame">
-            <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="NukesakuCOMPOSE 1.1.0 Hybrid Visual Finishの実際の操作画面" width="1280" height="820" loading="lazy" decoding="async">
+            <img src="NukesakuCOMPOSE-1.5.0-composer-canvas.png" alt="NukesakuCOMPOSE 1.5.0 Composer Canvasの実際の操作画面" width="1162" height="768" loading="lazy" decoding="async">
           </div>
           <figcaption>
-            <span class="evolution-label development-label">1.1.0 UI UPDATE</span>
-            <strong>編集できる製品を、さらに商用品質のUIへ</strong>
-            <p>1.0までの生成・編集機能はそのままに、生成テクスチャとJUCE描画を組み合わせたHybrid Visual Finishへ進化しました。</p>
+            <span class="evolution-label development-label">1.5.0 COMPOSER CANVAS</span>
+            <strong>生成結果を、画面の中心でそのまま育てる</strong>
+            <p>設定を左、音楽的なShapeを右、ChordとPiano Rollを中央へ。視線の流れを「設定 → 生成 → 編集 → DAW転送」に揃えました。</p>
           </figcaption>
         </figure>
       </div>
@@ -113,9 +124,28 @@
 
     <article class="article-body evolution-body">
 
-      <section class="article-section update-110-overview" id="version-1-1-0">
+      <section class="article-section update-110-overview update-150-overview" id="version-1-5-0">
         <div class="update-110-heading">
-          <p class="section-kicker kicker-keep-case">Latest Update / 1.1.0</p>
+          <p class="section-kicker kicker-keep-case">Latest Update / 1.5.0</p>
+          <h2>管理する画面から、<br>曲を直接育てるComposer Canvasへ。</h2>
+          <p>Chord TimelineとPiano Rollを中央の大きな編集領域へ統合。設定・生成・編集・DAW転送の順に視線が流れ、作った直後からノートへ自然に触れられるレイアウトになりました。</p>
+        </div>
+        <div class="update-110-points" aria-label="1.5.0の主な改善">
+          <div><span>01</span><strong>Composer Canvas</strong><p>ChordとPiano Rollを中央へ大きく配置</p></div>
+          <div><span>02</span><strong>Clear Workflow</strong><p>Createは左、Shapeは右、5レーンは下へ整理</p></div>
+          <div><span>03</span><strong>Wheel &amp; Pinch</strong><p>カーソル中心の横Zoom、縦Zoom、左右移動</p></div>
+          <div><span>04</span><strong>Key Audition</strong><p>左鍵盤をクリック・ドラッグして音程を試聴</p></div>
+        </div>
+        <div class="update-110-actions">
+          <a href="NukesakuCOMPOSE_1.5.0_UI_Update_Guide_JP.pdf" class="btn btn-primary" target="_blank" rel="noopener">1.5.0 UIアップデートガイドを開く <span aria-hidden="true">↗</span></a>
+          <span>A4横 / 5ページ / 日本語 / 約1.5 MB</span>
+        </div>
+      </section>
+
+      <section class="article-section update-110-overview" id="version-1-1-0">
+        <span class="anchor-alias" id="ui-update-report" aria-hidden="true"></span>
+        <div class="update-110-heading">
+          <p class="section-kicker kicker-keep-case">Previous Update / 1.1.0</p>
           <h2>見た目を深く。操作は、これまでどおり。</h2>
           <p>NukesakuCOMPOSE 1.1.0は、直前の正式版UIを土台にしたVisual Polishです。作曲機能や操作フローを変えず、生成画像の繊細な質感とJUCEの操作性を両立する<strong>Hybrid Visual Finish</strong>へ進化しました。</p>
         </div>
@@ -125,17 +155,20 @@
           <div><span>03</span><strong>Surface Hierarchy</strong><p>Panel・Lane・Chordを薄い差で整理</p></div>
           <div><span>04</span><strong>Live JUCE</strong><p>文字・状態・Hit Areaは従来どおりネイティブ描画</p></div>
         </div>
-        <p class="update-110-jump"><a href="#ui-update-report">1.1.0 UIアップデート詳細を読む <span aria-hidden="true">↓</span></a></p>
+        <div class="update-110-actions">
+          <a href="NukesakuCOMPOSE_1.1.0_UI_UPDATE_SUMMARY_JA.pdf" class="btn btn-primary" target="_blank" rel="noopener">1.1.0 UI更新レポートPDFを開く <span aria-hidden="true">↗</span></a>
+          <span>A4 / 6ページ / 日本語 / 約11 MB</span>
+        </div>
       </section>
 
-      <section class="article-section evolution-intro">
+      <section class="article-section evolution-intro" id="version-1-0">
         <p class="section-kicker kicker-keep-case">1.0 / Feature Evolution</p>
         <h2>まず、Beta版で見えた課題から始めました</h2>
         <p>Beta版を完成させたことで、「生成できる」だけでは本当の作曲支援にならないことが見えてきました。Beta版では、コードは表示と試聴までで、自分で別のコードへ変更することはできませんでした。Piano Rollも生成されたノートを見るための画面で、ノートを直接編集することはできませんでした。</p>
         <p>正式版では、良いメロディは残す、気になる小節だけ直す、コードを自分で選び直す、ノートをマウスで自然に編集する、続きをつなげる、という実際の作曲の流れを中心に設計を見直しています。</p>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="evolution-highlights">
         <div class="section-head compact-head">
           <p class="section-kicker">Evolution Highlights</p>
           <h2 class="section-title">1.0で加わった主な進化</h2>
@@ -186,7 +219,7 @@
         </div>
       </section>
 
-      <section class="article-section">
+      <section class="article-section" id="feature-comparison">
         <h2>Beta版と1.0以降の違い</h2>
         <p class="evolution-scroll-hint">表は横にスクロールできます →</p>
         <div class="evolution-table-wrap">
@@ -288,199 +321,6 @@
       </section>
       <!-- MANUAL-1.0-END -->
 
-      <section class="article-section update-manual" id="ui-update-report" aria-labelledby="ui-update-title">
-        <header class="update-manual-cover">
-          <div>
-            <p class="manual-overline">Product UI Update Report</p>
-            <h2 id="ui-update-title">NukesakuCOMPOSE 1.1.0</h2>
-            <p class="manual-subtitle">Hybrid Visual Finish</p>
-            <p>生成画像の質感と、JUCEの操作性を両立したUIアップデート</p>
-          </div>
-          <div class="manual-cover-note">
-            <strong>1.1.0の到達点</strong>
-            <p>Modern Composerの構成を変えず、Velvet Navyの生成テクスチャ、抑制されたボタン素材感、薄い立体階層を追加。見た目は深く、操作は従来どおりです。</p>
-          </div>
-          <div class="manual-tags" aria-label="アップデートの特徴">
-            <span>UI ONLY</span><span>JUCE HYBRID</span><span>RETINA / HIDPI</span>
-          </div>
-          <p class="manual-date">Release positioning: 1.1.0 <span aria-hidden="true">|</span> Report date: 2026-08-23 JST</p>
-        </header>
-
-        <nav class="manual-toc" aria-label="1.1.0 UIアップデート目次">
-          <a href="#update-overview"><span>01</span>今回のアップデート</a>
-          <a href="#update-before-after"><span>02</span>Before / After</a>
-          <a href="#update-exploration"><span>03</span>生成画像の使い方</a>
-          <a href="#update-architecture"><span>04</span>Hybrid UIの構造</a>
-          <a href="#update-qa"><span>05</span>品質確認</a>
-        </nav>
-
-        <section class="manual-chapter" id="update-overview">
-          <p class="manual-chapter-label">01 / Update Overview</p>
-          <h3>今回のアップデート</h3>
-          <p>NukesakuCOMPOSE 1.1.0は、直前の正式版UIを土台にしたVisual Polishです。作曲機能や操作フローは変更せず、商用製品としての質感と画面のまとまりを強化しました。</p>
-
-          <div class="manual-feature-grid">
-            <div><span>01</span><strong>生成テクスチャ</strong><p>オリジナルのVelvet Navy素材を低濃度で使用</p></div>
-            <div><span>02</span><strong>ボタン素材感</strong><p>Primary / Strong Actionに控えめな奥行きを追加</p></div>
-            <div><span>03</span><strong>Surface階層</strong><p>Panel / Lane / Chordを薄い差で整理</p></div>
-            <div><span>04</span><strong>操作性を維持</strong><p>文字・状態・Hit AreaはすべてLive JUCE</p></div>
-          </div>
-
-          <h4>変更したもの / 変更していないもの</h4>
-          <dl class="manual-definition-list">
-            <div><dt>変更</dt><dd>背景の質感、ボタンとCombo BoxのSurface、1 px Highlight、Subtle Shadow、Accent Wash</dd></div>
-            <div><dt>維持</dt><dd>レイアウト、機能位置、生成、MIDI、State、Parameter ID、Bundle / Product ID、操作フロー</dd></div>
-            <div><dt>方針</dt><dd>1枚画像UIにはせず、生成画像は抽象素材だけ。文字と操作状態はJUCEで描画</dd></div>
-          </dl>
-
-          <aside class="manual-callout callout-blue">
-            <strong>バージョンの位置づけ</strong>
-            <p>今回のHybrid Visual FinishをNukesakuCOMPOSE 1.1.0のUIアップデートとして整理しています。1.0全体の機能紹介ではありません。</p>
-          </aside>
-        </section>
-
-        <section class="manual-chapter" id="update-before-after">
-          <p class="manual-chapter-label">02 / Before / After</p>
-          <h3>配置を変えず、質感だけを深く</h3>
-          <p>配置や情報量は変えず、背景とSurfaceの微細な質感だけを足しています。差を強く見せる加工ではなく、長時間使える落ち着きを優先しました。</p>
-
-          <div class="manual-before-after">
-            <figure>
-              <img src="NukesakuCOMPOSE-1.0-development.png" alt="1.1.0更新前のFlat Premium Dark UI" width="1280" height="820" loading="lazy" decoding="async">
-              <figcaption>Before — Flat Premium Dark</figcaption>
-            </figure>
-            <figure>
-              <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="1.1.0更新後のHybrid Material Finish UI" width="1280" height="820" loading="lazy" decoding="async">
-              <figcaption>After — Hybrid Material Finish</figcaption>
-            </figure>
-          </div>
-
-          <h4>見た目の進化</h4>
-          <ul class="manual-bullet-list">
-            <li>背景にMidnight NavyからCharcoalへつながる微細なMicrograinと静かなVignetteを追加。</li>
-            <li>GENERATE、PLAY、MIDI DRAGなど重要Actionへ同系素材を低濃度で重ね、役割の差を補強。</li>
-            <li>Panel、Lane Card、Chord Cardに抑えたGradient、1 pxの上面Highlight、最小限のShadowを追加。</li>
-            <li>派手なGlowやMetallic表現を避け、Violet / Cyan / Greenの既存Accentを維持。</li>
-            <li>Piano Rollは装飾を増やさず、Note、Grid、Velocity、Selectionの視認性を最優先。</li>
-          </ul>
-
-          <aside class="manual-callout">
-            <strong>ポイント</strong>
-            <p>Afterは画像を前面に見せるUIではありません。質感は気づくか気づかないかの強さに抑え、階層・可読性・クリック感を支える下地として使っています。</p>
-          </aside>
-        </section>
-
-        <section class="manual-chapter" id="update-exploration">
-          <p class="manual-chapter-label">03 / Visual Exploration</p>
-          <h3>生成画像をどう使ったか</h3>
-          <p>実UIスクリーンショットを基準に3方向を検討し、Velvet Navyの柔らかな奥行きとModern Studioの操作階層を組み合わせました。</p>
-
-          <div class="manual-concept-grid">
-            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-graphite.jpg" alt="NukesakuCOMPOSE Minimal Graphite UIコンセプト" width="960" height="615" loading="lazy" decoding="async"><figcaption>Minimal Graphite</figcaption></figure>
-            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-velvet.jpg" alt="NukesakuCOMPOSE Velvet Navy UIコンセプト" width="960" height="614" loading="lazy" decoding="async"><figcaption>Velvet Navy</figcaption></figure>
-            <figure><img src="NukesakuCOMPOSE-1.1.0-concept-studio.jpg" alt="NukesakuCOMPOSE Modern Studio UIコンセプト" width="960" height="615" loading="lazy" decoding="async"><figcaption>Modern Studio</figcaption></figure>
-          </div>
-
-          <h4>採用と不採用の境界</h4>
-          <dl class="manual-decision-list">
-            <div class="decision-use"><dt>実装に採用</dt><dd>文字を含まない抽象Surface Texture 1点。背景と一部Button内へ低濃度で使用。</dd></div>
-            <div><dt>参考のみ</dt><dd>3つの全画面Concept。完成UI画像としては読み込まず、色・奥行き・階層の判断材料に限定。</dd></div>
-            <div class="decision-avoid"><dt>画像化しない</dt><dd>Button geometry、Label、Value、Chord名、Note、Hover / Pressed / Lockedなどの動的状態。</dd></div>
-          </dl>
-
-          <aside class="manual-callout">
-            <strong>独自性と安全性</strong>
-            <p>特定プラグインのUIをコピーせず、NukesakuCOMPOSE用に生成した抽象素材のみを使用。UI文字の焼き込みや透明ボタン方式は採用していません。</p>
-          </aside>
-        </section>
-
-        <section class="manual-chapter" id="update-architecture">
-          <p class="manual-chapter-label">04 / Hybrid Architecture</p>
-          <h3>Hybrid UIの実装構造</h3>
-          <p>見た目は画像の質感を利用しつつ、操作は従来どおりJUCE Componentが担当します。Retina / HiDPI、Resize、状態変化を壊さない構造です。</p>
-
-          <div class="manual-runtime-grid">
-            <figure>
-              <img src="NukesakuCOMPOSE-1.1.0-velvet-texture.jpg" alt="UI背景に低濃度で使用したVelvet Navy抽象テクスチャ" width="900" height="900" loading="lazy" decoding="async">
-              <figcaption>Generated Velvet Navy Surface</figcaption>
-            </figure>
-            <div>
-              <h4>Runtime Asset</h4>
-              <ul class="manual-bullet-list">
-                <li>Master: lossless PNG</li>
-                <li>Runtime: optimized JPEG / 268 KB</li>
-                <li>Decoded once in LookAndFeel</li>
-                <li>GUI painting only</li>
-                <li>Text / controls / state: not baked</li>
-              </ul>
-            </div>
-          </div>
-
-          <h4>描画パイプライン</h4>
-          <ol class="manual-pipeline" aria-label="Hybrid UI描画パイプライン">
-            <li><span>Generated Asset</span><strong>抽象Texture</strong></li>
-            <li><span>Look &amp; Feel</span><strong>Decode once</strong></li>
-            <li><span>Live JUCE</span><strong>Component / State</strong></li>
-            <li><span>Final UI</span><strong>Scalable Hybrid</strong></li>
-          </ol>
-
-          <h4>JUCE側に残したもの</h4>
-          <ul class="manual-bullet-list">
-            <li>文字、数値、Hit Area、Keyboard Focus、Tooltip</li>
-            <li>Hover、Pressed、Toggle、Disabled、Selected、Locked、Generating</li>
-            <li>Button / Combo Box / Lane / Chord CardのGeometryとVector描画</li>
-          </ul>
-
-          <aside class="manual-callout callout-green">
-            <strong>結果</strong>
-            <p>画像の雰囲気と、ネイティブUIの保守性・操作性を分離。将来のDPI対応やレイアウト変更でも、背景画像に縛られません。</p>
-          </aside>
-        </section>
-
-        <section class="manual-chapter" id="update-qa">
-          <p class="manual-chapter-label">05 / QA / Release Notes</p>
-          <h3>品質確認と1.1.0の範囲</h3>
-          <p>Hybrid finish適用後、生成済みCompositionを表示した状態でメインサイズと最小サイズを確認しました。機能Regressionを避けるため、既存のBuild / Testも再確認されています。</p>
-
-          <div class="manual-before-after manual-qa-shots">
-            <figure>
-              <img src="NukesakuCOMPOSE-1.1.0-development.png" alt="1280×820で表示したNukesakuCOMPOSE 1.1.0" width="1280" height="820" loading="lazy" decoding="async">
-              <figcaption>1280 × 820 — PASS</figcaption>
-            </figure>
-            <figure>
-              <img src="NukesakuCOMPOSE-1.1.0-minimum.png" alt="1040×700の最小サイズで表示したNukesakuCOMPOSE 1.1.0" width="1040" height="700" loading="lazy" decoding="async">
-              <figcaption>1040 × 700 — PASS</figcaption>
-            </figure>
-          </div>
-
-          <h4>Screenshot QA</h4>
-          <ul class="manual-bullet-list">
-            <li>Clipping / overlapなし。日本語Tooltip、Lane、Chord、Piano Rollの可読性を維持。</li>
-            <li>Textureの繰り返し感、過剰なGlow、Pixel artifact、焼き込み文字なし。</li>
-            <li>Primary / Strong / Secondary / UtilityのButton hierarchyを維持。</li>
-          </ul>
-
-          <h4>Build / Regression</h4>
-          <div class="evolution-table-wrap">
-            <table class="evolution-table manual-build-table">
-              <thead><tr><th scope="col">確認項目</th><th scope="col">内容</th><th scope="col">結果</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Debug</th><td>VST3 / AUv2 / Standalone</td><td><strong>PASS</strong></td></tr>
-                <tr><th scope="row">Release</th><td>VST3 / AUv2 / Standalone</td><td><strong>PASS</strong></td></tr>
-                <tr><th scope="row">Core Tests</th><td>Debug 50/50 / Release 50/50</td><td><strong>PASS</strong></td></tr>
-                <tr><th scope="row">Hosted VST3</th><td>12/12</td><td><strong>PASS</strong></td></tr>
-                <tr><th scope="row">Warnings</th><td>Compiler warning</td><td><strong>0</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <aside class="manual-callout">
-            <strong>1.1.0まとめ</strong>
-            <p>機能を増やす更新ではなく、生成画像を安全に取り入れ、見た目の完成度だけを一段引き上げたUIリリースです。</p>
-          </aside>
-        </section>
-      </section>
-
       <section class="evolution-cta" aria-labelledby="evolution-cta-title">
         <p class="section-kicker">Try the Current Beta</p>
         <h2 id="evolution-cta-title">現在の無料Beta版を試せます</h2>
@@ -509,7 +349,7 @@
         <div class="footer-col">
           <h4>Explore</h4>
           <a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="nukesakuchop.html">NukesakuCHOP</a>
-          <a href="compose-evolution.html">1.1.0 開発進捗</a>
+          <a href="compose-evolution.html">1.5.0 開発進捗</a>
           <a href="knowledge.html">基礎知識</a>
         </div>
         <div class="footer-col">
