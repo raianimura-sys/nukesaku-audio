@@ -20,7 +20,7 @@
   <meta property="article:published_time" content="2026-08-21T00:00:00+09:00">
   <meta property="article:modified_time" content="2026-08-23T00:00:00+09:00">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="style.css?v=17">
+  <link rel="stylesheet" href="style.css?v=18">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
 </head>
 <body class="evolution-page">
@@ -92,20 +92,31 @@
 
     <section class="evolution-visual-section" aria-labelledby="visual-heading">
       <div class="section-head compact-head">
-        <p class="section-kicker">Before / After</p>
-        <h2 class="section-title" id="visual-heading">まず、見た目が大きく変わりました</h2>
-        <p class="section-desc">どちらもモックアップではなく、実際に動作しているプラグイン画面です。</p>
+        <p class="section-kicker">Visual Evolution</p>
+        <h2 class="section-title" id="visual-heading">3段階で、作曲画面が進化しました</h2>
+        <p class="section-desc">Beta → 1.0 → 1.5.0。すべてモックアップではなく、実際に動作しているプラグイン画面です。</p>
       </div>
 
-      <div class="evolution-visual-grid">
-        <figure class="evolution-shot-card">
+      <div class="evolution-visual-grid" aria-label="NukesakuCOMPOSEの画面デザインの進化">
+        <figure class="evolution-shot-card evolution-shot-beta">
           <div class="evolution-shot-frame beta-shot">
             <img src="NukesakuCOMPOSE-UI-UX.png" alt="無料Beta版NukesakuCOMPOSEの明るい配色の操作画面" width="1180" height="780" loading="lazy" decoding="async">
           </div>
           <figcaption>
-            <span class="evolution-label beta-label">無料Beta版</span>
+            <div class="evolution-stage-head"><span class="evolution-step" aria-hidden="true">01</span><span class="evolution-label beta-label">無料Beta版</span></div>
             <strong>アイデアを素早く生成する試作版</strong>
             <p>初心者でも迷いにくい明るいUIで、5レーンのMIDI生成と試聴を形にしました。</p>
+          </figcaption>
+        </figure>
+
+        <figure class="evolution-shot-card evolution-shot-formal">
+          <div class="evolution-shot-frame">
+            <img src="NukesakuCOMPOSE-1.0-development.png" alt="NukesakuCOMPOSE正式版1.0のPremium Dark操作画面" width="1280" height="820" loading="lazy" decoding="async">
+          </div>
+          <figcaption>
+            <div class="evolution-stage-head"><span class="evolution-step" aria-hidden="true">02</span><span class="evolution-label formal-label">正式版 1.0</span></div>
+            <strong>生成したアイデアを、選び、直せる製品へ</strong>
+            <p>Premium Darkへ刷新。コード変更とPiano Roll編集に対応し、良い部分を残して曲を育てられるようになりました。</p>
           </figcaption>
         </figure>
 
@@ -114,7 +125,7 @@
             <img src="NukesakuCOMPOSE-1.5.0-composer-canvas.png" alt="NukesakuCOMPOSE 1.5.0 Composer Canvasの実際の操作画面" width="1162" height="768" loading="lazy" decoding="async">
           </div>
           <figcaption>
-            <span class="evolution-label development-label">1.5.0 COMPOSER CANVAS</span>
+            <div class="evolution-stage-head"><span class="evolution-step" aria-hidden="true">03</span><span class="evolution-label development-label">1.5.0 COMPOSER CANVAS</span></div>
             <strong>生成結果を、画面の中心でそのまま育てる</strong>
             <p>設定を左、音楽的なShapeを右、ChordとPiano Rollを中央へ。視線の流れを「設定 → 生成 → 編集 → DAW転送」に揃えました。</p>
           </figcaption>

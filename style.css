@@ -1852,21 +1852,40 @@ a.is-placeholder:focus-visible {
 
 .evolution-visual-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px;
   align-items: stretch;
 }
 
 .evolution-shot-card {
+  position: relative;
   min-width: 0;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
 }
 
-.evolution-shot-current { border-color: rgba(162, 145, 201, .34); }
+.evolution-shot-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  z-index: 2;
+  top: 29%;
+  right: -27px;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  color: rgba(111, 93, 165, .6);
+  font-family: var(--font-en);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.evolution-shot-formal { border-color: rgba(127, 192, 165, .26); }
+.evolution-shot-current { border-color: rgba(162, 145, 201, .48); box-shadow: 0 13px 34px rgba(78, 62, 122, .12); }
 
 .evolution-shot-frame {
   position: relative;
@@ -1874,6 +1893,7 @@ a.is-placeholder:focus-visible {
   overflow: hidden;
   background: #101722;
   border-bottom: 1px solid var(--line-soft);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
 
 .evolution-shot-frame.beta-shot { background: var(--card-2); }
@@ -1885,19 +1905,47 @@ a.is-placeholder:focus-visible {
   object-position: top center;
 }
 
-.evolution-shot-card figcaption { padding: 22px 24px 24px; }
+.evolution-shot-card figcaption {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px 21px 23px;
+}
+
+.evolution-stage-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.evolution-step {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text-faint);
+  background: var(--card-2);
+  font-family: var(--font-en);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
 
 .evolution-shot-card figcaption strong {
   display: block;
-  margin: 12px 0 8px;
-  font-size: 1.08rem;
+  margin: 15px 0 8px;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--text);
 }
 
 .evolution-shot-card figcaption p {
   margin: 0;
   color: var(--text-dim);
-  font-size: .9rem;
+  font-size: .84rem;
   line-height: 1.75;
 }
 
@@ -1916,6 +1964,11 @@ a.is-placeholder:focus-visible {
 .beta-label {
   color: var(--pink-deep);
   background: var(--pink-soft);
+}
+
+.formal-label {
+  color: var(--mint-deep);
+  background: var(--mint-soft);
 }
 
 .development-label {
@@ -2369,6 +2422,16 @@ a.is-placeholder:focus-visible {
   .evolution-visual-grid,
   .evolution-feature-grid {
     grid-template-columns: 1fr;
+  }
+
+  .evolution-visual-grid { gap: 42px; }
+
+  .evolution-shot-card:not(:last-child)::after {
+    content: "↓";
+    top: auto;
+    right: 50%;
+    bottom: -33px;
+    transform: translateX(50%);
   }
 
   .update-110-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
