@@ -153,15 +153,22 @@ export function transposeChords(chords, semitones) {
 }
 
 export const PRESETS = Object.freeze([
-  { id: 'pop', name: '王道ポップ', tag: 'POP', description: '明るく広がる、定番の4コード。', degrees: [1, 5, 6, 4], mode: 'major' },
-  { id: 'jpop', name: '王道J-POP', tag: 'J-POP', description: '切なさからサビへつながる王道進行。', degrees: [4, 5, 3, 6], mode: 'major' },
-  { id: 'jazz', name: 'ジャズ・ターンアラウンド', tag: 'JAZZ', description: 'ii–V–Iを中心にした、滑らかな7th進行。', degrees: [{ degree: 2, quality: 'min7' }, { degree: 5, quality: 'dom7' }, { degree: 1, quality: 'maj7' }, { degree: 6, quality: 'dom7' }], mode: 'major' },
+  { id: 'pop', name: '1564進行', tag: '1564', description: 'Iから始まる、ポップスの定番4コード。', degrees: [1, 5, 6, 4], mode: 'major' },
+  { id: 'jpop', name: '王道進行', tag: '4536', description: 'IVから始まり、viへ着地する4コード。', degrees: [4, 5, 3, 6], mode: 'major' },
+  { id: 'jazz', name: '逆循環進行', tag: '2516', description: 'ii–V–Iで着地し、VI7からiiへ戻る。', degrees: [{ degree: 2, quality: 'min7' }, { degree: 5, quality: 'dom7' }, { degree: 1, quality: 'maj7' }, { degree: 6, quality: 'dom7' }], mode: 'major' },
   { id: 'lofi', name: '夜のLo-fi', tag: 'LO-FI', description: '9thの余韻が心地よい、ゆったりしたループ。', degrees: [{ degree: 6, quality: 'min9' }, { degree: 4, quality: 'maj9' }, { degree: 1, quality: 'maj9' }, { degree: 5, quality: 'dom9' }], mode: 'major' },
   { id: 'cinematic', name: 'シネマティック', tag: 'CINEMA', description: '陰影と大きな展開を感じるマイナー進行。', degrees: [1, 6, 3, 7], mode: 'minor' },
-  { id: 'emotional', name: 'エモーショナル', tag: 'EMOTION', description: '胸に残る、マイナーから始まる進行。', degrees: [6, 4, 1, 5], mode: 'major' },
+  { id: 'emotional', name: '6415進行', tag: '6415', description: 'viから始まる、1564進行の並べ替え。', degrees: [6, 4, 1, 5], mode: 'major' },
   { id: 'neo-soul', name: 'ネオ・ソウル', tag: 'SOUL', description: '豊かなテンションと落ち着いた響き。', degrees: [{ degree: 2, quality: 'min9' }, { degree: 4, quality: 'maj9' }, { degree: 3, quality: 'min7' }, { degree: 6, quality: 'min9' }], mode: 'major' },
   { id: 'dorian', name: 'ドリアン・グルーヴ', tag: 'DORIAN', description: 'マイナーの色に、明るいIVコードを添えて。', degrees: [1, 4, 7, 4], mode: 'dorian' },
+  { id: 'canon', name: 'カノン進行', tag: '8コード', description: 'I–V–vi–iii–IV–I–IV–Vの8コード。', degrees: [1, 5, 6, 3, 4, 1, 4, 5], mode: 'major' },
+  { id: 'marusa', name: '丸サ進行', tag: '4361', description: 'III7でviへ、I7でIVへ戻る4コードの基本形。', degrees: [{ degree: 4, quality: 'maj7' }, { degree: 3, quality: 'dom7' }, { degree: 6, quality: 'min7' }, { degree: 1, quality: 'dom7' }], mode: 'major' },
+  { id: 'komuro', name: '小室進行', tag: '6451', description: 'vi–IV–V–Iで、最後はIに着地。', degrees: [6, 4, 5, 1], mode: 'major' },
+  { id: 'turnaround', name: '循環進行', tag: '1625', description: 'I–vi–ii–Vで一周し、Iへ戻る。', degrees: [{ degree: 1, quality: 'maj7' }, { degree: 6, quality: 'min7' }, { degree: 2, quality: 'min7' }, { degree: 5, quality: 'dom7' }], mode: 'major' },
 ].map(preset => Object.freeze({ ...preset, degrees: Object.freeze(preset.degrees) })));
+
+// Existing recipe IDs remain available for older integrations; the picker uses named progressions.
+export const NAMED_PRESETS = Object.freeze(['jpop', 'canon', 'marusa', 'komuro', 'pop', 'emotional', 'turnaround', 'jazz'].map(id => PRESETS.find(preset => preset.id === id)));
 
 export function makePreset(presetId, key = 0, mode = 'major', extension = 'triad') {
   const preset = PRESETS.find(item => item.id === presetId) || PRESETS[0];

@@ -26,6 +26,8 @@ The rhythm catalog has 5 basic, 11 simple, and 32 complex patterns. Version 1.3 
 
 Version 1.5 puts five context-aware chord recommendations at the center of the composer. The full palette is collapsed under “自分でコードを選ぶ” and keeps diatonic, borrowed, and unrestricted chord choices available. Recommendations include explanations and two-chord audition. Tapping a candidate selects and previews it; only its separate plus button or a drag inserts it into the progression.
 
+Version 1.6 replaces mood-based suggestions in “アイデアの種” with eight named progressions. Royal road, Canon, Marusa, and Komuro are directly visible; every recipe shows its actual chords in the current key before loading. Curated chord qualities are preserved.
+
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
 
 `harmony-home.css` provides HARMONY-specific routes, its home topic, and introduction-page layout. The renewed home layout and site-wide spacing are applied by `studio.css`, using the original cream, pink, lavender, and mint brand palette.

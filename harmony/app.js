@@ -1,8 +1,8 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.5.0';
-import {suggestNextChords} from './recommendations.js?v=1.5.0';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.5.0';
-import {AudioEngine} from './audio.js?v=1.5.0';
-import {createProject as defaults, validateProject} from './project.js?v=1.5.0';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.6.0';
+import {suggestNextChords} from './recommendations.js?v=1.6.0';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.6.0';
+import {AudioEngine} from './audio.js?v=1.6.0';
+import {createProject as defaults, validateProject} from './project.js?v=1.6.0';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -112,7 +112,7 @@ function renderRoll(){
  $('progression-summary').textContent=state.chords.map(c=>chordName(c,state.key)).join(' → ')||'コードを追加すると、構成音がここに表示されます。';
  const seconds=total*60/state.settings.bpm;$('duration-summary').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;
 }
-function presetCard(p){const d=makePreset(p.id,0,p.mode||state.mode,'auto').map(c=>romanNumeral(c,0,p.mode||state.mode)).join(' – ');return `<button class="template-card" data-preset="${p.id}"><span class="template-tag">${esc(p.tag)}<span>↗</span></span><strong>${esc(p.name)}</strong><p>${esc(p.description)}</p><div class="template-degrees">${esc(d)}</div></button>`;}
+function presetCard(p,compact=false){const chords=makePreset(p.id,state.key,p.mode||state.mode,'auto'),d=chords.map(c=>romanNumeral(c,state.key,p.mode||state.mode)).join(' → '),names=chords.map(c=>chordName(c,state.key)).join(' → ');return `<button class="template-card standard-preset" data-preset="${p.id}" aria-label="${esc(p.name)}をキー${esc(KEYS[state.key])}で読み込む"><span class="template-tag">${esc(p.tag)} · KEY ${esc(KEYS[state.key])} Major<span>↗</span></span><strong>${esc(p.name)}</strong><div class="preset-chords">${esc(names)}</div><div class="template-degrees">${esc(d)}</div>${compact?'':`<p>${esc(p.description)}</p>`}</button>`;}
 function render(){
  $('project-title').value=state.title;$('key-select').value=state.key;$('mode-select').value=state.mode;
  $('side-key').innerHTML=`${esc(KEYS[state.key])}<small>${{major:'Major',minor:'Minor',dorian:'Dorian',mixolydian:'Mixolydian'}[state.mode]}</small>`;
@@ -124,7 +124,7 @@ function render(){
  document.querySelector('.midi-detail span').textContent=state.settings.bass?'CHORDS + BASS':'CHORDS';
  ['top-export','download-midi'].forEach(id=>$(id).disabled=!state.chords.length);
  buildPalette();renderTimeline();renderInspector();renderRecommendations();renderRoll();prepareMidi();renderRhythm();renderPlayback(0,-1);
- $('template-cards').innerHTML=[PRESETS[1],PRESETS[3],PRESETS[2]].map(presetCard).join('');
+ $('template-cards').innerHTML=NAMED_PRESETS.slice(0,4).map(p=>presetCard(p,true)).join('');
 }
 function renderPlayback(beat,index){
  const playing=audio.isPlaying;
@@ -270,7 +270,7 @@ function nextVariation(){
  const listen=modalMode!=='rhythm'||rhythmPrefs.autoplay||audio.isPlaying||starting;
  stop();updateSettings({variation:(state.settings.variation+1)%16},{restart:false});if(modalMode==='rhythm')renderRhythmCards();if(listen)togglePlay();
 }
-function openPresets(){openModal('アイデアの種',`<p>気になる進行からはじめて、コードや響きを自由に変えてみましょう。読み込み前の進行は「元に戻す」で戻せます。</p><div class="preset-grid">${PRESETS.map(presetCard).join('')}</div>`,'PROGRESSION RECIPES');}
+function openPresets(){openModal('アイデアの種',`<p>有名な進行を、現在のキーで読み込めます。元の進行は「元に戻す」で復元。基本形の響きを保ち、必要に応じてスケールも切り替えます。</p><div class="preset-grid">${NAMED_PRESETS.map(p=>presetCard(p)).join('')}</div>`,'PROGRESSION RECIPES');}
 function saveProject(){state.title=$('project-title').value.trim()||'Untitled progression';const entry={...clone(state),savedAt:Date.now()};const next=library.slice(),i=next.findIndex(p=>p.id===state.id);if(i>=0)next[i]=entry;else next.unshift(entry);try{localStorage.setItem(STORAGE.library,JSON.stringify(next));library=next;$('library-count').textContent=library.length;autosave();toast('マイライブラリに保存しました');}catch{toast('保存容量がいっぱいです。JSONを書き出して保存してください。');}}
 function openLibrary(){openModal('マイライブラリ',`<div class="library-toolbar"><button class="button" data-library="new">${icon('plus')}新しい進行</button><button class="button" data-library="save">${icon('save')}今の進行を保存</button><button class="button" data-library="json">${icon('download')}JSONを書き出す</button><button class="button" data-library="import">${icon('folder')}JSONを読み込む</button></div><div class="modal-note">進行はこのブラウザに保存されます。別の端末へ移すときはJSONを書き出して読み込んでください。</div><div class="library-list" style="margin-top:16px">${library.length?library.map((p,i)=>`<div class="library-item"><div class="library-info"><strong>${esc(p.title)}</strong><small>${esc(KEYS[p.key]||'C')} · ${esc(p.settings?.bpm||120)} BPM · ${p.chords?.length||0} chords · ${new Date(p.savedAt||Date.now()).toLocaleDateString('ja-JP')}</small></div><button class="button" data-load="${i}">開く</button><button class="icon-button" data-remove="${i}" aria-label="${esc(p.title)}を削除">${icon('trash')}</button></div>`).join(''):'<div class="library-empty">気に入った進行を、ここに集めていきましょう。</div>'}</div>`,'YOUR COLLECTION');}
 function openSettings(){openModal('演奏・書き出し設定',`<div class="settings-grid"><label>ノートの長さ（100%でつなぐ） <span id="gate-value">${Math.round(state.settings.gate*100)}%</span><input data-setting="gate" type="range" min="10" max="100" value="${state.settings.gate*100}"></label><label>スイング <span id="swing-value">${Math.round(state.settings.swing*100)}%</span><input data-setting="swing" type="range" min="0" max="50" value="${state.settings.swing*100}"></label><label>ヒューマナイズ <span id="humanize-value">${Math.round(state.settings.humanize*100)}%</span><input data-setting="humanize" type="range" min="0" max="100" value="${state.settings.humanize*100}"></label><label>音量 <span id="volume-value">${Math.round(state.settings.volume*100)}%</span><input data-setting="volume" aria-label="試聴の音量" type="range" min="0" max="100" value="${state.settings.volume*100}"></label><label>全体の音域<select data-setting="octave">${[-2,-1,0,1,2].map(n=>`<option value="${n}" ${n===state.settings.octave?'selected':''}>${n===0?'そのまま':(n>0?'+':'')+n+' オクターブ'}</option>`).join('')}</select></label><label class="check-label"><input data-setting="bass" type="checkbox" ${state.settings.bass?'checked':''}>ベースを追加する</label></div><p>ノートの長さ・演奏パターン・スイング・ヒューマナイズ・音域・ベースは、試聴とMIDIの両方に反映されます。</p><div class="settings-footer">MIDIはコードとベースを別トラックにし、テンポ・拍子も含めて書き出します。音色とメトロノームは試聴用です。6/8拍子はBPMを四分音符基準として扱います。</div>`,'MAKE IT FEEL RIGHT');}
@@ -345,7 +345,7 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
  $('play-button').onclick=togglePlay;$('stop-button').onclick=stop;$('modal-stop').onclick=stop;['open-rhythms','transport-rhythms'].forEach(id=>$(id).onclick=()=>openRhythms());$('open-simple-rhythms').onclick=()=>openRhythms('simple');$('open-complex-rhythms').onclick=()=>openRhythms('complex');$('next-variation').onclick=nextVariation;document.querySelector('.rhythm-quick').onclick=e=>{const b=e.target.closest('[data-quick-pattern]');if(b)choosePattern(b.dataset.quickPattern);};$('loop-button').onclick=()=>updateSettings({loop:!state.settings.loop});$('metronome-button').onclick=()=>updateSettings({metronome:!state.settings.metronome});
  $('bpm-input').onchange=e=>updateSettings({bpm:Math.round(clamp(e.target.value,40,240))});$('meter-select').onchange=e=>updateSettings({meter:Number(e.target.value)});$('instrument-select').onchange=e=>updateSettings({instrument:e.target.value});$('pattern-select').onchange=e=>updateSettings({pattern:e.target.value});
  $('volume-input').oninput=e=>{state.settings.volume=Number(e.target.value)/100;audio.setVolume(state.settings.volume);autosave();};
- $('roll-toggle').onclick=()=>{rollShown=!rollShown;renderRoll();};$('inspire-button').onclick=()=>{const p=PRESETS[Math.floor(Math.random()*PRESETS.length)];applyPreset(p.id);};
+ $('roll-toggle').onclick=()=>{rollShown=!rollShown;renderRoll();};$('inspire-button').onclick=()=>{const p=NAMED_PRESETS[Math.floor(Math.random()*NAMED_PRESETS.length)];applyPreset(p.id);};
  $('all-presets').onclick=openPresets;$('template-cards').onclick=e=>{const p=e.target.closest('[data-preset]');if(p)applyPreset(p.dataset.preset);};
  ['top-export','download-midi'].forEach(id=>$(id).onclick=downloadMidi);
  $('midi-drag').onclick=downloadMidi;$('midi-drag').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();downloadMidi();}};
