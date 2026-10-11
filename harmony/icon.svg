@@ -1,1 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="42" fill="#222b27"/><g stroke="#b8edb0" stroke-width="12" stroke-linecap="round"><path d="M46 78v36m25-63v90m25-108v126m25-108v90m25-63v36"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">HARMONY</title>
+  <defs>
+    <linearGradient id="forest" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#354b3f"/>
+      <stop offset=".5" stop-color="#222b27"/>
+      <stop offset="1" stop-color="#17231e"/>
+    </linearGradient>
+    <radialGradient id="light" cx=".32" cy=".16" r=".82">
+      <stop stop-color="#9ccea1" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#9ccea1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2=".36" y2="1">
+      <stop stop-color="#e0f6cc"/>
+      <stop offset=".45" stop-color="#b8edb0"/>
+      <stop offset="1" stop-color="#89c399"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#f0ffe5" stop-opacity=".65"/>
+      <stop offset=".45" stop-color="#f0ffe5" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#f0ffe5" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-25%" width="180%" height="170%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <g id="wave">
+      <rect x="112" y="200" width="32" height="112" rx="16"/>
+      <rect x="176" y="152" width="32" height="208" rx="16"/>
+      <rect x="240" y="96" width="32" height="320" rx="16"/>
+      <rect x="304" y="152" width="32" height="208" rx="16"/>
+      <rect x="368" y="200" width="32" height="112" rx="16"/>
+    </g>
+  </defs>
+  <!-- Full-bleed opaque background; the platform supplies its own icon mask. -->
+  <rect width="512" height="512" fill="url(#forest)"/>
+  <rect width="512" height="512" fill="url(#light)"/>
+  <!-- The entire mark fits within the central 40%-radius maskable safe zone. -->
+  <use href="#wave" fill="#071810" opacity=".42" transform="translate(0 14)" filter="url(#shadow)"/>
+  <use href="#wave" fill="url(#mint)"/>
+  <use href="#wave" fill="none" stroke="url(#edge)" stroke-width="1.5"/>
+</svg>

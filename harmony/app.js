@@ -1,8 +1,8 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.7.0';
-import {suggestNextChords} from './recommendations.js?v=1.7.0';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.7.0';
-import {AudioEngine} from './audio.js?v=1.7.0';
-import {createProject as defaults, validateProject} from './project.js?v=1.7.0';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.7.1';
+import {suggestNextChords} from './recommendations.js?v=1.7.1';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.7.1';
+import {AudioEngine} from './audio.js?v=1.7.1';
+import {createProject as defaults, validateProject} from './project.js?v=1.7.1';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
