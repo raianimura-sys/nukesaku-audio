@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#faf7f1">
   <meta name="color-scheme" content="light">
   <title>Nukesaku Audio | 曲作りを、もっと楽しく、もっと気軽に。</title>
-  <meta name="description" content="作曲初心者の視点から音楽プラグインを作り、その過程まで公開するNukesaku Audio。NukesakuCOMPOSE Betaを無料配布中、NukesakuCHOPを公開準備中です。">
+  <meta name="description" content="無料のコード進行アプリHARMONY、音楽プラグイン、DTMの基礎知識。Nukesaku Audioは曲作りの「やってみたい」を支える個人スタジオです。">
   <link rel="canonical" href="https://raianimura-sys.github.io/nukesaku-audio/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
@@ -22,7 +22,6 @@
   <meta name="twitter:title" content="Nukesaku Audio">
   <meta name="twitter:description" content="曲作りを、もっと楽しく、もっと気軽に。">
   <meta name="twitter:image" content="https://raianimura-sys.github.io/nukesaku-audio/nukesaku-audio-social-card-v2.jpg">
-  <link rel="preload" as="image" href="NukesakuCOMPOSE-1.5.0-composer-canvas.png" fetchpriority="high">
   <link rel="stylesheet" href="style.css?v=17">
   <link rel="stylesheet" href="harmony-home.css?v=3">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317171c'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23dca7a5' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23b7a8d6'/%3E%3C/svg%3E">
@@ -52,326 +51,78 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="studio.css?v=3">
 </head>
-<body class="home-page">
+<body class="home-page studio-home">
   <a class="skip-link" href="#main-content">本文へ移動</a>
-
-  <div class="bg-decor" aria-hidden="true">
-    <div class="bg-grid"></div>
-    <div class="bg-orb orb-pink"></div>
-    <div class="bg-orb orb-lavender"></div>
-    <div class="bg-orb orb-mint"></div>
-  </div>
-
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="#top" class="brand" aria-label="Nukesaku Audio ホーム">
-        <span class="brand-knob" aria-hidden="true"></span>
-        <span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music-tech studio</span></span>
-      </a>
-
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav">
-        <span></span><span></span><span></span>
-      </button>
-
+      <a href="#top" class="brand" aria-label="Nukesaku Audio ホーム"><span class="brand-knob" aria-hidden="true"></span><span class="brand-copy"><span class="brand-name">Nukesaku Audio</span><span class="brand-tagline">Independent music tools</span></span></a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
       <nav class="site-nav" id="siteNav" aria-label="メインメニュー">
-        <a href="harmony/">HARMONY</a>
-        <a href="nukesakucompose.html">COMPOSE</a><a href="nukesakuchop.html">CHOP</a>
-        <a href="knowledge.html">学ぶ</a>
-        <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube<span class="external-mark" aria-hidden="true">↗</span></a>
-        <a href="#lab">開発進捗</a>
-        <a href="#about">About</a>
-        <a href="https://nukesakuaudio.booth.pm/items/8725510" class="nav-cta" target="_blank" rel="noopener">無料Betaを試す</a>
+        <a href="#plugins">ツール</a><a href="knowledge.html">学ぶ</a><a href="#lab">開発ノート</a><a href="#about">About</a><a href="harmony/" class="nav-cta">HARMONYを開く <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
-
   <main id="main-content" tabindex="-1">
-    <section class="home-hero" id="top">
-      <div class="home-hero-grid">
-        <div class="home-hero-copy">
-          <p class="hero-eyebrow">Create · Learn · Share</p>
-          <h1 class="home-hero-title">曲作りを、<br><span>もっと楽しく、<br>もっと気軽に。</span></h1>
-          <p class="home-hero-lead">作曲初心者の「わからない」を出発点に、音楽プラグインを作り、DTMを学び、その過程まで公開するプロジェクトです。</p>
-          <div class="home-hero-actions">
-            <a href="compose-evolution.html" class="btn btn-primary">NukesakuCOMPOSE 1.5.0 開発を見る <span aria-hidden="true">→</span></a>
-            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-ghost" target="_blank" rel="noopener">現在の無料Betaを試す <span aria-hidden="true">↗</span></a>
-          </div>
-          <p class="availability-note"><span class="status-dot" aria-hidden="true"></span>Beta v0.3.0 配布中 <span aria-hidden="true">·</span> macOS / Apple Silicon</p>
+    <section class="studio-hero studio-container" id="top" aria-labelledby="hero-title">
+      <div class="studio-hero-grid">
+        <div class="studio-hero-copy">
+          <p class="studio-eyebrow"><span class="studio-dot" aria-hidden="true"></span> SMALL STUDIO. BIG POSSIBILITIES.</p>
+          <h1 id="hero-title">そのひらめき、<br><span>音にしよう。</span></h1>
+          <p class="studio-hero-lead">コードを並べる。リズムで遊ぶ。<br>知らなかったことが、少しわかる。<br>曲作りの「やってみたい」を、ここから。</p>
+          <div class="studio-actions"><a class="studio-button studio-button-dark" href="harmony/">無料でコードをつくる <span aria-hidden="true">↗</span></a><a class="studio-text-link" href="#plugins">ツールを見つける <span aria-hidden="true">↓</span></a></div>
+          <p class="studio-fineprint">HARMONY · PC / スマホ · インストール不要</p>
         </div>
-
-        <figure class="hero-product-figure">
-          <div class="product-window-bar" aria-hidden="true">
-            <span class="window-dots"><i></i><i></i><i></i></span>
-            <span>NukesakuCOMPOSE</span>
-            <span class="development-chip">1.5.0 COMPOSER CANVAS</span>
-          </div>
-          <img src="NukesakuCOMPOSE-1.5.0-composer-canvas.png" alt="NukesakuCOMPOSE 1.5.0 Composer Canvasの操作画面" width="1162" height="768" decoding="async" fetchpriority="high">
-          <figcaption>
-            <span><strong>Version 1.5.0</strong> 開発中</span>
-            <a href="compose-evolution.html">1.5.0の進化を見る <span aria-hidden="true">→</span></a>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <nav class="quick-routes" aria-label="おすすめの入口">
-      <a class="route-card route-harmony" href="harmony/">
-        <span class="route-index">01 / HARMONY · スマホ対応</span>
-        <span class="route-title">コード進行を組み立てる</span>
-        <span class="route-copy">無料のブラウザアプリ<br>MIDIでDAWへ</span>
-        <span class="route-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="route-card route-compose" href="nukesakucompose.html">
-        <span class="route-index">02 / TRY</span>
-        <span class="route-title">作曲アイデアを生成する</span>
-        <span class="route-copy">無料Betaの機能と始め方</span>
-        <span class="route-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="route-card route-learn" href="knowledge.html">
-        <span class="route-index">03 / LEARN</span>
-        <span class="route-title">DTMの基礎を知る</span>
-        <span class="route-copy">MIDIとコードからやさしく</span>
-        <span class="route-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="route-card route-watch" href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">
-        <span class="route-index">04 / WATCH</span>
-        <span class="route-title">成長の過程を見る</span>
-        <span class="route-copy">制作・開発のYouTube記録</span>
-        <span class="route-arrow" aria-hidden="true">↗</span>
-      </a>
-    </nav>
-
-    <section class="section section-wide harmony-topic" id="harmony-topic" aria-labelledby="harmony-heading">
-      <div class="section-head section-head-split">
-        <div>
-          <p class="section-kicker">Browser Chord Studio</p>
-          <h2 class="section-title" id="harmony-heading"><a href="harmony.html">HARMONY</a></h2>
-        </div>
-        <p class="section-desc">キーからコードを選んで、好きな刻みを試す。PCでもスマホでも使える、無料のコード進行スタジオです。</p>
-      </div>
-      <article class="harmony-feature">
-        <a class="harmony-studio-preview" href="harmony/" aria-label="コード進行スタジオ HARMONYを開く">
-          <div class="harmony-preview-window" aria-hidden="true">
-            <div class="harmony-preview-bar"><span class="window-dots"><i></i><i></i><i></i></span><strong>HARMONY</strong><span>CHORD STUDIO</span></div>
-            <div class="harmony-preview-content">
-              <div class="harmony-preview-key"><span>KEY <b>C</b></span><span>SCALE <b>Major</b></span><small>コード進行のイメージ</small></div>
-              <p class="harmony-preview-label">BUILD YOUR PROGRESSION</p>
-              <div class="harmony-preview-chords"><div><small>01 / I</small><strong>Cmaj7</strong><span>4 beats</span></div><div><small>02 / vi</small><strong>Am7</strong><span>4 beats</span></div><div><small>03 / IV</small><strong>Fmaj7</strong><span>4 beats</span></div><div><small>04 / V</small><strong>G7</strong><span>4 beats</span></div></div>
-              <div class="harmony-preview-roll"><i style="--x:0%;--y:70%"></i><i style="--x:0%;--y:50%"></i><i style="--x:0%;--y:35%"></i><i style="--x:0%;--y:15%"></i><i style="--x:25%;--y:80%"></i><i style="--x:25%;--y:70%"></i><i style="--x:25%;--y:50%"></i><i style="--x:25%;--y:35%"></i><i style="--x:50%;--y:45%"></i><i style="--x:50%;--y:25%"></i><i style="--x:50%;--y:10%"></i><i style="--x:75%;--y:70%"></i><i style="--x:75%;--y:45%"></i><i style="--x:75%;--y:20%"></i></div>
-              <div class="harmony-preview-rhythm"><span>単純系 <b>11</b></span><span>複雑系 <b>20</b></span><span class="harmony-preview-midi">MIDI ↗</span></div>
+        <div class="demo-shell" aria-label="HARMONYのコードとリズムの試聴デモ">
+          <div class="demo-topline"><span class="demo-brand"><span class="demo-logo" aria-hidden="true">H</span> HARMONY</span><span class="demo-live"><i aria-hidden="true"></i> LISTENING ROOM</span></div>
+          <div class="demo-workspace">
+            <div class="demo-session"><span>KEY <b>C MAJOR</b></span><span>100 <small>BPM</small></span></div>
+            <p class="demo-caption">FOUR CHORDS. YOUR NEXT IDEA.</p>
+            <div class="demo-sequence" id="demo-sequence">
+              <div data-demo-chord="0"><span>01 / I</span><strong>Cmaj7</strong><small>C · E · G · B</small></div><div data-demo-chord="1"><span>02 / vi</span><strong>Am7</strong><small>A · C · E · G</small></div><div data-demo-chord="2"><span>03 / IV</span><strong>Fmaj7</strong><small>F · A · C · E</small></div><div data-demo-chord="3"><span>04 / V</span><strong>G7</strong><small>G · B · D · F</small></div>
             </div>
-            <div class="harmony-preview-footer"><span>▶　ひらめきを、音に。</span><span>PC / MOBILE</span></div>
+            <div class="demo-roll" aria-hidden="true"><div class="demo-roll-labels"><span>C5</span><span>C4</span></div><div class="demo-roll-notes"><div><i style="--note-y:13%"></i><i style="--note-y:34%"></i><i style="--note-y:54%"></i><i style="--note-y:75%"></i></div><div><i style="--note-y:24%"></i><i style="--note-y:43%"></i><i style="--note-y:65%"></i><i style="--note-y:84%"></i></div><div><i style="--note-y:12%"></i><i style="--note-y:33%"></i><i style="--note-y:55%"></i><i style="--note-y:75%"></i></div><div><i style="--note-y:20%"></i><i style="--note-y:43%"></i><i style="--note-y:64%"></i><i style="--note-y:84%"></i></div><div class="demo-progress-track"><span id="demo-progress"></span></div></div></div>
+            <div class="demo-pattern-row"><span>FEEL THE DIFFERENCE</span><div class="demo-patterns" aria-label="試聴する刻み"><button type="button" data-demo-pattern="simple" aria-pressed="true">単純系 <span>8分パルス</span></button><button type="button" data-demo-pattern="complex" aria-pressed="false">複雑系 <span>16分ファンク</span></button></div></div>
           </div>
-        </a>
-        <div class="harmony-feature-copy">
-          <div class="card-badges"><span class="badge badge-free">無料で使える</span><span class="badge">PC / スマホ</span></div>
-          <h3>ひらめきを、<br>コードに。</h3>
-          <p>気になる響きをタップして並べ、聴きながら進行を育てる。一定のリズムから複雑な刻みまで、曲の雰囲気に合わせて選べます。</p>
-          <ul class="harmony-feature-points"><li>12キー・4つのスケールからコードを選ぶ</li><li>基本5・単純系11・複雑系20のパターン</li><li>試聴した進行をMIDIでDAWへ持っていく</li></ul>
-          <div class="card-actions harmony-topic-actions"><a class="btn btn-primary" href="harmony/">HARMONYを開く <span aria-hidden="true">→</span></a><a class="btn btn-ghost" href="harmony.html">機能・使い方を見る</a></div>
-          <p class="harmony-feature-note">ブラウザですぐに使えます。インストール・ログイン不要。</p>
+          <div class="demo-transport"><button id="demo-play" type="button" aria-pressed="false"><span class="demo-play-icon" aria-hidden="true"></span><span data-play-label>聴いてみる</span></button><p id="demo-status" role="status" aria-live="polite">クリックして、音の雰囲気を試す。</p><div class="demo-meter" id="demo-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <p class="demo-under-note">コードと刻みの試聴デモ <span>FULL STUDIO <a href="harmony/" aria-label="HARMONYのフルアプリを開く">↗</a></span></p>
         </div>
+      </div>
+      <div class="studio-hero-bottom"><span>CREATE. LEARN. MAKE IT YOURS.</span><span>音楽を始める人と、同じ目線で。</span><a href="#harmony-topic" aria-label="HARMONYの紹介へ移動">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <nav class="studio-routes studio-container" aria-label="目的から探す"><a href="harmony/"><span>01 / CREATE</span><strong>まず、音をつくる。</strong><small>ブラウザですぐに始める</small><i aria-hidden="true">↗</i></a><a href="knowledge.html"><span>02 / LEARN</span><strong>ひとつ、わかる。</strong><small>DTM・作曲・音作りの基礎</small><i aria-hidden="true">→</i></a><a href="#lab"><span>03 / FOLLOW</span><strong>できるまで、見てみる。</strong><small>音楽ツールの開発記録</small><i aria-hidden="true">↓</i></a></nav>
+
+    <section class="studio-section studio-container" id="harmony-topic" aria-labelledby="harmony-heading">
+      <div class="studio-section-head"><p class="studio-eyebrow">01 / START IN YOUR BROWSER</p><span class="studio-section-note">思いついたときが、始めどき。</span></div>
+      <article class="studio-harmony">
+        <div class="studio-harmony-copy"><div class="studio-tags"><span class="studio-tag studio-tag-green">無料公開中</span><span class="studio-tag">PC・スマホ</span></div><h2 id="harmony-heading">HARMONY<span>CHORD PROGRESSION STUDIO</span></h2><h3>好きな響きから、<br>次の一曲へ。</h3><p>キーを決めて、気になるコードを並べる。一定の刻みも、複雑なリズムも、聴きながら選ぶ。できた進行はMIDIで、いつものDAWへ。</p><div class="studio-actions"><a class="studio-button studio-button-dark" href="harmony/">HARMONYを開く <span aria-hidden="true">↗</span></a><a class="studio-text-link" href="harmony.html">機能・使い方 <span aria-hidden="true">→</span></a></div><p class="studio-fineprint">ログイン不要。アイデアはブラウザに保存できます。</p></div>
+        <div class="studio-harmony-lab"><div class="harmony-lab-top"><span>FIND YOUR SOUND</span><i aria-hidden="true">↗</i></div><div class="studio-key-display"><span>YOUR KEY</span><strong>C<span>major</span></strong><div aria-hidden="true"><i>C</i><i>D♭</i><i>D</i><i>E♭</i><i>E</i><i>F</i><i>F♯</i><i>G</i><i>A♭</i><i>A</i><i>B♭</i><i>B</i></div></div><div class="studio-rhythm-display"><span>CHOOSE YOUR GROOVE</span><div><strong>基本</strong><div class="rhythm-graphic rhythm-basic" aria-hidden="true"><i></i><i></i><i></i><i></i></div><b>05</b></div><div><strong>単純系</strong><div class="rhythm-graphic rhythm-simple" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b>11</b></div><div><strong>複雑系</strong><div class="rhythm-graphic rhythm-complex" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b>20</b></div></div><div class="harmony-lab-bottom"><span>12 KEYS / 4 SCALES</span><span>MIDI EXPORT <i aria-hidden="true">↗</i></span></div></div>
       </article>
     </section>
 
-    <section class="section section-wide" id="lab">
-      <div class="section-head section-head-split">
-        <div>
-          <p class="section-kicker">Now in Nukesaku Lab</p>
-          <h2 class="section-title">いま、育てているもの。</h2>
-        </div>
-        <p class="section-desc">無料Betaで見えた課題を一つずつ解き、NukesakuCOMPOSEを“生成して終わり”ではない作曲環境へ進化させています。</p>
-      </div>
-
-      <article class="dev-showcase">
-        <a class="dev-showcase-visual" href="compose-evolution.html" aria-label="NukesakuCOMPOSE 1.5.0 開発進捗を見る">
-          <img src="NukesakuCOMPOSE-1.5.0-composer-canvas.png" alt="NukesakuCOMPOSE 1.5.0開発版のComposer Canvas UI" width="1162" height="768" loading="lazy" decoding="async">
-          <span class="image-label">Actual development build</span>
-        </a>
-        <div class="dev-showcase-copy">
-          <div class="card-badges">
-            <span class="badge badge-development">1.5.0 COMPOSER CANVAS</span>
-            <span class="badge badge-verified">macOS RC</span>
-            <span class="badge badge-pending">Windows 未検証</span>
-          </div>
-          <p class="dev-overline">NukesakuCOMPOSE 1.5.0</p>
-          <h3>アイデアを生み、<br>曲へ育てられる製品へ。</h3>
-          <p>Beta版ではできなかったコード変更とPiano Roll編集に対応。1.5.0では編集領域を中央へ広げ、設定・生成・編集・DAW転送の流れが自然につながるComposer Canvasへ進化しました。</p>
-          <ul class="progress-list">
-            <li><span>生成品質</span><strong>Engine 2.0 実装</strong></li>
-            <li><span>編集</span><strong>コード変更 / Piano Roll編集</strong></li>
-            <li><span>UI</span><strong>Composer Canvas</strong></li>
-            <li><span>macOS</span><strong>Release Candidate</strong></li>
-            <li><span>Windows</span><strong>ネイティブ検証前</strong></li>
-          </ul>
-          <div class="card-actions">
-            <a href="compose-evolution.html" class="btn btn-primary">1.5.0の進化を詳しく見る</a>
-            <a href="nukesakucompose.html" class="btn btn-quiet">現在のBetaを見る</a>
-          </div>
-          <p class="truth-note">※ 正式版1.5.0はまだ販売開始していません。Windows版もネイティブ環境での検証前です。</p>
-        </div>
-      </article>
-    </section>
-
-    <section class="section section-wide" id="plugins">
-      <div class="section-head section-head-split">
-        <div>
-          <p class="section-kicker">Handmade Music Tools</p>
-          <h2 class="section-title">Plugins</h2>
-        </div>
-        <p class="section-desc">難しいことを隠すのではなく、触りながら自然に理解できる道具を目指しています。</p>
-      </div>
-
-      <article class="compose-feature-card">
-        <div class="compose-feature-copy">
-          <div class="card-badges">
-            <span class="badge badge-beta">Beta v0.3.0</span>
-            <span class="badge badge-free">無料配布中</span>
-          </div>
-          <p class="dev-overline">Theory-aware MIDI composer</p>
-          <h3>NukesakuCOMPOSE</h3>
-          <p class="compose-feature-lead">Key・Scale・Genre・Moodを選ぶだけ。コード、メロディ、ベース、アルペジオ、リズムを一つの作曲アイデアとして生成します。</p>
-          <div class="product-facts" aria-label="主な機能">
-            <span><strong>5</strong> MIDIレーン</span>
-            <span><strong>Seed</strong> で再現</span>
-            <span><strong>Drag</strong> してDAWへ</span>
-          </div>
-          <div class="card-meta">
-            <span>VST3</span><span>AU</span><span>macOS</span><span>Apple Silicon</span>
-          </div>
-          <div class="card-actions">
-            <a href="https://nukesakuaudio.booth.pm/items/8725510" class="btn btn-primary" target="_blank" rel="noopener">無料Betaをダウンロード <span aria-hidden="true">↗</span></a>
-            <a href="nukesakucompose.html" class="btn btn-ghost">機能と使い方</a>
-          </div>
-        </div>
-        <div class="compose-feature-image">
-          <img src="NukesakuCOMPOSE-UI-UX.png" alt="無料配布中のNukesakuCOMPOSE Beta操作画面" width="1180" height="780" loading="lazy" decoding="async">
-          <span class="visual-version">CURRENT BETA</span>
-        </div>
-      </article>
-
-      <div class="research-grid" aria-label="研究中のプラグイン">
-        <article class="research-card research-eq">
-          <span class="research-state">RESEARCH</span>
-          <div class="research-glyph" aria-hidden="true"><i></i><i></i><i></i></div>
-          <h3>NukesakuEQ</h3>
-          <p>音の変化を見て、聴いて、理解しやすいEQを研究中。</p>
-          <span class="research-note">公開時期未定</span>
-        </article>
-        <a class="research-card research-chop" href="nukesakuchop.html" aria-label="NukesakuCHOPの製品ページを見る">
-          <span class="research-state">COMING SOON</span>
-          <div class="research-glyph chop-glyph" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-          <h3>NukesakuCHOP</h3>
-          <p>音を切って、並べて、変形して、思いがけないフレーズへ。主要機能が揃い、公開に向けて最終調整中です。</p>
-          <span class="research-note">機能と実UIを見る</span>
-        </a>
+    <section class="studio-section studio-container" id="plugins" aria-labelledby="tools-title"><div class="studio-section-head"><div><p class="studio-eyebrow">02 / MUSIC TOOLS</p><h2 class="studio-title" id="tools-title">ひらめきの、その先へ。</h2></div><p>アイデアを生む道具と、<br>思いがけない音に出会う道具。</p></div>
+      <div class="studio-tools-grid">
+        <article class="studio-tool"><div class="studio-tool-top"><span class="studio-tag studio-tag-lav">無料Beta配布中</span><span>01 / MIDI COMPOSER</span></div><a class="studio-tool-image" href="nukesakucompose.html" aria-label="NukesakuCOMPOSEの機能と使い方"><img src="NukesakuCOMPOSE-UI-UX.png" alt="無料Beta v0.3.0のNukesakuCOMPOSE操作画面" width="1180" height="780" loading="lazy" decoding="async"></a><div class="studio-tool-copy"><h3>Nukesaku<span>COMPOSE</span></h3><p>キー、スケール、ジャンル、ムードから、コード・メロディ・ベース・アルペジオ・リズムをひとつのアイデアに。</p><p class="studio-tool-meta">BETA v0.3.0 · macOS / Apple Silicon · VST3 / AU</p><div class="studio-actions"><a class="studio-button studio-button-dark" href="https://nukesakuaudio.booth.pm/items/8725510" target="_blank" rel="noopener">無料Betaを試す <span aria-hidden="true">↗</span></a><a class="studio-text-link" href="nukesakucompose.html">機能・使い方 <span aria-hidden="true">→</span></a></div></div></article>
+        <article class="studio-tool studio-tool-chop"><div class="studio-tool-top"><span class="studio-tag studio-tag-peach">公開準備中</span><span>02 / PHRASE COLLAGE</span></div><a class="studio-tool-image" href="nukesakuchop.html" aria-label="NukesakuCHOPの機能と実際の画面"><img src="NukesakuCHOP-ui.jpg" alt="開発中のNukesakuCHOP操作画面" width="1102" height="678" loading="lazy" decoding="async"></a><div class="studio-tool-copy"><h3>Nukesaku<span>CHOP</span></h3><p>音を切る。並べる。変形する。素材のかけらから、思いがけないフレーズを生み出す音楽ツール。</p><p class="studio-tool-meta">主要機能実装済み · OS・価格・公開日は未発表</p><div class="studio-actions"><a class="studio-button studio-button-outline" href="nukesakuchop.html">CHOPを見てみる <span aria-hidden="true">→</span></a><span class="studio-coming-note">仕上げの調整中です。</span></div></div></article>
       </div>
     </section>
 
-    <section class="section section-wide learn-watch-section" id="dtmer">
-      <div class="section-head section-head-split">
-        <div>
-          <p class="section-kicker">Learn &amp; Follow</p>
-          <h2 class="section-title">わかったことも、<br>迷ったことも共有する。</h2>
-        </div>
-        <p class="section-desc">専門用語を知っている前提にしません。初心者だった自分が欲しかった説明を、記事と動画にしていきます。</p>
-      </div>
+    <section class="studio-section studio-container" id="lab" aria-labelledby="lab-title"><div class="studio-lab"><div class="studio-lab-head"><div><p class="studio-eyebrow"><span class="studio-dot" aria-hidden="true"></span>03 / WORK IN PROGRESS</p><h2 class="studio-title" id="lab-title">まだ途中。だから、面白い。</h2></div><p>完成だけでなく、試行錯誤も。<br>Nukesaku Labの、いま。</p></div>
+      <article class="studio-lab-feature"><a href="compose-evolution.html" class="lab-feature-image" aria-label="COMPOSE 1.5.0の開発記録を見る"><img src="NukesakuCOMPOSE-1.5.0-composer-canvas.png" alt="開発中のCOMPOSE 1.5.0 Composer Canvas" width="1162" height="768" loading="lazy" decoding="async"><span>ACTUAL DEVELOPMENT BUILD</span></a><div class="lab-feature-copy"><div class="studio-tags"><span class="studio-tag studio-tag-lav">開発中 / 1.5.0</span><span class="studio-tag">macOS RC</span></div><h3>COMPOSEの、<br>次のかたち。</h3><p>編集の場所を、真ん中へ。コード変更とPiano Roll編集に対応したComposer Canvasで、生成したアイデアを曲へ育てる。</p><a class="studio-text-link" href="compose-evolution.html">1.5.0の進化を見る <span aria-hidden="true">→</span></a><p class="lab-status">正式版は未販売。Windowsはネイティブ検証前です。</p></div></article>
+      <div class="studio-lab-grid"><article class="studio-lab-card"><div class="lab-card-image"><img src="NukesakuFLOW-0.9.0-arrange.png" alt="FLOW 0.9.0開発版のアレンジ画面" width="1220" height="800" loading="lazy" decoding="async"><span>DEVELOPMENT BUILD / 0.9.0</span></div><div class="lab-card-copy"><h3>NukesakuFLOW</h3><p>短いフレーズから、イントロ〜サビの構成へ。刻みパターン、アレンジメント生成、DRUM MAPを備えた開発版。</p><small>未販売 · Bitwigでの保存復元を検証中</small></div></article><article class="studio-lab-card"><div class="lab-card-image"><img src="NukesakuGuitarPractice-0.1.3-chords.png" alt="GuitarPractice 0.1.3検証版のコード表示画面" width="1100" height="700" loading="lazy" decoding="async"><span>VALIDATION PREVIEW / 0.1.3</span></div><div class="lab-card-copy"><h3>NukesakuGuitarPractice</h3><p>チューナー、コード辞書、指板、MIDI→TAB。ギター練習の「わからない」を減らす道具を研究しています。</p><small>未配布 · 実ギターでの判定精度を改善中</small></div></article></div>
+      <div class="studio-lab-foot"><span><i aria-hidden="true"></i> ALSO IN RESEARCH</span><p><strong>NukesakuEQ</strong> — 音の変化を、見て、聴いて、理解するEQ。公開時期は未定です。</p></div>
+    </div></section>
 
-      <div class="learn-watch-grid">
-        <div class="learning-panel">
-          <div class="panel-heading">
-            <span class="panel-number">01</span>
-            <div><p>BEGINNER'S NOTES</p><h3>基礎知識</h3></div>
-            <a href="knowledge.html">記事一覧 <span aria-hidden="true">→</span></a>
-          </div>
-          <a class="editorial-link" href="article-daw.html">
-            <span class="editorial-category">START HERE / 約4分</span>
-            <strong>DAWって何？ 音楽制作の作業机を理解する</strong>
-            <span aria-hidden="true">→</span>
-          </a>
-          <a class="editorial-link" href="knowledge.html">
-            <span class="editorial-category">3 COURSES / 15 ARTICLES</span>
-            <strong>DTM・作曲・音作りの基礎を順番に学ぶ</strong>
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
+    <section class="studio-section studio-container" id="dtmer" aria-labelledby="learn-title"><div class="studio-section-head"><div><p class="studio-eyebrow">04 / LEARN &amp; FOLLOW</p><h2 class="studio-title" id="learn-title">「わからない」から、はじめよう。</h2></div><a class="studio-text-link" href="knowledge.html">すべての記事 <span aria-hidden="true">→</span></a></div><div class="studio-learn-grid"><div class="studio-learning"><div class="studio-learning-head"><span>BEGINNER’S NOTES</span><p><b>15</b> ARTICLES / <b>3</b> COURSES</p></div><a class="studio-lesson" href="article-daw.html"><span>01 / DTMの入口</span><h3>DAWって、何？</h3><p>音楽制作の「作業机」を知るところから。</p><i aria-hidden="true">→</i></a><a class="studio-lesson" href="article-chord.html"><span>02 / 曲作りの基本</span><h3>コードって、何？</h3><p>いくつかの音が、ひとつの響きになる。</p><i aria-hidden="true">→</i></a><a class="studio-lesson" href="article-eq.html"><span>03 / 音作りの基本</span><h3>EQって、何？</h3><p>音の明るさや厚みを、整えてみよう。</p><i aria-hidden="true">→</i></a></div><div class="studio-channel"><div class="studio-channel-top"><span>ON YOUTUBE</span><span aria-hidden="true">↗</span></div><div class="studio-channel-art" aria-hidden="true"><span class="channel-ring ring-one"></span><span class="channel-ring ring-two"></span><span class="channel-ring ring-three"></span><img src="channel-icon.png" alt="" width="256" height="256" loading="lazy" decoding="async"><span class="channel-play">▶</span></div><h3>DTMerへの道！</h3><p>作曲を学び、プラグインを作る。<br>うまくいったことも、迷ったことも。<br>音楽と開発の成長記録を、動画で。</p><a class="studio-button studio-button-dark" href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">チャンネルを見る <span aria-hidden="true">↗</span></a></div></div></section>
 
-        <div class="youtube-panel">
-          <div class="channel-lockup">
-            <img src="channel-icon.png" alt="Nukesaku Audio YouTubeチャンネルアイコン" width="256" height="256" loading="lazy" decoding="async">
-            <div><p>YOUTUBE CHANNEL</p><h3>DTMerへの道！</h3></div>
-          </div>
-          <p>曲作りとプラグイン開発の成長記録。完成した結果だけでなく、試行錯誤の途中も公開しています。</p>
-          <div class="youtube-actions">
-            <a href="https://youtube.com/playlist?list=PLCp8cBz1DiLQDEYYA5c5iQZjApuktl8zF" class="btn btn-dark" target="_blank" rel="noopener">シリーズを見る <span aria-hidden="true">↗</span></a>
-            <a href="https://www.youtube.com/playlist?list=PLKj49O7Pxzgk" class="text-link" target="_blank" rel="noopener">プラグイン紹介を見る <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="studio-section studio-container" id="about" aria-labelledby="about-title"><div class="studio-about"><div><p class="studio-eyebrow">05 / THE STUDIO</p><h2 id="about-title">小さなスタジオ。<br>音楽への、<span>大きな好奇心。</span></h2></div><div class="studio-about-copy"><p>わからないからこそ、わかりにくい場所に気づける。Nukesaku Audioは、作曲を学ぶ人と同じ目線で、音楽を始めるハードルを少し下げる道具と説明を作る個人プロジェクトです。</p><dl><div><dt>01</dt><dd><strong>触れながら、わかる。</strong><span>まずは試せる。知識は、そのあとでも。</span></dd></div><div><dt>02</dt><dd><strong>途中も、正直に。</strong><span>できたことと、これからのことを伝える。</span></dd></div><div><dt>03</dt><dd><strong>声から、育てる。</strong><span>使う人の気づきを、次の改善につなげる。</span></dd></div></dl></div></div></section>
 
-    <section class="section section-wide" id="about">
-      <div class="manifesto-card">
-        <div class="manifesto-heading">
-          <p class="section-kicker">About Nukesaku Audio</p>
-          <h2>初心者の疑問を、<br>開発の出発点に。</h2>
-        </div>
-        <div class="manifesto-copy">
-          <p>わからないからこそ、わかりにくい場所に気づける。Nukesaku Audioは、作曲を学ぶ人と同じ目線で、音楽を始めるハードルを少し下げる道具と説明を作る個人プロジェクトです。</p>
-          <dl class="principles">
-            <div><dt>01</dt><dd><strong>使いながら学べる</strong><span>専門知識がなくても始められ、あとから深く触れられる。</span></dd></div>
-            <div><dt>02</dt><dd><strong>過程まで正直に</strong><span>できたことも、未検証のことも、区別して伝える。</span></dd></div>
-            <div><dt>03</dt><dd><strong>小さくても本気で</strong><span>個人制作だからこそ、使う人の声に近い製品を目指す。</span></dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-wide contact-section" id="contact">
-      <div class="contact-callout">
-        <p class="section-kicker">Contact / Feedback</p>
-        <h2>気づいたことを、<br>次の改善につなげたい。</h2>
-        <p>不具合、使いにくかったところ、こんな機能が欲しいという声を歓迎しています。</p>
-        <div class="contact-actions">
-          <a href="mailto:nukesakuaudio@proton.me" class="btn btn-primary">メールで連絡する</a>
-          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" class="btn btn-ghost" target="_blank" rel="noopener">YouTubeへ <span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </section>
+    <section class="studio-container studio-contact" id="contact" aria-labelledby="contact-title"><div><p class="studio-eyebrow">SAY HELLO</p><h2 id="contact-title">次のアイデアを、いっしょに。</h2><p>使ってみた感想、不具合、「こんなの欲しい」。気軽に聞かせてください。</p></div><a href="mailto:nukesakuaudio@proton.me" class="studio-contact-link">メールで連絡する <span aria-hidden="true">↗</span></a></section>
   </main>
-
-  <footer class="site-footer site-footer-v2">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="#top" class="brand">
-          <span class="brand-knob" aria-hidden="true"></span>
-          <span class="brand-name">Nukesaku Audio</span>
-        </a>
-        <p>曲作りを、もっと楽しく、もっと気軽に。</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <a href="harmony/">HARMONY · コード進行</a>
-          <a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="nukesakuchop.html">NukesakuCHOP</a>
-          <a href="compose-evolution.html">1.5.0 開発進捗</a>
-          <a href="knowledge.html">基礎知識</a>
-        </div>
-        <div class="footer-col">
-          <h4>Elsewhere</h4>
-          <a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH <span aria-hidden="true">↗</span></a>
-          <a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube <span aria-hidden="true">↗</span></a>
-          <a href="mailto:nukesakuaudio@proton.me">Contact</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Nukesaku Audio.</p>
-      <p>Independent music-tech project from Japan.</p>
-    </div>
-  </footer>
-
+  <footer class="site-footer site-footer-v2 studio-footer"><div class="studio-container"><div class="studio-footer-top"><a href="#top" class="brand"><span class="brand-knob" aria-hidden="true"></span><span class="brand-name">Nukesaku Audio</span></a><p>曲作りを、もっと楽しく、もっと気軽に。</p><a href="#top" class="studio-back-top" aria-label="ページの先頭へ">↑</a></div><div class="studio-footer-links"><div><span>TOOLS</span><a href="harmony.html">HARMONY</a><a href="nukesakucompose.html">NukesakuCOMPOSE</a><a href="nukesakuchop.html">NukesakuCHOP</a></div><div><span>EXPLORE</span><a href="knowledge.html">基礎知識</a><a href="compose-evolution.html">開発ノート</a><a href="#about">このスタジオについて</a></div><div><span>ELSEWHERE</span><a href="https://nukesakuaudio.booth.pm/" target="_blank" rel="noopener">BOOTH ↗</a><a href="https://youtube.com/channel/UCAgXW05yq8Rg0s3lzZblxLQ" target="_blank" rel="noopener">YouTube ↗</a><a href="mailto:nukesakuaudio@proton.me">Contact ↗</a></div></div><div class="studio-footer-bottom"><p>© 2026 Nukesaku Audio</p><p>INDEPENDENT MUSIC TOOLS · MADE WITH CURIOSITY</p></div></div></footer>
   <script src="script.js?v=4"></script>
+  <script type="module" src="homepage-demo.js?v=1"></script>
 </body>
 </html>

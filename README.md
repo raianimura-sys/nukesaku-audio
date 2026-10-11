@@ -8,12 +8,12 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 
 ## Pages
 
-- `index.html` — brand home and primary routes
+- `index.html` — studio home: live HARMONY demo, public tools, development projects, learning and contact routes
 - `harmony/` — free browser chord progression app with mobile support and MIDI export
 - `harmony.html` — HARMONY features and a three-step guide, with direct app links
 - `nukesakucompose.html` — currently distributed Beta product page
 - `nukesakuchop.html` — upcoming phrase collage instrument product preview
-- `compose-evolution.html` — formal 1.0 development log
+- `compose-evolution.html` — formal 1.5.0 Composer Canvas development log and earlier milestones
 - `knowledge.html` — 15-article beginner curriculum across three courses
 - `article-*.html` — DAW, composition theory, MIDI editing and mixing fundamentals
 - `404.html` — GitHub Pages fallback
@@ -24,7 +24,14 @@ HARMONY is available at <https://raianimura-sys.github.io/nukesaku-audio/harmony
 
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
 
-`harmony-home.css` is loaded by `index.html` and `harmony.html` for HARMONY routes, its home topic, and introduction-page layout without changing shared page styles.
+`harmony-home.css` provides HARMONY-specific routes, its home topic, and introduction-page layout. The home redesign and site-wide visual treatment are applied by `studio.css`.
+
+## Home demo and shared styling
+
+- `studio.css?v=3` is loaded after existing styles by every root-level HTML page, including product pages, learning articles, and the fallback. The independent `harmony/` app is excluded so its editor styling stays separate.
+- `homepage-demo.js` uses the existing HARMONY engines for the home demo. Playback starts from a user action, plays the progression once, and can be stopped. The simple and complex controls let visitors compare the two rhythm families.
+- Keep the home routes to `harmony/`, `harmony.html`, the COMPOSE Beta page, CHOP preview, development log, the 15-article curriculum, BOOTH, YouTube, and contact. Preserve the `#lab` and `#about` anchors used by other pages.
+- Keep screenshots with their actual product/version labels. The FLOW and GuitarPractice images are development evidence, not released products.
 
 ## Local preview
 
@@ -36,7 +43,7 @@ Then open `http://localhost:8080/`.
 
 ## Design system
 
-The editable color, spacing, type and radius tokens are at the top of `style.css`. The current direction is “Warm Editorial × Music Tech”: warm and approachable at brand level, dark and precise around product imagery.
+The site uses a shared studio design across its home, product pages, and learning content. Base color, spacing, type and radius tokens live in `style.css`; `studio.css` applies the redesigned home and the site-wide overrides. Prefer scoped home-page rules for layout changes and shared rules for navigation, typography, buttons, and footer consistency.
 
 Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social-card-v2.jpg` is used only for social sharing, not as a page UI.
 
@@ -44,9 +51,11 @@ Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social
 
 - The currently distributed Beta is macOS / Apple Silicon only.
 - NukesakuCHOP is in final development; its OS, price and release date are not yet published.
-- Formal 1.0 is in development and must not be described as released.
+- Formal COMPOSE 1.5.0 Composer Canvas is in development and has not started selling. Its chord editing, Piano Roll, and central editing UI are development features; do not attribute them to the distributed Beta 0.3.0.
+- FLOW 0.9.0 is an unsold development build; Bitwig save/restore remains under verification. Its current evidence supports rhythm patterns, arrangement generation, and DRUM MAP display.
+- GuitarPractice 0.1.3 is an undistributed validation prototype. Its tuner, chord dictionary, fretboard, and MIDI-to-TAB are being tested; real-guitar recognition accuracy remains in development.
 - Windows remains unverified until a native build and DAW acceptance pass are complete.
-- When CSS or JavaScript changes, bump the `?v=` query in every HTML page.
+- When shared CSS or JavaScript changes, bump its `?v=` query in every root-level HTML page that loads it. Update the home demo query on `index.html` when the demo changes. Do not change the independent app cache without an app update.
 
 ## Search and sharing
 
