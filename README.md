@@ -24,7 +24,7 @@ HARMONY is available at <https://raianimura-sys.github.io/nukesaku-audio/harmony
 
 The rhythm catalog has 5 basic, 11 simple, and 32 complex patterns. Version 1.3 adds 12 hand-composed accompaniment grooves; density, accents, and variations apply to both playback and MIDI export.
 
-Version 1.4 adds five context-aware next-chord choices with explanations and two-chord audition. Tapping a candidate selects and previews it; only its separate plus button or a drag inserts it into the progression.
+Version 1.5 puts five context-aware chord recommendations at the center of the composer. The full palette is collapsed under “自分でコードを選ぶ” and keeps diatonic, borrowed, and unrestricted chord choices available. Recommendations include explanations and two-chord audition. Tapping a candidate selects and previews it; only its separate plus button or a drag inserts it into the progression.
 
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
 
