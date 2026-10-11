@@ -1,4 +1,4 @@
-import {MODES, QUALITIES, makeChord, diatonicChords} from './music.js?v=1.7.1';
+import {MODES, QUALITIES, makeChord, diatonicChords, chordName} from './music.js?v=2.0.0';
 
 // Written transition choices, rather than random chord suggestions. The order
 // offers several musical directions while retaining the current key and mode.
@@ -20,7 +20,8 @@ const direction = (degree, quality, mode) => {
   return QUALITIES[quality].intervals[1] === 3 ? ['やわらかく', '落ち着いたマイナーの色を添える。'] : ['明るく', '響きの色を変え、明るい流れへ。'];
 };
 
-export function suggestNextChords({anchor = null, key = 0, mode = 'major', extension = 'triad'} = {}) {
+export function suggestNextChords({anchor = null, key = 0, mode = 'major', extension = 'triad', chords=null, index=-1, intent='natural', loop=true} = {}) {
+  if(chords?.length)return contextualSuggestions({chords,index,key,mode,extension,intent,loop});
   const activeMode = MODES.find(item => item.id === mode) || MODES[0];
   const palette = diatonicChords(key, activeMode.id, extension);
   const relative = anchor ? mod(anchor.root - palette[0].root) : -1;
@@ -55,4 +56,64 @@ export function suggestNextChords({anchor = null, key = 0, mode = 'major', exten
   // Fill only if a chromatic source or the source-root exclusion left a gap.
   for (const degree of [0,3,4,5,1,2,6]) add(degree);
   return choices.slice(0,5).map(item => ({...item, chord:makeChord(item.chord.root,item.chord.quality)}));
+}
+
+const tones = c => QUALITIES[c.quality].intervals.map(n=>mod(c.root+n));
+const dominant = c => ['dom7','dom9','maj'].includes(c.quality);
+export function connectionScore(a,b) {
+  if(!a||!b)return 0;
+  const left=tones(a),right=tones(b),distance=(x,y)=>Math.min(mod(x-y),mod(y-x));
+  let score=left.filter(n=>right.includes(n)).length*1.1;
+  score-=left.reduce((sum,n)=>sum+Math.min(...right.map(p=>distance(n,p))),0)/left.length*.55;
+  const movement=mod(b.root-a.root);
+  if(movement===5&&dominant(a))score+=5;
+  if(movement===7)score+=1.3;
+  if([2,10].includes(movement))score+=.8;
+  if(['dim','dim7','m7b5'].includes(a.quality)&&movement===1)score+=3;
+  if(['min','min7','min9'].includes(a.quality)&&movement===7)score+=1.2;
+  if(a.root===b.root)score-=2.8;
+  return score;
+}
+
+export function chordPool(key,mode,extension,intent='natural') {
+  const palette=diatonicChords(key,mode,extension);
+  const pool=palette.map(chord=>({chord,label:'キーの響き',reason:'キーの中で流れをつくる。',outside:false}));
+  if(mode==='minor') {
+    pool.push({chord:makeChord(mod(key+7),extension==='triad'?'maj':extension==='9th'?'dom9':'dom7'),label:'短調のV',reason:'明るいVで短調の中心へ向かう。',outside:false});
+  }
+  if(intent!=='natural') {
+    if(mode==='major')for(const [interval,quality] of [[5,'min'],[8,'maj'],[10,'maj']]){
+      const q=extension==='triad'?quality:quality==='min'?(extension==='9th'?'min9':'min7'):(extension==='9th'?'maj9':'maj7');
+      pool.push({chord:makeChord(mod(key+interval),q),label:'借用で彩る',reason:'同じ主音の短調から借りた響き。',outside:true});
+    }
+    for(const target of palette.filter(c=>!['dim','m7b5','m7b5b9'].includes(c.quality))) {
+      pool.push({chord:makeChord(mod(target.root+7),extension==='triad'?'maj':extension==='9th'?'dom9':'dom7'),label:'着地を導く',reason:`${chordName(target,key)}へ向かう、もう一つのドミナント。`,outside:true,target:target.root});
+    }
+    if(intent==='adventure')pool.push({chord:makeChord(mod(key+1),'maj7'),label:'半音の彩り',reason:'半音上の響きで、いつもと違う景色へ。',outside:true});
+  }
+  return pool.filter((item,i)=>pool.findIndex(other=>other.chord.root===item.chord.root&&other.chord.quality===item.chord.quality)===i);
+}
+
+export function contextualSuggestions({chords,index,key,mode,extension,intent='natural',loop=true}) {
+  index=Math.min(chords.length-1,Math.max(0,index));
+  const anchor=chords[index],next=chords[index+1]||(loop&&chords.length>1?chords[0]:null);
+  const palette=diatonicChords(key,mode,extension);
+  const from=MODES.find(m=>m.id===mode)?.intervals.indexOf(mod(anchor.root-key))??-1;
+  const preferred=TRANSITIONS[mode]?.[from]||[0,3,4,5,1,2,6];
+  const ranked=chordPool(key,mode,extension,intent).filter(item=>item.chord.root!==anchor.root&&item.chord.root!==next?.root).map(item=>{
+    const c=item.chord,degree=palette.findIndex(p=>p.root===c.root&&p.quality===c.quality);
+    let score=connectionScore(anchor,c)+(next?connectionScore(c,next)*1.25:0);
+    score+=degree>=0?(7-Math.max(0,preferred.indexOf(degree)))*.18:0;
+    if(item.outside)score-=intent==='adventure'?.15:1.1;
+    if(item.target!=null)score+=next?.root===item.target?2.5:-2.5;
+    if(next?.root===c.root)score-=2;
+    const repetitions=chords.filter(p=>p.root===c.root&&p.quality===c.quality).length;
+    score-=repetitions*.22;
+    const [label,reason]=degree>=0?direction(degree,c.quality,mode):[item.label,item.reason];
+    const resolves=next&&dominant(c)&&mod(c.root+5)===next.root;
+    return {...item,score,label:resolves?'次の着地へ':label,reason:(resolves?`${chordName(next,key)}への解決をつくる。`:reason)+(next?`${index===chords.length-1?' 先頭':' 次の'}${chordName(next,key)}とのつながりも考慮。`:'')};
+  }).sort((a,b)=>b.score-a.score);
+  const result=[];
+  for(const item of ranked){if(result.some(p=>p.chord.root===item.chord.root))continue;result.push(item);if(result.length===5)break;}
+  return result;
 }

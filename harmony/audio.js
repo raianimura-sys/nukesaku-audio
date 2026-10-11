@@ -1,4 +1,4 @@
-import { arrangementEvents, totalBeats, chordNotes } from './music.js?v=1.7.1';
+import { arrangementEvents, totalBeats, chordNotes } from './music.js?v=2.0.0';
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, Number(value) || 0));
 const frequency = pitch => 440 * Math.pow(2, (pitch - 69) / 12);
@@ -46,9 +46,7 @@ export class AudioEngine {
       this._context = new AudioContextClass({ latencyHint: 'interactive' });
       const ctx = this._context;
       this._resumePromise = null;
-      this._impulseBuffer = this._impulse(1.65);
-      this._pianoWave = this._wave([0, 1, .31, .13, .065, .025, .015, .009]);
-      this._rhodesWave = this._wave([0, 1, .045, .16, .013, .045, 0, .012]);
+      this._initializeTimbres();
       ctx.addEventListener('statechange', () => {
         if (ctx !== this._context) return;
         if (ctx.state === 'running' && this._playing) this._tick(this._generation);
@@ -73,6 +71,13 @@ export class AudioEngine {
     return ctx;
   }
 
+  _initializeTimbres() {
+    this._impulseBuffer = this._impulse(1.65);
+    this._pianoWave = this._wave([0, 1, .26, .14, .075, .045, .023, .018, .012, .008, .006, .004]);
+    this._pianoSoftWave = this._wave([0, 1, .16, .055, .025, .012, .006]);
+    this._rhodesWave = this._wave([0, 1, .03, .12, .008, .026, 0, .006]);
+  }
+
   _createGraph() {
     const ctx = this._context;
     this._dry = ctx.createGain();
@@ -80,7 +85,7 @@ export class AudioEngine {
     this._convolver = ctx.createConvolver();
     this._convolver.buffer = this._impulseBuffer;
     this._reverb = ctx.createGain();
-    this._reverb.gain.value = .32;
+    this._reverb.gain.value = .22;
     this._compressor = ctx.createDynamicsCompressor();
     this._compressor.threshold.value = -16;
     this._compressor.knee.value = 18;
@@ -338,10 +343,13 @@ export class AudioEngine {
     filter.type = 'lowpass';
     filter.Q.value = .65;
     filter.connect(amplitude);
-    amplitude.connect(this._dry);
+    if(ctx.createStereoPanner){
+      const pan=ctx.createStereoPanner();pan.pan.value=kind==='bass'?0:clamp((pitch-60)/48,-.38,.38);
+      amplitude.connect(pan);pan.connect(this._dry);nodes.push(pan);
+    }else amplitude.connect(this._dry);
     amplitude.connect(send);
     send.connect(this._reverbInput);
-    send.gain.value = kind === 'bass' ? .025 : kind === 'pad' ? .4 : .22;
+    send.gain.value = kind === 'bass' ? .025 : kind === 'pad' ? .32 : .16;
     const source = (type, relative = 1, gain = 1, detune = 0, wave = null) => {
       const osc = ctx.createOscillator();
       const level = ctx.createGain();
@@ -357,23 +365,30 @@ export class AudioEngine {
     };
     let attack = .005, release = .2, peak = .14 * strength, sustain = .3;
     if (kind === 'piano') {
-      source('sine', 1, .86, 0, this._pianoWave);
-      const overtone = source('sine', 2, .1 * strength);
-      overtone.gain.setValueAtTime(.1 * strength, at);
-      overtone.gain.exponentialRampToValueAtTime(.001, at + .22);
-      filter.frequency.setValueAtTime(Math.min(15000, 2400 + freq * 5 + strength * 2400), at);
-      filter.frequency.exponentialRampToValueAtTime(Math.max(900, freq * 2.4), at + Math.min(duration, 1.1));
-      release = .24;
-      sustain = .25;
+      // Slightly separated strings and a short, velocity-dependent hammer spectrum.
+      const wave=vel<.58?this._pianoSoftWave:this._pianoWave;
+      source('sine', 1, .46, -1.8, wave);
+      source('sine', 1, .46, 1.6, wave);
+      const overtone = source('sine', 2.002, .075 * strength);
+      overtone.gain.setValueAtTime(.075 * strength, at);
+      overtone.gain.exponentialRampToValueAtTime(.0001, at + .17);
+      const hammer=source('sine', 3.008, .035*strength);
+      hammer.gain.setValueAtTime(.035*strength,at);hammer.gain.exponentialRampToValueAtTime(.0001,at+.055);
+      filter.frequency.setValueAtTime(Math.min(15000, 1700 + freq * 4 + vel * 4300), at);
+      filter.frequency.exponentialRampToValueAtTime(Math.max(800, freq * 2.2), at + Math.min(duration, 1.35));
+      release = .28;
+      sustain = .42;
     } else if (kind === 'rhodes') {
-      source('sine', 1, .9, 0, this._rhodesWave);
-      const tine = source('sine', 7, .048 * strength);
-      tine.gain.setValueAtTime(.048 * strength, at);
-      tine.gain.exponentialRampToValueAtTime(.001, at + .16);
-      filter.frequency.value = Math.min(12000, freq * 9 + 1200);
-      peak = .16 * strength;
-      release = .3;
-      sustain = .34;
+      source('sine', 1, .48, -2.2, this._rhodesWave);
+      source('sine', 1, .48, 2.2, this._rhodesWave);
+      const tine = source('sine', 7.01, .035 * vel);
+      tine.gain.setValueAtTime(.035 * vel, at);
+      tine.gain.exponentialRampToValueAtTime(.0001, at + .24);
+      filter.frequency.setValueAtTime(Math.min(11000, freq * 7 + 1000+vel*2200),at);
+      filter.frequency.exponentialRampToValueAtTime(Math.max(700,freq*3),at+Math.min(duration,1.5));
+      peak = .15 * strength;
+      release = .36;
+      sustain = .48;
     } else if (kind === 'pad') {
       source('triangle', 1, .5, -5);
       source('triangle', 1, .5, 5);

@@ -57,7 +57,7 @@ export function makeChord(root, quality = 'maj', degree = null) {
   return {
     id: `chord-${Date.now().toString(36)}-${(++chordSerial).toString(36)}`,
     root: pc(root), quality: safeQuality(quality), degree,
-    inversion: 0, octave: 4, beats: 4, velocity: 90,
+    inversion: 0, octave: 4, beats: 4, velocity: 90, locked:false, voicing:'close', bass:null,
   };
 }
 
@@ -65,8 +65,8 @@ export function chordName(chord, key = 0) {
   const quality = safeQuality(chord?.quality);
   const root = pc(chord?.root);
   const inversion = inversionOf(chord);
-  const bass = pc(root + QUALITIES[quality].intervals[inversion]);
-  return noteName(root, key) + QUALITIES[quality].suffix + (inversion ? `/${noteName(bass, key)}` : '');
+  const bass = chord?.bass!=null ? pc(chord.bass) : pc(chordNotes(chord)[0]);
+  return noteName(root, key) + QUALITIES[quality].suffix + (bass!==root ? `/${noteName(bass, key)}` : '');
 }
 
 export function chordNotes(chord, options = {}) {
@@ -80,6 +80,8 @@ export function chordNotes(chord, options = {}) {
     while (interval < bassInterval) interval += 12;
     return root + interval;
   }).sort((a, b) => a - b);
+  if(chord?.voicing==='open') notes=notes.map((n,i)=>i%2?n+12:n).sort((a,b)=>a-b);
+  if(chord?.voicing==='drop2'&&notes.length>=3){notes[notes.length-2]-=12;notes.sort((a,b)=>a-b);}
   // Move the entire voicing by octaves at MIDI's bounds, preserving intervals.
   while (notes[0] < 0) notes = notes.map(note => note + 12);
   while (notes.at(-1) > 127) notes = notes.map(note => note - 12);
@@ -148,7 +150,7 @@ export function transposeChords(chords, semitones) {
   return (Array.isArray(chords) ? chords : []).map(chord => {
     const movedRoot = pc(chord?.root) + amount;
     const octave = clamp(Math.round(finite(chord?.octave, 4)), -1, 8) + Math.floor(movedRoot / 12);
-    return { ...chord, root: pc(movedRoot), octave: clamp(octave, -1, 8) };
+    return { ...chord, root: pc(movedRoot), octave: clamp(octave, -1, 8), ...(chord.bass!=null?{bass:pc(chord.bass+amount)}:{}) };
   });
 }
 
@@ -191,9 +193,10 @@ function voiceMovement(previous, next) {
 
 export function voiceLead(chords) {
   if (!Array.isArray(chords) || !chords.length) return [];
-  const result = [{ ...chords[0], octave: clamp(Math.round(finite(chords[0]?.octave, 4)), 2, 6), inversion: inversionOf(chords[0]) }];
+  const result = [chords[0].locked?{...chords[0]}:{ ...chords[0], octave: clamp(Math.round(finite(chords[0]?.octave, 4)), 2, 6), inversion: inversionOf(chords[0]) }];
   let previous = chordNotes(result[0]);
   for (const original of chords.slice(1)) {
+    if(original.locked){result.push({...original});previous=chordNotes(original);continue;}
     let best = { ...original };
     let bestScore = Infinity;
     const ownOctave = clamp(Math.round(finite(original?.octave, 4)), 2, 6);
@@ -673,7 +676,7 @@ export function arrangementEvents(chords, settings = {}) {
     if (settings.bass) {
       const offset = clamp(Math.round(finite(settings.octave, 0)), -4, 4);
       const bassOctave = clamp(Math.round(finite(settings.bassOctave, 2)) + offset, -1, 8);
-      const bassPitch = clamp((bassOctave + 1) * 12 + pc(notes[0]), 0, 127);
+      const bassPitch = clamp((bassOctave + 1) * 12 + pc(chord.bass!=null?chord.bass:notes[0]), 0, 127);
       let alternatePitchClass = pc(pc(chord.root) + QUALITIES[safeQuality(chord.quality)].intervals[2]);
       if (alternatePitchClass === pc(bassPitch)) alternatePitchClass = pc(chord.root);
       const bassFifth = clamp((bassOctave + 1) * 12 + alternatePitchClass, 0, 127);
@@ -698,8 +701,8 @@ function variableLength(value) {
   return bytes;
 }
 const uint32 = value => [(value >>> 24) & 255, (value >>> 16) & 255, (value >>> 8) & 255, value & 255];
-const ascii = text => Array.from(text, character => character.charCodeAt(0) & 127);
-const metaText = (type, value) => [0xff, type, ...variableLength(value.length), ...ascii(value)];
+const ascii = text => Array.from(text, character => character.charCodeAt(0)>=32&&character.charCodeAt(0)<=126?character.charCodeAt(0):63);
+const metaText = (type, value) => {const bytes=ascii(String(value));return [0xff,type,...variableLength(bytes.length),...bytes];};
 
 function midiTrack(messages, endTick) {
   messages.sort((a, b) => a.tick - b.tick || a.order - b.order);
@@ -736,6 +739,7 @@ export function createMidi(chords, settings = {}) {
     { tick: 0, order: 2, data: [0xff, 0x58, 4, numerator, Math.log2(denominator), denominator === 8 && numerator % 3 === 0 ? 36 : 24, 8] },
     { tick: 0, order: 3, data: metaText(6, 'LOOP_START') },
     { tick: endTick, order: 3, data: metaText(6, 'LOOP_END') },
+    ...(Array.isArray(settings.sectionMarkers)?settings.sectionMarkers:[]).filter(m=>Number.isFinite(m.beat)&&m.beat>=0&&m.beat<endTick/ppq).map(m=>({tick:Math.round(m.beat*ppq),order:4,data:metaText(6,String(m.midiLabel||m.label).slice(0,100))})),
   ], endTick);
   const events = arrangementEvents(chords, settings);
   const tracks = [tempoTrack];

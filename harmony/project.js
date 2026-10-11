@@ -1,16 +1,19 @@
-import {MODES, QUALITIES, PATTERNS, makeChord} from './music.js?v=1.7.1';
+import {MODES, QUALITIES, PATTERNS, makeChord} from './music.js?v=2.0.0';
+import {createSection, SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS} from './sections.js?v=2.0.0';
 
 const uid = () => globalThis.crypto?.randomUUID?.() ?? `project-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const number = (value, fallback, min, max) => value !== null && value !== '' && Number.isFinite(Number(value))
   ? Math.min(max, Math.max(min, Number(value))) : fallback;
 
 export function createProject() {
+  const chords=[makeChord(0, 'maj7'), makeChord(9, 'min7'), makeChord(5, 'maj7'), makeChord(7, 'dom7')];
+  const section=createSection('verse',chords);
   return {
-    version: 2, id: uid(), title: 'Untitled progression', key: 0, mode: 'major', extension: '7th', selected: 0,
-    chords: [makeChord(0, 'maj7'), makeChord(9, 'min7'), makeChord(5, 'maj7'), makeChord(7, 'dom7')],
+    version: 3, id: uid(), title: 'Untitled progression', key: 0, mode: 'major', extension: '7th', selected: 0,
+    chords, sections:[section], activeSectionId:section.id, recommendationIntent:'natural',
     settings: {bpm: 120, meter: 4, pattern: 'block', gate: 1, swing: 0, humanize: 0, bass: true,
       octave: 0, instrument: 'piano', volume: .65, loop: true, metronome: false,
-      variation: 0, density: 1, accent: .5},
+      variation: 0, density: 1, accent: .5, playScope:'section'},
   };
 }
 
@@ -18,7 +21,9 @@ export function createProject() {
 export function validateProject(raw) {
   if (!raw || !Array.isArray(raw.chords) || raw.chords.length > 128) throw new Error('有効なHARMONYプロジェクトではありません。');
   const d = createProject();
-  const chords = raw.chords.map(c => {
+  const validateChords = items => {
+    if(!Array.isArray(items)||items.length>128)throw new Error('1セクションは128コードまでです。');
+    return items.map(c => {
     if (!c || !Object.hasOwn(QUALITIES, c.quality) || c.root === null || !Number.isFinite(Number(c.root))) {
       throw new Error('コードデータを読み込めませんでした。');
     }
@@ -26,8 +31,28 @@ export function validateProject(raw) {
     return {...chord, id: typeof c.id === 'string' && c.id.length <= 100 ? c.id : chord.id,
       beats: number(c.beats, 4, .5, 8), octave: Math.round(number(c.octave, 4, -1, 8)),
       velocity: Math.round(number(c.velocity, 90, 1, 127)),
-      inversion: Math.min(QUALITIES[c.quality].intervals.length - 1, Math.round(number(c.inversion, 0, 0, 4)))};
-  });
+      inversion: Math.min(QUALITIES[c.quality].intervals.length - 1, Math.round(number(c.inversion, 0, 0, 4))),
+      locked:c.locked===true, voicing:['close','open','drop2'].includes(c.voicing)?c.voicing:'close',
+      bass:c.bass==null?null:Math.round(number(c.bass,0,0,11))};
+    });
+  };
+  const chords=validateChords(raw.chords);
+  let sections, activeSectionId;
+  if(Number(raw.version)>=3){
+    if(!Array.isArray(raw.sections)||!raw.sections.length||raw.sections.length>MAX_SECTIONS)throw new Error('曲の構成データを読み込めませんでした。');
+    const ids=new Set();
+    sections=raw.sections.map(s=>{
+      if(!s||typeof s.id!=='string'||!s.id||s.id.length>100||ids.has(s.id)||!SECTION_TYPES.some(t=>t.id===s.type))throw new Error('セクションデータを読み込めませんでした。');
+      ids.add(s.id);
+      const sequence=s.id===raw.activeSectionId?chords:validateChords(s.chords);
+      return {id:s.id,type:s.type,chords:sequence,selected:sequence.length?Math.min(sequence.length-1,Math.round(number(s.id===raw.activeSectionId?raw.selected:s.selected,0,0,127))):-1};
+    });
+    if(!ids.has(raw.activeSectionId))throw new Error('編集中のセクションが見つかりません。');
+    activeSectionId=raw.activeSectionId;
+    if(sections.reduce((n,s)=>n+s.chords.length,0)>MAX_SONG_CHORDS)throw new Error('曲全体は512コードまでです。');
+  }else{
+    sections=[createSection('verse',chords)];activeSectionId=sections[0].id;
+  }
   const s = raw.settings ?? {};
   const legacyGate = Number(raw.version ?? 1) < 2 && (s.gate == null || Number(s.gate) === .88);
   return {...d, id: typeof raw.id === 'string' ? raw.id.slice(0, 100) : d.id,
@@ -35,7 +60,9 @@ export function validateProject(raw) {
     key: Math.round(number(raw.key, 0, 0, 11)), mode: MODES.some(m => m.id === raw.mode) ? raw.mode : 'major',
     extension: ['triad', '7th', '9th'].includes(raw.extension) ? raw.extension : '7th',
     selected: chords.length ? Math.min(chords.length - 1, Math.round(number(raw.selected, 0, 0, 127))) : -1,
-    chords, settings: {...d.settings,
+    chords,sections,activeSectionId,
+    recommendationIntent:['natural','color','adventure'].includes(raw.recommendationIntent)?raw.recommendationIntent:'natural',
+    settings: {...d.settings,playScope:s.playScope==='song'?'song':'section',
       bpm: Math.round(number(s.bpm, 120, 40, 240)), meter: [3, 4, 6].includes(Number(s.meter)) ? Number(s.meter) : 4,
       pattern: PATTERNS.some(p => p.id === s.pattern) ? s.pattern : 'block',
       gate: legacyGate ? 1 : number(s.gate, 1, .1, 1), swing: number(s.swing, 0, 0, .5),
