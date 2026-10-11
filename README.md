@@ -9,12 +9,21 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 ## Pages
 
 - `index.html` — brand home and primary routes
+- `harmony/` — free browser chord progression app with mobile support and MIDI export
 - `nukesakucompose.html` — currently distributed Beta product page
 - `nukesakuchop.html` — upcoming phrase collage instrument product preview
 - `compose-evolution.html` — formal 1.0 development log
 - `knowledge.html` — 15-article beginner curriculum across three courses
 - `article-*.html` — DAW, composition theory, MIDI editing and mixing fundamentals
 - `404.html` — GitHub Pages fallback
+
+## HARMONY
+
+HARMONY is available at <https://raianimura-sys.github.io/nukesaku-audio/harmony/> from the home navigation, first quick-route card, and footer. It runs in the browser on desktop and mobile; MIDI files can be imported into a DAW.
+
+Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
+
+`harmony-home.css` is loaded only by `index.html` and controls its four quick routes without changing shared page styles.
 
 ## Local preview
 
