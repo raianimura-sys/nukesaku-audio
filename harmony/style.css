@@ -81,3 +81,9 @@
 .preset-chords{font-size:11px;line-height:1.85;color:#48663b;overflow-wrap:anywhere}
 .standard-preset .template-degrees{font-size:9px;line-height:1.8;margin:0;color:#8a9a7d;overflow-wrap:anywhere}.template-card.standard-preset p{font-size:10px;line-height:1.8;white-space:normal;margin:0;color:#819274}
 @media(max-width:620px){.template-card.standard-preset{padding:12px 10px;gap:5px}.template-card.standard-preset strong{font-size:13px}.standard-preset .template-tag{font-size:7px}.preset-chords{font-size:10px}.standard-preset .template-degrees{font-size:8px}.template-card.standard-preset p{font-size:9px}}
+
+/* Delete one chord directly on the timeline, with a separate selectable body. */
+.timeline-chord .card-top{align-items:center;gap:4px;min-height:34px}.timeline-card-actions{display:flex;align-items:center;gap:2px}.timeline-card-actions .drag-grip{display:flex;align-items:center;justify-content:center;min-height:34px;width:20px;padding:0}
+.timeline-delete{display:inline-flex;align-items:center;justify-content:center;gap:2px;min-height:34px;width:44px;padding:4px 3px;border-radius:4px;background:#ffffff50;color:#455e3c;font-size:8px;line-height:1.2;cursor:pointer;touch-action:manipulation}.timeline-delete svg{width:12px;height:12px}.timeline-delete:hover{background:#ffffff90;color:#704739}.timeline-delete:focus-visible{outline:2px solid #465f39;outline-offset:1px}
+.timeline-select{display:block;width:100%;padding:0;text-align:left;color:inherit;background:none;cursor:pointer}.timeline-select:focus-visible{outline:2px solid #465f39;outline-offset:3px;border-radius:3px}.timeline-select strong{margin-top:4px}.timeline-chord{min-height:143px}
+@media(max-width:620px){.timeline-delete{min-height:36px}.timeline-card-actions .drag-grip{min-height:36px}.timeline-select strong{margin-top:3px}.timeline-chord{min-height:145px}}
