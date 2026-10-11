@@ -41,3 +41,24 @@
 @media(max-height:680px){.rhythm-modal #modal-body{display:block;overflow-y:auto;overscroll-behavior:contain}.rhythm-picker{min-height:100%;flex:none}.rhythm-list{flex:none;height:clamp(100px,26dvh,180px);min-height:100px;margin-right:0;padding-right:3px}.rhythm-modal[open]{padding-top:14px;padding-bottom:14px}.rhythm-modal .modal-header{margin-bottom:10px}.rhythm-type-tabs button{min-height:56px;padding-top:8px;padding-bottom:8px}}
 
 .home-return{text-decoration:none}.breadcrumb>.home-return{white-space:nowrap;color:#667d59;font-size:10px;font-weight:600}.home-return:hover{color:#83a16b}.sidebar .home-return{margin-top:12px;border-top:1px solid #3a443d;border-radius:0;padding-top:17px}
+
+/* Choose and audition first; adding is an explicit, separate action. */
+.candidate-card{display:flex;flex-direction:column;min-height:132px;padding:11px 10px 8px;cursor:grab}
+.candidate-card.candidate-selected{border-color:#6e9360;box-shadow:inset 0 0 0 1px #6e9360;background:#f5faef}
+.candidate-select{display:block;width:100%;text-align:left;padding:0;flex:1;min-width:0}
+.candidate-select .roman{gap:4px}.candidate-select .roman>span{font-size:11px;color:#6c845e}
+.candidate-actions{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-top:10px}
+.candidate-grip{touch-action:none;cursor:grab;width:26px;min-height:32px;color:#8d9c80;font-size:18px;padding:0}
+.candidate-plus{display:flex;align-items:center;justify-content:center;gap:3px;min-height:32px;padding:4px 8px;border-radius:5px;background:#ebf1e4;border:1px solid #d8e3cc;color:#4f6c3f;font-size:9px;font-weight:650}
+.candidate-plus svg{width:13px;height:13px}.candidate-status{color:#6c7d61;font-size:10px;margin:11px 0 0;line-height:1.7;min-height:17px}
+.recommendation-section{margin:18px 0;padding:18px 16px;background:#f0f4e9;border:1px solid #dfe7d6;border-radius:9px}
+.recommendation-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.recommendation-header .eyebrow{font-size:7px;letter-spacing:1.6px}.recommendation-header h2{font-size:13px;margin:3px 0 0}
+.recommendation-header .text-button{font-size:9px;white-space:nowrap}.recommendation-context{font-size:15px;font-weight:650;color:#3d5733}
+.recommendation-note{font-size:10px;color:#738269;line-height:1.8;margin:5px 0 12px}
+.recommendation-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
+.recommendation-card{min-height:162px;margin:0}.recommendation-card strong{font-size:25px}.recommendation-card.long-name strong{font-size:21px}
+.recommendation-card small{font-size:9px;color:#678355;font-weight:650;white-space:normal}.recommendation-card p{font-size:9px;color:#829076;line-height:1.7;margin:6px 0 0}
+.recommendation-footnote{font-size:8px;color:#8d9a83;line-height:1.8;margin:11px 0 0}
+.candidate-drop-ready{outline:2px dashed #c6ecc0;outline-offset:-3px}
+@media(max-width:620px){.candidate-card{min-height:136px;padding:10px 8px 7px}.candidate-actions{gap:2px;margin-top:7px}.candidate-grip{width:21px;min-height:36px}.candidate-plus{min-height:36px;padding:4px 6px}.candidate-plus span{display:none}.candidate-plus svg{width:15px;height:15px}.candidate-status{font-size:9px}.recommendation-section{padding:16px 12px}.recommendation-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.recommendation-card{min-height:167px}.recommendation-card .candidate-plus span{display:inline}.recommendation-card .candidate-plus{padding-inline:9px}.recommendation-note{font-size:9px}.recommendation-context{font-size:14px}.recommendation-header h2{font-size:12px}.recommendation-header .text-button{font-size:8px}.recommendation-footnote{font-size:8px}}

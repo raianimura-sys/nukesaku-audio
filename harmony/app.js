@@ -1,7 +1,8 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.3.0';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.3.0';
-import {AudioEngine} from './audio.js?v=1.3.0';
-import {createProject as defaults, validateProject} from './project.js?v=1.3.0';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.4.0';
+import {suggestNextChords} from './recommendations.js?v=1.4.0';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.4.0';
+import {AudioEngine} from './audio.js?v=1.4.0';
+import {createProject as defaults, validateProject} from './project.js?v=1.4.0';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -14,6 +15,7 @@ const KEYS=['C','D♭','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
 const STORAGE={draft:'harmony.draft.v1',library:'harmony.library.v1',picker:'harmony.pattern-picker.v1'};
 const audio=new AudioEngine();
 let toastTimer,saveTimer,activeChord=-1,palette=[],paletteTab='diatonic',chromaticRoot=0,midiBytes,midiUri,midiFilename,rollShown=true,dragIndex=null,touchDrag=null,lastFocused=null;
+let candidateChoice=null,recommendations=[],suppressCandidateClickUntil=0;
 let undoStack=[],redoStack=[],storageUnavailable=false,starting=false,playRequest=0;
 let timelineNodes=[],arrangementLength=0,paintedChord=-1,paintedStep=-1,transportPhase='',modalMode=null,rhythmSearch='',rhythmFilter='simple',rhythmFeel='all',rhythmFavoritesOnly=false;
 
@@ -25,9 +27,9 @@ const savedPicker=readStorage(STORAGE.picker,{});let rhythmPrefs={autoplay:saved
 function toast(message){$('toast').textContent=message;$('toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3200);}
 function autosave(){clearTimeout(saveTimer);$('save-status').innerHTML='<i></i>保存中…';saveTimer=setTimeout(()=>{try{localStorage.setItem(STORAGE.draft,JSON.stringify(state));$('save-status').innerHTML='<i></i>保存済み';storageUnavailable=false;}catch{$('save-status').textContent='保存できません';if(!storageUnavailable){toast('ブラウザに保存できません。ライブラリからJSONを保存してください。');storageUnavailable=true;}}},300);}
 function stop(){playRequest++;starting=false;audio.stop();activeChord=-1;renderPlayback(0,-1);}
-function mutate(action,{message,history=true}={}){if(history){undoStack.push(clone(state));if(undoStack.length>70)undoStack.shift();redoStack=[];}if(audio.isPlaying||starting)stop();action(state);state.selected=state.chords.length?Math.min(Math.max(0,state.selected),state.chords.length-1):-1;render();autosave();if(message)toast(message);}
-function undo(){if(!undoStack.length)return;stop();redoStack.push(clone(state));state=undoStack.pop();render();autosave();toast('元に戻しました');}
-function redo(){if(!redoStack.length)return;stop();undoStack.push(clone(state));state=redoStack.pop();render();autosave();toast('やり直しました');}
+function mutate(action,{message,history=true}={}){if(history){undoStack.push(clone(state));if(undoStack.length>70)undoStack.shift();redoStack=[];}if(audio.isPlaying||starting)stop();action(state);candidateChoice=null;state.selected=state.chords.length?Math.min(Math.max(0,state.selected),state.chords.length-1):-1;render();autosave();if(message)toast(message);}
+function undo(){if(!undoStack.length)return;stop();redoStack.push(clone(state));state=undoStack.pop();candidateChoice=null;render();autosave();toast('元に戻しました');}
+function redo(){if(!redoStack.length)return;stop();undoStack.push(clone(state));state=redoStack.pop();candidateChoice=null;render();autosave();toast('やり直しました');}
 function selected(){return state.chords[state.selected];}
 function barBeats(){return state.settings.meter===6?3:state.settings.meter;}
 function role(chord){const r=mod(chord.root-state.key),idx=MODES.find(m=>m.id===state.mode).intervals.indexOf(r);if([0,2,5].includes(idx))return 'tonic';if([1,3].includes(idx))return 'subdominant';return 'dominant';}
@@ -49,14 +51,44 @@ function buildPalette(){
   palette=specs.map(([interval,q])=>makeChord(mod(state.key+interval),state.extension==='triad'?q:(state.extension==='9th'?{maj:'maj9',min:'min9',dom7:'dom9'}:{maj:'maj7',min:'min7'})[q]||q));
  }else palette=Object.keys(QUALITIES).filter(q=>!['min7b9','m7b5b9'].includes(q)).map(q=>makeChord(chromaticRoot,q));
  $('chromatic-controls').hidden=paletteTab!=='all';
- $('chord-palette').innerHTML=palette.map((c,i)=>`<div class="palette-chord ${chordName(c,state.key).length>6?'long-name':''}" data-palette="${i}" draggable="true" style="--chord-color:${colors[role(c)]}"><button class="palette-add" aria-label="${esc(chordName(c,state.key))}を追加"><span class="roman">${esc(degreeLabel(c))}${icon('plus')}</span><strong>${esc(chordName(c,state.key))}</strong><small>${esc(QUALITIES[c.quality].label)}</small></button><button class="palette-listen" data-listen="${i}" aria-label="${esc(chordName(c,state.key))}を試聴" title="試聴">${icon('play')}</button></div>`).join('');
+ $('chord-palette').innerHTML=palette.map((c,i)=>candidateCard(c,i,'palette')).join('');
  $('chord-palette').style.gridTemplateColumns=paletteTab==='all'?'repeat(auto-fill,minmax(100px,1fr))':'';
  document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===paletteTab);b.setAttribute('aria-pressed',b.dataset.tab===paletteTab);});
  $('palette-footnote').textContent=paletteTab==='borrowed'?'キーの外の響きで、彩りを。':'響き設定は、追加する候補だけに適用。';
+ highlightCandidate();
 }
+function candidateCard(c,index,source,description=''){
+ const name=esc(chordName(c,state.key)),data=`data-candidate-source="${source}" data-candidate-index="${index}"`;
+ return `<div class="palette-chord candidate-card ${source==='recommendation'?'recommendation-card':''} ${name.length>6?'long-name':''}" ${data} draggable="true" style="--chord-color:${colors[role(c)]}"><button class="candidate-select" data-candidate-action="select" aria-label="${name}を選択して${source==='recommendation'?'つながりを':''}試聴" aria-pressed="false"><span class="roman">${esc(degreeLabel(c))}<span aria-hidden="true">▷</span></span><strong>${name}</strong><small>${source==='recommendation'?esc(recommendations[index].label):esc(QUALITIES[c.quality].label)}</small>${description?`<p>${esc(description)}</p>`:''}</button><div class="candidate-actions"><button class="candidate-grip" data-candidate-action="drag" aria-label="${name}を進行へドラッグ" title="進行へドラッグ">⠿</button><button class="candidate-plus" data-candidate-action="add" aria-label="${name}を進行に追加" title="選択中のコードの次に追加">${icon('plus')}<span>追加</span></button></div></div>`;
+}
+function candidateFromCard(card){return (card?.dataset.candidateSource==='palette'?palette:recommendations.map(item=>item.chord))[Number(card?.dataset.candidateIndex)];}
+function highlightCandidate(){
+ document.querySelectorAll('.candidate-card').forEach(card=>{const c=candidateFromCard(card),on=!!(candidateChoice&&c&&c.root===candidateChoice.root&&c.quality===candidateChoice.quality);card.classList.toggle('candidate-selected',on);card.querySelector('.candidate-select').setAttribute('aria-pressed',on);});
+ const where=selected()?`${String(state.selected+1).padStart(2,'0')} ${chordName(selected(),state.key)}の次`:'進行の最初';
+ $('candidate-status').textContent=candidateChoice?`${chordName(candidateChoice,state.key)}を選択中 · ＋で${where}へ`:`タップで選択・試聴 · ＋で${where}へ追加`;
+}
+function renderRecommendations(){
+ const c=selected();recommendations=suggestNextChords({anchor:c,key:state.key,mode:state.mode,extension:state.extension});
+ $('recommendation-context').textContent=c?`${String(state.selected+1).padStart(2,'0')}  ${chordName(c,state.key)} の次に`:'最初のコードにおすすめ';
+ $('recommendation-note').textContent=c?'候補をタップして、前後のつながりを聴き比べ。＋かドラッグで追加。':'まずは気になる響きを試聴。＋かドラッグで進行を始めましょう。';
+ $('continue-last').hidden=state.chords.length<2||state.selected===state.chords.length-1;
+ $('recommendation-cards').innerHTML=recommendations.map((item,i)=>candidateCard(item.chord,i,'recommendation',item.reason)).join('');
+ highlightCandidate();
+}
+async function chooseCandidate(c,connection=false){
+ if(!c)return;candidateChoice=clone(c);highlightCandidate();
+ stop();
+ const anchor=selected();if(!connection||!anchor){preview(c);return;}
+ const request=++playRequest;starting=true;renderPlayback(0,-1);
+ try{
+  await audio.start([anchor,c].map(chord=>({...clone(chord),beats:1})),{...state.settings,loop:false,pattern:'block',bass:false,metronome:false,gate:.92,humanize:0,swing:0},{onStop:()=>{if(request!==playRequest)return;starting=false;renderPlayback(0,-1);}});
+  if(request!==playRequest)return;starting=false;renderPlayback(0,-1);
+ }catch(error){if(request!==playRequest)return;stop();toast(error.message||'音声を開始できませんでした。');}
+}
+function addCandidate(c){if(c)addChord(c,selected()?state.selected+1:state.chords.length);}
 function renderTimeline(){
  const scroll=$('chord-timeline').scrollLeft;
- $('chord-timeline').innerHTML=state.chords.length?state.chords.map((c,i)=>`<div class="timeline-chord ${chordName(c,state.key).length>6?'long-name':''} ${i===state.selected?'selected':''}" draggable="true" tabindex="0" role="button" aria-label="${i+1}番目 ${esc(chordName(c,state.key))} ${c.beats}拍" aria-pressed="${i===state.selected}" data-index="${i}" style="--chord-color:${colors[role(c)]}"><div class="card-top"><span>${String(i+1).padStart(2,'0')}</span><span class="drag-grip" title="ドラッグで移動" aria-hidden="true">⠿</span></div><strong>${esc(chordName(c,state.key))}</strong><span class="chord-role">${esc(degreeLabel(c))} · ${roleLabel[role(c)]}</span><div class="card-duration"><span>${c.beats} beats</span><span class="beat-dots">${Array.from({length:Math.min(8,Math.ceil(c.beats))},()=>'<i></i>').join('')}</span></div></div>`).join('')+`<button class="timeline-add" aria-label="コード候補から追加">${icon('plus')}</button>`:`<div class="empty-timeline">最初のコードを選びましょう<small>上のコードをタップ、またはここにドラッグ</small></div>`;
+ $('chord-timeline').innerHTML=state.chords.length?state.chords.map((c,i)=>`<div class="timeline-chord ${chordName(c,state.key).length>6?'long-name':''} ${i===state.selected?'selected':''}" draggable="true" tabindex="0" role="button" aria-label="${i+1}番目 ${esc(chordName(c,state.key))} ${c.beats}拍" aria-pressed="${i===state.selected}" data-index="${i}" style="--chord-color:${colors[role(c)]}"><div class="card-top"><span>${String(i+1).padStart(2,'0')}</span><span class="drag-grip" title="ドラッグで移動" aria-hidden="true">⠿</span></div><strong>${esc(chordName(c,state.key))}</strong><span class="chord-role">${esc(degreeLabel(c))} · ${roleLabel[role(c)]}</span><div class="card-duration"><span>${c.beats} beats</span><span class="beat-dots">${Array.from({length:Math.min(8,Math.ceil(c.beats))},()=>'<i></i>').join('')}</span></div></div>`).join('')+`<button class="timeline-add" aria-label="コード候補から追加">${icon('plus')}</button>`:`<div class="empty-timeline">最初のコードを選びましょう<small>候補を試聴して＋で追加、またはここにドラッグ</small></div>`;
  $('chord-timeline').scrollLeft=scroll;
  let offset=0;timelineNodes=Array.from($('chord-timeline').querySelectorAll('[data-index]')).map((el,index)=>{const item={el,dots:Array.from(el.querySelectorAll('.beat-dots i')),start:offset};offset+=state.chords[index].beats;return item;});paintedChord=-1;paintedStep=-1;
  $('bar-count').textContent=`${+(totalBeats(state.chords)/barBeats()).toFixed(1)} BARS`;
@@ -91,7 +123,7 @@ function render(){
  $('library-count').textContent=library.length;$('midi-length').textContent=`${+(totalBeats(state.chords)/barBeats()).toFixed(1)} bars · ${state.settings.bpm} BPM`;
  document.querySelector('.midi-detail span').textContent=state.settings.bass?'CHORDS + BASS':'CHORDS';
  ['top-export','download-midi'].forEach(id=>$(id).disabled=!state.chords.length);
- buildPalette();renderTimeline();renderInspector();renderRoll();prepareMidi();renderRhythm();renderPlayback(0,-1);
+ buildPalette();renderTimeline();renderInspector();renderRecommendations();renderRoll();prepareMidi();renderRhythm();renderPlayback(0,-1);
  $('template-cards').innerHTML=[PRESETS[1],PRESETS[3],PRESETS[2]].map(presetCard).join('');
 }
 function renderPlayback(beat,index){
@@ -131,7 +163,7 @@ async function togglePlay(){
 }
 async function preview(c){if(!c)return;try{await audio.preview(c,state.settings);}catch(error){toast(error.message||'音声を開始できませんでした。');}}
 function addChord(c,at=state.chords.length){if(state.chords.length>=128){toast('1つの進行には最大128コードまで追加できます。');return;}mutate(s=>{const copy={...clone(c),id:makeChord(0).id,beats:barBeats()};s.chords.splice(at,0,copy);s.selected=at;});const el=$('chord-timeline').querySelector(`[data-index="${state.selected}"]`);if(el)$('chord-timeline').scrollTo({left:el.offsetLeft-10,behavior:'smooth'});preview(selected());}
-function pickChord(index){state.selected=index;renderInspector();document.querySelectorAll('.timeline-chord').forEach((el,i)=>{el.classList.toggle('selected',i===index);el.setAttribute('aria-pressed',i===index);});autosave();}
+function pickChord(index){state.selected=index;candidateChoice=null;renderInspector();renderRecommendations();document.querySelectorAll('.timeline-chord').forEach((el,i)=>{el.classList.toggle('selected',i===index);el.setAttribute('aria-pressed',i===index);});autosave();}
 function removeChord(){if(!selected())return;mutate(s=>{s.chords.splice(s.selected,1);},{message:'コードを削除しました'});}
 function copyChord(){if(!selected()||state.chords.length>=128)return;mutate(s=>{s.chords.splice(s.selected+1,0,{...clone(selected()),id:makeChord(0).id});s.selected++;},{message:'コードを複製しました'});}
 function moveChord(from,to){if(!Number.isInteger(from)||!Number.isInteger(to)||from===to||from<0||from>=state.chords.length||to<0||to>=state.chords.length)return;mutate(s=>{const [c]=s.chords.splice(from,1);s.chords.splice(to,0,c);s.selected=to;});toast('コードを移動しました');$('chord-timeline').querySelector(`[data-index="${to}"]`)?.focus({preventScroll:true});}
@@ -139,9 +171,9 @@ function setKey(newKey,amount=null){const diff=amount??((newKey-state.key+18)%12
 function setMode(newMode){if(newMode===state.mode)return;mutate(s=>{const before=diatonicChords(s.key,s.mode,s.extension),after=diatonicChords(s.key,newMode,s.extension);s.chords=s.chords.map(c=>{const i=before.findIndex(d=>d.root===c.root&&d.quality===c.quality);return i<0?c:{...c,root:after[i].root,quality:after[i].quality,inversion:Math.min(c.inversion,QUALITIES[after[i].quality].intervals.length-1)};});s.mode=newMode;});}
 function setExtension(ext){
  if(!['triad','7th','9th'].includes(ext)||ext===state.extension)return;
- state.extension=ext;
+ state.extension=ext;candidateChoice=null;
  document.querySelectorAll('[data-ext]').forEach(button=>{button.classList.toggle('active',button.dataset.ext===ext);button.setAttribute('aria-pressed',button.dataset.ext===ext);});
- buildPalette();autosave();
+ buildPalette();renderRecommendations();autosave();
 }
 function applyPreset(id){const p=PRESETS.find(x=>x.id===id);if(!p)return;mutate(s=>{s.mode=p.mode||s.mode;s.chords=makePreset(id,s.key,s.mode,'auto').map(c=>({...c,beats:barBeats()}));s.selected=0;},{message:`「${p.name}」を読み込みました。元の進行は元に戻せます。`});closeModal();}
 function updateSettings(patch,{history=true,restart=true}={}){
@@ -242,9 +274,9 @@ function openPresets(){openModal('アイデアの種',`<p>気になる進行か�
 function saveProject(){state.title=$('project-title').value.trim()||'Untitled progression';const entry={...clone(state),savedAt:Date.now()};const next=library.slice(),i=next.findIndex(p=>p.id===state.id);if(i>=0)next[i]=entry;else next.unshift(entry);try{localStorage.setItem(STORAGE.library,JSON.stringify(next));library=next;$('library-count').textContent=library.length;autosave();toast('マイライブラリに保存しました');}catch{toast('保存容量がいっぱいです。JSONを書き出して保存してください。');}}
 function openLibrary(){openModal('マイライブラリ',`<div class="library-toolbar"><button class="button" data-library="new">${icon('plus')}新しい進行</button><button class="button" data-library="save">${icon('save')}今の進行を保存</button><button class="button" data-library="json">${icon('download')}JSONを書き出す</button><button class="button" data-library="import">${icon('folder')}JSONを読み込む</button></div><div class="modal-note">進行はこのブラウザに保存されます。別の端末へ移すときはJSONを書き出して読み込んでください。</div><div class="library-list" style="margin-top:16px">${library.length?library.map((p,i)=>`<div class="library-item"><div class="library-info"><strong>${esc(p.title)}</strong><small>${esc(KEYS[p.key]||'C')} · ${esc(p.settings?.bpm||120)} BPM · ${p.chords?.length||0} chords · ${new Date(p.savedAt||Date.now()).toLocaleDateString('ja-JP')}</small></div><button class="button" data-load="${i}">開く</button><button class="icon-button" data-remove="${i}" aria-label="${esc(p.title)}を削除">${icon('trash')}</button></div>`).join(''):'<div class="library-empty">気に入った進行を、ここに集めていきましょう。</div>'}</div>`,'YOUR COLLECTION');}
 function openSettings(){openModal('演奏・書き出し設定',`<div class="settings-grid"><label>ノートの長さ（100%でつなぐ） <span id="gate-value">${Math.round(state.settings.gate*100)}%</span><input data-setting="gate" type="range" min="10" max="100" value="${state.settings.gate*100}"></label><label>スイング <span id="swing-value">${Math.round(state.settings.swing*100)}%</span><input data-setting="swing" type="range" min="0" max="50" value="${state.settings.swing*100}"></label><label>ヒューマナイズ <span id="humanize-value">${Math.round(state.settings.humanize*100)}%</span><input data-setting="humanize" type="range" min="0" max="100" value="${state.settings.humanize*100}"></label><label>音量 <span id="volume-value">${Math.round(state.settings.volume*100)}%</span><input data-setting="volume" aria-label="試聴の音量" type="range" min="0" max="100" value="${state.settings.volume*100}"></label><label>全体の音域<select data-setting="octave">${[-2,-1,0,1,2].map(n=>`<option value="${n}" ${n===state.settings.octave?'selected':''}>${n===0?'そのまま':(n>0?'+':'')+n+' オクターブ'}</option>`).join('')}</select></label><label class="check-label"><input data-setting="bass" type="checkbox" ${state.settings.bass?'checked':''}>ベースを追加する</label></div><p>ノートの長さ・演奏パターン・スイング・ヒューマナイズ・音域・ベースは、試聴とMIDIの両方に反映されます。</p><div class="settings-footer">MIDIはコードとベースを別トラックにし、テンポ・拍子も含めて書き出します。音色とメトロノームは試聴用です。6/8拍子はBPMを四分音符基準として扱います。</div>`,'MAKE IT FEEL RIGHT');}
-function openHelp(){openModal('HARMONYの使い方',`<h3>1. キーを選び、コードをタップ</h3><p>キーとスケールを選ぶと候補が切り替わります。Triad・7th・9thは追加する候補の響きです。すでに並べたコードやプリセットはそのまま。コード候補の再生マーク、または長押しで試聴できます。</p><h3>2. 進行を組み立てる</h3><p>コードをタップするとエディターで長さ・転回形・音域を変更できます。ドラッグハンドル「⠿」で並び替え、またはエディターの左右ボタンで移動。「なめらかにつなぐ」は構成音の移動が小さくなる転回形を選びます。</p><h3>3. 刻みを試す</h3><p>基本のパターンに加えて「高度なパターン」の単純系で一定の刻み、複雑系で細切れや変則リズムを聴き比べられます。星でお気に入りに保存し、左右のボタンで順番に試せます。密度・アクセント・16通りのバリエーションはMIDIにも反映。「すべての音を停止」は試聴や残響も止めます。</p><h3>4. DAWへ持ち出す</h3><p>パソコンではMIDIカードをDAWへドラッグ。ドラッグの受け取りはブラウザ・OS・DAWの組み合わせによって異なります。対応しない場合は「MIDIを保存」で.midファイルを保存し、DAWへ読み込んでください。スマホは保存、または対応端末の共有ボタンを使えます。</p><div class="modal-note">ブラウザからDAWへの直接ドラッグはChromium系の対応環境向けです。このアプリからDAWの受け取り完了は確認できません。MIDIファイルとしての保存はいつでも使えます。</div><h3>スマホで使う</h3><p>ホーム画面に追加するとアプリのように開けます。初回読み込み後はオフラインでも使えます。進行は端末のブラウザに保存されるため、バックアップはライブラリからJSONを書き出してください。</p>`,'A LITTLE GUIDE');}
+function openHelp(){openModal('HARMONYの使い方',`<h3>1. キーを選び、コードをタップ</h3><p>キーとスケールを選ぶと候補が切り替わります。Triad・7th・9thは追加する候補の響きです。すでに並べたコードやプリセットはそのまま。候補をタップすると選択・試聴できます。＋を押すか進行へドラッグしたときだけ追加します。数字キー1〜7も選択・試聴です。</p><h3>2. おすすめから進行を組み立てる</h3><p>進行のコードを選ぶと、その次のおすすめが5つ表示されます。候補を押して前後のつながりを試聴し、＋で選択コードの直後に追加。「末尾から続ける」で続きを作れます。コードをタップするとエディターで長さ・転回形・音域を変更できます。ドラッグハンドル「⠿」で並び替え、またはエディターの左右ボタンで移動。「なめらかにつなぐ」は構成音の移動が小さくなる転回形を選びます。</p><h3>3. 刻みを試す</h3><p>基本のパターンに加えて「高度なパターン」の単純系で一定の刻み、複雑系で細切れや変則リズムを聴き比べられます。星でお気に入りに保存し、左右のボタンで順番に試せます。密度・アクセント・16通りのバリエーションはMIDIにも反映。「すべての音を停止」は試聴や残響も止めます。</p><h3>4. DAWへ持ち出す</h3><p>パソコンではMIDIカードをDAWへドラッグ。ドラッグの受け取りはブラウザ・OS・DAWの組み合わせによって異なります。対応しない場合は「MIDIを保存」で.midファイルを保存し、DAWへ読み込んでください。スマホは保存、または対応端末の共有ボタンを使えます。</p><div class="modal-note">ブラウザからDAWへの直接ドラッグはChromium系の対応環境向けです。このアプリからDAWの受け取り完了は確認できません。MIDIファイルとしての保存はいつでも使えます。</div><h3>スマホで使う</h3><p>ホーム画面に追加するとアプリのように開けます。初回読み込み後はオフラインでも使えます。進行は端末のブラウザに保存されるため、バックアップはライブラリからJSONを書き出してください。</p>`,'A LITTLE GUIDE');}
 function openLearn(){openModal('コードのヒント',`<h3>トニック — 帰ってくる場所</h3><p>Ⅰ・Ⅲ・Ⅵを中心に、落ち着きを感じる響きです。最初や最後のコードに置くと進行がまとまりやすくなります。</p><h3>サブドミナント — 景色を変える</h3><p>Ⅱ・Ⅳを中心に、動きや広がりをつくる響きです。トニックから離れて、次の展開へ向かうときに。</p><h3>ドミナント — 次へ向かう力</h3><p>Ⅴ・Ⅶを中心に、緊張感をつくる響きです。Ⅴ → Ⅰの流れは、帰ってきた感覚を生みます。機能は前後の文脈でも変わります。</p><h3>借用コードで色をつける</h3><p>同じ主音を持つ別のスケールから響きを借ります。CメジャーでFmを使う、など。色分けは目安なので、最後は耳で選んでみてください。</p><h3>転回形でなめらかに</h3><p>一番下の音を変えると、同じコードでも聞こえ方が変わります。コード名の「/E」はEがベースになっている印。「なめらかにつなぐ」で、隣り合うコードの音の動きを整えられます。</p>`,'FOLLOW YOUR EARS');}
-function openShortcuts(){openModal('キーボードショートカット',`<div class="shortcut-list"><div><span>再生 / 停止</span><kbd>Space</kbd></div><div><span>元に戻す</span><kbd>⌘ / Ctrl Z</kbd></div><div><span>やり直す</span><kbd>⌘ / Ctrl ⇧ Z</kbd></div><div><span>ライブラリに保存</span><kbd>⌘ / Ctrl S</kbd></div><div><span>選択コードを複製</span><kbd>⌘ / Ctrl D</kbd></div><div><span>選択コードを削除</span><kbd>Delete</kbd></div><div><span>選択コードを移動</span><kbd>← / →</kbd></div><div><span>候補を追加</span><kbd>1 … 7</kbd></div></div>`,'A FASTER FLOW');}
+function openShortcuts(){openModal('キーボードショートカット',`<div class="shortcut-list"><div><span>再生 / 停止</span><kbd>Space</kbd></div><div><span>元に戻す</span><kbd>⌘ / Ctrl Z</kbd></div><div><span>やり直す</span><kbd>⌘ / Ctrl ⇧ Z</kbd></div><div><span>ライブラリに保存</span><kbd>⌘ / Ctrl S</kbd></div><div><span>選択コードを複製</span><kbd>⌘ / Ctrl D</kbd></div><div><span>選択コードを削除</span><kbd>Delete</kbd></div><div><span>選択コードを移動</span><kbd>← / →</kbd></div><div><span>候補を選択・試聴</span><kbd>1 … 7</kbd></div></div>`,'A FASTER FLOW');}
 
 // Controls and interaction. Every core operation also has a tap or keyboard path.
 const options=KEYS.map((n,i)=>`<option value="${i}">${n}</option>`).join('');['key-select','edit-root','chromatic-root'].forEach(id=>$(id).innerHTML=options);
@@ -256,23 +288,53 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
  $('extension-selector').onclick=e=>{if(e.target.dataset.ext)setExtension(e.target.dataset.ext);};
  document.querySelector('.palette-tabs').onclick=e=>{if(e.target.dataset.tab){paletteTab=e.target.dataset.tab;buildPalette();}};
  $('chromatic-root').onchange=e=>{chromaticRoot=Number(e.target.value);buildPalette();};
- let holdTimer,held=false,holdPointer=null;
- $('chord-palette').addEventListener('pointerdown',e=>{const card=e.target.closest('[data-palette]');if(!card||e.target.closest('[data-listen]'))return;held=false;holdPointer={x:e.clientX,y:e.clientY};clearTimeout(holdTimer);holdTimer=setTimeout(()=>{held=true;preview(palette[Number(card.dataset.palette)]);},450);});
- $('chord-palette').addEventListener('pointermove',e=>{if(holdPointer&&Math.hypot(e.clientX-holdPointer.x,e.clientY-holdPointer.y)>10)clearTimeout(holdTimer);});
- ['pointerup','pointercancel','pointerleave'].forEach(name=>$('chord-palette').addEventListener(name,()=>{clearTimeout(holdTimer);holdPointer=null;}));
- $('chord-palette').addEventListener('click',e=>{const listen=e.target.closest('[data-listen]');if(listen){preview(palette[Number(listen.dataset.listen)]);return;}if(held){held=false;return;}const c=e.target.closest('[data-palette]');if(c)addChord(palette[Number(c.dataset.palette)]);});
- $('chord-palette').addEventListener('dragstart',e=>{clearTimeout(holdTimer);const el=e.target.closest('[data-palette]');if(!el)return;e.dataTransfer.setData('application/x-harmony-palette',el.dataset.palette);e.dataTransfer.effectAllowed='copy';});
- $('chord-timeline').addEventListener('click',e=>{const c=e.target.closest('[data-index]');if(c&&!touchDrag)pickChord(Number(c.dataset.index));if(e.target.closest('.timeline-add')){$('chord-palette').scrollIntoView({behavior:'smooth',block:'center'});$('chord-palette').querySelector('button')?.focus({preventScroll:true});}});
+ for(const id of ['chord-palette','recommendation-cards']){
+  $(id).addEventListener('click',e=>{
+   if(Date.now()<suppressCandidateClickUntil)return;
+   const card=e.target.closest('.candidate-card'),c=candidateFromCard(card);if(!c)return;
+   const action=e.target.closest('[data-candidate-action]')?.dataset.candidateAction;
+   if(action==='add')addCandidate(c);else if(action!=='drag')chooseCandidate(c,card.dataset.candidateSource==='recommendation');
+  });
+  $(id).addEventListener('dragstart',e=>{const card=e.target.closest('.candidate-card'),c=candidateFromCard(card);if(!c)return;e.dataTransfer.setData('application/x-harmony-candidate',JSON.stringify(c));e.dataTransfer.effectAllowed='copy';suppressCandidateClickUntil=Date.now()+500;});
+  $(id).addEventListener('dragend',()=>{suppressCandidateClickUntil=Date.now()+500;document.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'));});
+  $(id).addEventListener('pointerdown',e=>{
+   if(touchDrag||!e.target.closest('.candidate-grip'))return;
+   const card=e.target.closest('.candidate-card'),c=candidateFromCard(card);if(!c)return;
+   e.preventDefault();const rect=card.getBoundingClientRect(),ghost=card.cloneNode(true);ghost.classList.add('touch-drag-ghost');ghost.style.width=rect.width+'px';ghost.style.height=rect.height+'px';document.body.append(ghost);
+   touchDrag={kind:'copy',chord:clone(c),to:state.chords.length,valid:false,ghost,dx:e.clientX-rect.left,dy:e.clientY-rect.top,pointer:e.pointerId};e.target.setPointerCapture(e.pointerId);ghost.style.left=e.clientX-touchDrag.dx+'px';ghost.style.top=e.clientY-touchDrag.dy+'px';
+  });
+ }
+ $('continue-last').onclick=()=>pickChord(state.chords.length-1);
+ $('chord-timeline').addEventListener('click',e=>{const c=e.target.closest('[data-index]');if(c&&!touchDrag&&Date.now()>=suppressCandidateClickUntil)pickChord(Number(c.dataset.index));if(e.target.closest('.timeline-add')){pickChord(state.chords.length-1);$('chord-palette').scrollIntoView({behavior:'smooth',block:'center'});$('chord-palette').querySelector('button')?.focus({preventScroll:true});}});
  $('chord-timeline').addEventListener('dblclick',e=>{const c=e.target.closest('[data-index]');if(c)preview(state.chords[Number(c.dataset.index)]);});
  $('chord-timeline').addEventListener('keydown',e=>{const c=e.target.closest('[data-index]');if(c&&(e.key==='Enter'||e.key===' ')){pickChord(Number(c.dataset.index));preview(selected());e.preventDefault();e.stopPropagation();}});
  $('chord-timeline').addEventListener('dragstart',e=>{const c=e.target.closest('[data-index]');if(!c)return;dragIndex=Number(c.dataset.index);e.dataTransfer.setData('application/x-harmony-chord',String(dragIndex));e.dataTransfer.effectAllowed='move';requestAnimationFrame(()=>c.classList.add('dragging'));});
  $('chord-timeline').addEventListener('dragover',e=>{if(!Array.from(e.dataTransfer.types).some(t=>t.startsWith('application/x-harmony')))return;e.preventDefault();const c=e.target.closest('[data-index]');document.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'));c?.classList.add('drop-target');});
- $('chord-timeline').addEventListener('drop',e=>{e.preventDefault();const source=e.dataTransfer.getData('application/x-harmony-chord'),p=e.dataTransfer.getData('application/x-harmony-palette');const target=e.target.closest('[data-index]');if(source!=='')moveChord(Number(source),target?Number(target.dataset.index):state.chords.length-1);else if(p!==''&&palette[Number(p)])addChord(palette[Number(p)],target?Number(target.dataset.index):state.chords.length);dragIndex=null;document.querySelectorAll('.drop-target,.dragging').forEach(x=>x.classList.remove('drop-target','dragging'));});
+ $('chord-timeline').addEventListener('drop',e=>{
+  e.preventDefault();const source=e.dataTransfer.getData('application/x-harmony-chord'),payload=e.dataTransfer.getData('application/x-harmony-candidate');const target=e.target.closest('[data-index]');
+  if(source!=='')moveChord(Number(source),target?Number(target.dataset.index):state.chords.length-1);
+  else if(payload){try{const c=JSON.parse(payload);if(Number.isInteger(c.root)&&c.root>=0&&c.root<12&&Object.hasOwn(QUALITIES,c.quality))addChord(makeChord(c.root,c.quality),target?Number(target.dataset.index):state.chords.length);}catch{}}
+  dragIndex=null;document.querySelectorAll('.drop-target,.dragging').forEach(x=>x.classList.remove('drop-target','dragging'));
+ });
  $('chord-timeline').addEventListener('dragend',()=>{dragIndex=null;document.querySelectorAll('.drop-target,.dragging').forEach(x=>x.classList.remove('drop-target','dragging'));});
- $('chord-timeline').addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||!e.target.closest('.drag-grip'))return;const card=e.target.closest('[data-index]');if(!card)return;e.preventDefault();const rect=card.getBoundingClientRect(),ghost=card.cloneNode(true);ghost.classList.add('touch-drag-ghost');ghost.style.width=rect.width+'px';ghost.style.height=rect.height+'px';document.body.append(ghost);touchDrag={from:Number(card.dataset.index),to:Number(card.dataset.index),ghost,dx:e.clientX-rect.left,dy:e.clientY-rect.top,pointer:e.pointerId};e.target.setPointerCapture(e.pointerId);ghost.style.left=e.clientX-touchDrag.dx+'px';ghost.style.top=e.clientY-touchDrag.dy+'px';card.classList.add('dragging');});
- document.addEventListener('pointermove',e=>{if(!touchDrag||e.pointerId!==touchDrag.pointer)return;touchDrag.ghost.style.left=e.clientX-touchDrag.dx+'px';touchDrag.ghost.style.top=e.clientY-touchDrag.dy+'px';const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('#chord-timeline [data-index]');document.querySelectorAll('.touch-drop').forEach(x=>x.classList.remove('touch-drop'));if(target){touchDrag.to=Number(target.dataset.index);target.classList.add('touch-drop');}const area=$('chord-timeline'),r=area.getBoundingClientRect();if(e.clientX>r.right-25)area.scrollLeft+=9;if(e.clientX<r.left+25)area.scrollLeft-=9;});
- function finishTouch(cancel=false){if(!touchDrag)return;const {from,to,ghost}=touchDrag;ghost.remove();touchDrag=null;document.querySelectorAll('.touch-drop,.dragging').forEach(x=>x.classList.remove('touch-drop','dragging'));if(!cancel)moveChord(from,to);}
- document.addEventListener('pointerup',()=>finishTouch());document.addEventListener('pointercancel',()=>finishTouch(true));
+ $('chord-timeline').addEventListener('pointerdown',e=>{if(touchDrag||!e.target.closest('.drag-grip'))return;const card=e.target.closest('[data-index]');if(!card)return;e.preventDefault();const rect=card.getBoundingClientRect(),ghost=card.cloneNode(true);ghost.classList.add('touch-drag-ghost');ghost.style.width=rect.width+'px';ghost.style.height=rect.height+'px';document.body.append(ghost);touchDrag={kind:'move',from:Number(card.dataset.index),to:Number(card.dataset.index),ghost,dx:e.clientX-rect.left,dy:e.clientY-rect.top,pointer:e.pointerId};e.target.setPointerCapture(e.pointerId);ghost.style.left=e.clientX-touchDrag.dx+'px';ghost.style.top=e.clientY-touchDrag.dy+'px';card.classList.add('dragging');});
+ document.addEventListener('pointermove',e=>{
+  if(!touchDrag||e.pointerId!==touchDrag.pointer)return;
+  touchDrag.ghost.style.left=e.clientX-touchDrag.dx+'px';touchDrag.ghost.style.top=e.clientY-touchDrag.dy+'px';
+  const hit=document.elementFromPoint(e.clientX,e.clientY),area=$('chord-timeline'),inside=hit?.closest('#chord-timeline'),target=hit?.closest('#chord-timeline [data-index]');
+  document.querySelectorAll('.touch-drop').forEach(x=>x.classList.remove('touch-drop'));area.classList.toggle('candidate-drop-ready',!!inside&&touchDrag.kind==='copy');
+  if(touchDrag.kind==='copy'){touchDrag.valid=!!inside;touchDrag.to=target?Number(target.dataset.index):state.chords.length;}
+  else if(target)touchDrag.to=Number(target.dataset.index);
+  target?.classList.add('touch-drop');
+  const r=area.getBoundingClientRect();if(inside){if(e.clientX>r.right-25)area.scrollLeft+=9;if(e.clientX<r.left+25)area.scrollLeft-=9;}
+  if(touchDrag.kind==='copy'){if(e.clientY>innerHeight-80)window.scrollBy(0,16);else if(e.clientY<80)window.scrollBy(0,-16);}
+ });
+ function finishTouch(cancel=false){
+  if(!touchDrag)return;const drag=touchDrag;drag.ghost.remove();touchDrag=null;suppressCandidateClickUntil=Date.now()+500;
+  document.querySelectorAll('.touch-drop,.dragging,.candidate-drop-ready').forEach(x=>x.classList.remove('touch-drop','dragging','candidate-drop-ready'));
+  if(!cancel){if(drag.kind==='copy'&&drag.valid)addChord(drag.chord,drag.to);else if(drag.kind==='move')moveChord(drag.from,drag.to);}
+ }
+ document.addEventListener('pointerup',e=>{if(e.pointerId===touchDrag?.pointer)finishTouch();});document.addEventListener('pointercancel',e=>{if(e.pointerId===touchDrag?.pointer)finishTouch(true);});
  const editorBindings={'edit-root':'root','edit-quality':'quality','edit-inversion':'inversion','edit-beats':'beats','edit-octave':'octave','edit-velocity':'velocity'};
  Object.entries(editorBindings).forEach(([id,prop])=>$(id).addEventListener('change',e=>{if(!selected())return;let v=prop==='quality'?e.target.value:Number(e.target.value);if(prop==='velocity')v=Math.round(clamp(v,1,127));mutate(()=>{selected()[prop]=v;if(prop==='quality')selected().inversion=Math.min(selected().inversion,QUALITIES[v].intervals.length-1);});preview(selected());}));
  $('mini-keyboard').onclick=async e=>{const button=e.target.closest('[data-note]');if(!button)return;const pitch=12*((selected()?.octave??4)+1+state.settings.octave)+Number(button.dataset.note);try{await audio.previewNote(pitch,state.settings);}catch(error){toast(error.message||'音声を開始できませんでした。');}};
@@ -313,7 +375,7 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
  $('modal-body').addEventListener('change',e=>{if(e.target.id==='rhythm-auto-audition'){rhythmPrefs.autoplay=e.target.checked;saveRhythmPrefs();renderRhythmCards();$('rhythm-select-hint').textContent=rhythmPrefs.autoplay?'タップで選択・試聴':'タップで選択';return;}const key=e.target.dataset.setting;if(!key||key==='volume')return;const value=e.target.type==='checkbox'?e.target.checked:['octave','variation'].includes(key)?Number(e.target.value):Number(e.target.value)/100;updateSettings({[key]:value});if(modalMode==='rhythm')renderRhythmCards();});
  $('modal-body').addEventListener('keydown',e=>{if(modalMode!=='rhythm'||!e.target.closest('[data-rhythm]')||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const direction=['ArrowRight','ArrowDown'].includes(e.key)?1:-1;stepRhythm(direction);document.querySelector(`[data-rhythm="${state.settings.pattern}"]`)?.focus({preventScroll:true});});
  $('project-import').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>1000000)throw new Error('1MB以下のプロジェクトJSONを選んでください。');const p=validateProject(JSON.parse(await f.text()));p.id=uid();mutate(()=>{state=p;},{message:'プロジェクトを読み込みました'});closeModal();}catch(error){toast(error.message||'ファイルを読み込めませんでした。');}e.target.value='';};
- document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('modal').open)closeModal();else stop();e.preventDefault();return;}if($('modal').open)return;const typing=e.target.closest('input,select,textarea,[contenteditable=true]');const command=e.metaKey||e.ctrlKey;if(command&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();return;}if(typing)return;if(command&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();return;}if(command&&e.key.toLowerCase()==='d'){e.preventDefault();copyChord();return;}if(e.code==='Space'){if(e.repeat){e.preventDefault();return;}if(e.target.closest('button,a,[role=button]'))return;e.preventDefault();togglePlay();return;}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeChord();return;}if(e.key==='ArrowLeft'){e.preventDefault();moveChord(state.selected,state.selected-1);}if(e.key==='ArrowRight'){e.preventDefault();moveChord(state.selected,state.selected+1);}if(/^[1-7]$/.test(e.key)&&palette[Number(e.key)-1])addChord(palette[Number(e.key)-1]);});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){finishTouch(true);if($('modal').open)closeModal();else stop();e.preventDefault();return;}if($('modal').open)return;const typing=e.target.closest('input,select,textarea,[contenteditable=true]');const command=e.metaKey||e.ctrlKey;if(command&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();return;}if(typing)return;if(command&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();return;}if(command&&e.key.toLowerCase()==='d'){e.preventDefault();copyChord();return;}if(e.code==='Space'){if(e.repeat){e.preventDefault();return;}if(e.target.closest('button,a,[role=button]'))return;e.preventDefault();togglePlay();return;}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeChord();return;}if(e.key==='ArrowLeft'){e.preventDefault();moveChord(state.selected,state.selected-1);}if(e.key==='ArrowRight'){e.preventDefault();moveChord(state.selected,state.selected+1);}if(/^[1-7]$/.test(e.key)&&palette[Number(e.key)-1])chooseCandidate(palette[Number(e.key)-1]);});
  window.addEventListener('pagehide',()=>{stop();try{localStorage.setItem(STORAGE.draft,JSON.stringify(state));}catch{}});
  render();audio.setVolume(state.settings.volume);autosave();
  if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
