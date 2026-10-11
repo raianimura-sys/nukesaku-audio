@@ -22,6 +22,8 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 
 HARMONY is available at <https://raianimura-sys.github.io/nukesaku-audio/harmony/>. The home topic and <https://raianimura-sys.github.io/nukesaku-audio/harmony.html> introduce its features and workflow, with direct links to open the app. It runs in the browser on desktop and mobile; MIDI files can be imported into a DAW.
 
+The rhythm catalog has 5 basic, 11 simple, and 32 complex patterns. Version 1.3 adds 12 hand-composed accompaniment grooves; density, accents, and variations apply to both playback and MIDI export.
+
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
 
 `harmony-home.css` provides HARMONY-specific routes, its home topic, and introduction-page layout. The renewed home layout and site-wide spacing are applied by `studio.css`, using the original cream, pink, lavender, and mint brand palette.

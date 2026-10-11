@@ -1,4 +1,4 @@
-import {MODES, QUALITIES, PATTERNS, makeChord} from './music.js';
+import {MODES, QUALITIES, PATTERNS, makeChord} from './music.js?v=1.3.0';
 
 const uid = () => globalThis.crypto?.randomUUID?.() ?? `project-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const number = (value, fallback, min, max) => value !== null && value !== '' && Number.isFinite(Number(value))

@@ -222,8 +222,9 @@ const pseudoRandom = seed => {
 
 const SIMPLE_PATTERN_IDS = new Set(['steady8', 'steady16', 'offbeat8', 'disco', 'house', 'rolling16', 'broken-octaves', 'cinematic-pulse', 'waltz', 'dotted', 'ballad']);
 const INTRICATE_PATTERN_IDS = new Set(['glitch32', 'burst-chops', 'polymeter5', 'three-over-four', 'euclid7-16', 'idm-fracture', 'odd-group16', 'evolving-comp', 'braided-arp', 'triplet-slices']);
+const PRACTICAL_PATTERN_IDS = new Set(['uk-garage', 'deep-house-turn', 'broken-beat', 'afro-weave', 'latin-piano', 'jazz-shells', 'soul-pocket', 'rnb-pickups', 'dub-echo', 'pop-push', 'triplet-turnaround', 'hocket-comp']);
 const ARPEGGIO_PATTERN_IDS = new Set(['arp', 'updown', 'broken', 'rolling16', 'broken-octaves', 'ballad', 'dotted', 'braided-arp']);
-const PREVIEW_GRIDS = { glitch32: 32, 'burst-chops': 32, 'idm-fracture': 32, 'evolving-comp': 32, 'three-over-four': 48, 'braided-arp': 48, 'triplet-slices': 24 };
+const PREVIEW_GRIDS = { glitch32: 32, 'burst-chops': 32, 'idm-fracture': 32, 'evolving-comp': 32, 'three-over-four': 48, 'braided-arp': 48, 'triplet-slices': 24, 'soul-pocket': 32, 'rnb-pickups': 32, 'dub-echo': 32, 'triplet-turnaround': 48, 'hocket-comp': 32 };
 const patternDescriptor = (id, name, category, description) => Object.freeze({
   id, name, category, description,
   complexity: category === 'basic' ? 'basic' : SIMPLE_PATTERN_IDS.has(id) ? 'simple' : 'complex',
@@ -270,6 +271,18 @@ export const ADVANCED_PATTERNS = Object.freeze([
   patternDescriptor('evolving-comp', '4小節エボルブ・コンプ', 'advanced', '4小節で呼びかけ・応答・細かな連打へ展開。小節ごとに刻みの重心が動く。'),
   patternDescriptor('braided-arp', '交差アルペジオ', 'advanced', '16分側の上昇と3連側の下降が交差する。2つの構成音の流れを編み合わせる。'),
   patternDescriptor('triplet-slices', '3連スライス', 'advanced', '16分3連の断片に、長い構成音を混ぜる。連打と抜けを交替する細かなチョップ。'),
+  patternDescriptor('uk-garage', '2ステップ・ガラージ', 'advanced', '1・3拍の低声を支えに、遅い裏拍の上声と短い返し。UKガラージや軽いダンス伴奏に。'),
+  patternDescriptor('deep-house-turn', 'ディープ・ハウス・ターン', 'advanced', '小節頭の長めの響きへ、2〜4拍の裏から短く応答する2小節コンプ。落ち着いたハウスに。'),
+  patternDescriptor('broken-beat', 'ブロークン・ビート', 'advanced', '1拍目と3拍付近の低声の間に、上声の16分裏をずらして置く。ジャズ寄りのビートやソウルに。'),
+  patternDescriptor('afro-weave', 'アフロ・ウィーブ', 'advanced', '低声の3–3–2を芯に、上声の裏拍が応答する。歌を邪魔しにくいアフロ系ポップの伴奏に。'),
+  patternDescriptor('latin-piano', 'ラテン・ピアノ・レスポンス', 'advanced', '1・3拍の低声に、2・4拍の先取りと短い上声を重ねる2小節。ラテン寄りのピアノ伴奏に。'),
+  patternDescriptor('jazz-shells', 'ジャズ・スペース・コンプ', 'advanced', '小節頭の低声と、2拍後半・4拍裏の上声で余白を保つ2小節。メロディーを支えるジャズやLo-fiに。'),
+  patternDescriptor('soul-pocket', 'ソウル・ポケット', 'advanced', '1・3拍を支え、2・4拍の裏へ長短の上声を返す。短い単音の拾いを添えたソウル伴奏。'),
+  patternDescriptor('rnb-pickups', 'R&B・ピックアップ', 'advanced', '長い強拍の間は休み、小節終わりに32分の短い返し。ボーカルの余白を残すR&B伴奏に。'),
+  patternDescriptor('dub-echo', 'ダブ・エコー・チョップ', 'advanced', '裏拍の短い上声へ、弱い単音が遅れて返る。低声で拍を支えるダブやゆったりした電子ポップに。'),
+  patternDescriptor('pop-push', 'ポップ・プッシュ', 'advanced', '1拍から8分の先取りを交互に置き、3拍で低声を補強。ギターやシンセで歌を押すポップ伴奏に。'),
+  patternDescriptor('triplet-turnaround', '3連・ターンアラウンド', 'advanced', '1・3拍の芯を残し、各小節の最後1拍だけ3連で答える。短いピアノの返しやサビ前の伴奏に。'),
+  patternDescriptor('hocket-comp', 'ホケット・コンプ', 'advanced', '短い低声と上声を細かな裏位置で受け渡し、同時に詰め込まない。軽い鍵盤やマレットの掛け合いに。'),
 ]);
 export const PATTERNS = Object.freeze([...BASIC_PATTERNS, ...ADVANCED_PATTERNS]);
 export const SIMPLE_PATTERNS = Object.freeze(ADVANCED_PATTERNS.filter(pattern => pattern.complexity === 'simple'));
@@ -304,6 +317,103 @@ const RHYTHMS = {
   'broken-octaves': { variants: [eighths(.48, 'octave-broken'), eighths(.42, 'octave-broken')], bass: 'hold' },
   'cinematic-pulse': { variants: [eighths(.48, 'alternating'), eighths(.42, 'alternating')], bass: 'pulse' },
 };
+
+// Accompaniment cells keep a recognizable downbeat and leave space for a lead.
+// Two written phrases × two register responses × four articulations provide
+// sixteen repeatable variations, without turning the groove into random fills.
+const practicalHit = (at, length, voice, accent, essential = false, gain = 1) => ({ ...hit(at, length, voice, accent, essential), gain });
+const PRACTICAL_RHYTHMS = {
+  'uk-garage': { variants: [
+    [practicalHit(0, .55, 'low', .95, true), practicalHit(.75, .34, 'upper', .85, true), practicalHit(1.25, .15, 'top', .3, false, .7), practicalHit(1.75, .23, 'upper', .55), practicalHit(2, .48, 'low', .9, true), practicalHit(2.5, .29, 'upper', .75), practicalHit(3.25, .18, 'upper', .65), practicalHit(3.75, .16, 'arpeggio', .35, false, .8)],
+    [practicalHit(0, .55, 'low', .95, true), practicalHit(.5, .28, 'upper', .8, true), practicalHit(1.25, .22, 'upper', .55), practicalHit(1.75, .14, 'top', .3, false, .7), practicalHit(2, .48, 'low', .9, true), practicalHit(2.75, .26, 'upper', .75), practicalHit(3.25, .17, 'arpeggio', .3, false, .75), practicalHit(3.5, .27, 'upper', .7)],
+  ] },
+  'deep-house-turn': { bars: 2, variants: [
+    [practicalHit(0, 1.15, 'chord', .8, true), practicalHit(1.5, .38, 'upper', .55), practicalHit(2.75, .66, 'upper', .75), practicalHit(3.75, .17, 'top', .35, false, .75), practicalHit(4, .42, 'low', .85, true), practicalHit(4.5, .94, 'upper', .75, true), practicalHit(6.25, .46, 'upper', .55), practicalHit(7, .56, 'chord', .8), practicalHit(7.75, .16, 'middle', .3, false, .75)],
+    [practicalHit(0, .97, 'chord', .8, true), practicalHit(1.75, .45, 'upper', .65), practicalHit(2.5, .78, 'upper', .7), practicalHit(3.5, .26, 'top', .35, false, .75), practicalHit(4, .4, 'low', .85, true), practicalHit(4.75, .76, 'upper', .8, true), practicalHit(6, .64, 'upper', .65), practicalHit(7.25, .43, 'chord', .8), practicalHit(7.75, .16, 'middle', .3, false, .75)],
+  ] },
+  'broken-beat': { variants: [
+    [practicalHit(0, .42, 'low', .95, true), practicalHit(.75, .23, 'upper', .65, true), practicalHit(1.5, .29, 'upper', .75), practicalHit(1.75, .12, 'arpeggio', .3, false, .75), practicalHit(2.25, .42, 'low', .85, true), practicalHit(2.75, .21, 'upper', .5), practicalHit(3.25, .28, 'upper', .75), practicalHit(3.75, .15, 'middle', .3, false, .75)],
+    [practicalHit(0, .42, 'low', .95, true), practicalHit(.5, .25, 'upper', .7, true), practicalHit(1.25, .24, 'upper', .55), practicalHit(1.75, .17, 'middle', .3, false, .75), practicalHit(2.25, .42, 'low', .85, true), practicalHit(3, .3, 'upper', .8), practicalHit(3.5, .15, 'arpeggio', .35, false, .75)],
+  ] },
+  'afro-weave': { variants: [
+    [practicalHit(0, .45, 'low', .95, true), practicalHit(.5, .22, 'upper', .5, true), practicalHit(1, .18, 'upper', .45), practicalHit(1.5, .39, 'low', .8, true), practicalHit(2.25, .26, 'upper', .7), practicalHit(2.75, .14, 'top', .3, false, .7), practicalHit(3, .42, 'low', .9), practicalHit(3.5, .29, 'upper', .7)],
+    [practicalHit(0, .45, 'low', .95, true), practicalHit(.75, .22, 'upper', .65, true), practicalHit(1.25, .14, 'top', .3, false, .7), practicalHit(1.5, .39, 'low', .8, true), practicalHit(2, .24, 'upper', .6), practicalHit(2.5, .23, 'upper', .65), practicalHit(3, .42, 'low', .9), practicalHit(3.75, .17, 'upper', .5)],
+  ] },
+  'latin-piano': { bars: 2, variants: [
+    [practicalHit(0, .4, 'low', .95, true), practicalHit(.75, .26, 'upper', .7, true), practicalHit(1.5, .35, 'upper', .65), practicalHit(2, .4, 'low', .85), practicalHit(2.75, .27, 'upper', .8), practicalHit(3.5, .3, 'upper', .65), practicalHit(4, .4, 'low', .95, true), practicalHit(4.5, .28, 'upper', .55, true), practicalHit(5.25, .25, 'upper', .75), practicalHit(5.75, .13, 'top', .3, false, .75), practicalHit(6, .4, 'low', .85), practicalHit(6.5, .27, 'upper', .7), practicalHit(7.5, .32, 'upper', .8)],
+    [practicalHit(0, .4, 'low', .95, true), practicalHit(.5, .24, 'upper', .65, true), practicalHit(1.25, .3, 'upper', .7), practicalHit(2, .4, 'low', .85), practicalHit(2.5, .25, 'upper', .6), practicalHit(3.25, .35, 'upper', .8), practicalHit(4, .4, 'low', .95, true), practicalHit(4.75, .28, 'upper', .7, true), practicalHit(5.5, .3, 'upper', .6), practicalHit(6, .4, 'low', .85), practicalHit(6.75, .28, 'upper', .75), practicalHit(7.25, .14, 'top', .3, false, .75), practicalHit(7.75, .17, 'upper', .6)],
+  ] },
+  'jazz-shells': { bars: 2, variants: [
+    [practicalHit(0, .45, 'low', .8, true), practicalHit(1.75, .33, 'upper', .6, true), practicalHit(2.75, .18, 'middle', .25, false, .65), practicalHit(3.5, .34, 'upper', .7), practicalHit(4, .44, 'low', .8, true), practicalHit(4.75, .3, 'upper', .55, true), practicalHit(6.25, .4, 'upper', .65), practicalHit(7.5, .29, 'upper', .6)],
+    [practicalHit(0, .45, 'low', .8, true), practicalHit(1.25, .37, 'upper', .6, true), practicalHit(2.5, .18, 'middle', .25, false, .65), practicalHit(3.75, .17, 'upper', .6), practicalHit(4, .44, 'low', .8, true), practicalHit(5.5, .41, 'upper', .65, true), practicalHit(6.75, .3, 'upper', .55), practicalHit(7.75, .16, 'top', .3, false, .7)],
+  ] },
+  'soul-pocket': { variants: [
+    [practicalHit(0, .72, 'chord', .9, true), practicalHit(.875, .13, 'top', .3, false, .7), practicalHit(1.5, .47, 'upper', .55), practicalHit(2, .48, 'low', .85, true), practicalHit(2.75, .24, 'middle', .3, false, .75), practicalHit(3.5, .39, 'upper', .7)],
+    [practicalHit(0, .72, 'chord', .9, true), practicalHit(1.25, .19, 'middle', .3, false, .75), practicalHit(1.75, .28, 'upper', .6), practicalHit(2, .48, 'low', .85, true), practicalHit(2.625, .13, 'top', .3, false, .7), practicalHit(3.25, .5, 'upper', .65)],
+  ] },
+  'rnb-pickups': { variants: [
+    [practicalHit(0, 1.05, 'chord', .85, true), practicalHit(1.5, .31, 'upper', .5), practicalHit(2, .6, 'low', .8, true), practicalHit(2.875, .16, 'middle', .3, false, .75), practicalHit(3.5, .24, 'upper', .65), practicalHit(3.625, .09, 'arpeggio', .3, false, .65), practicalHit(3.875, .1, 'top', .35, false, .7)],
+    [practicalHit(0, 1.12, 'chord', .85, true), practicalHit(1.75, .23, 'upper', .55), practicalHit(2, .55, 'low', .8, true), practicalHit(3.125, .17, 'middle', .3, false, .75), practicalHit(3.5, .13, 'arpeggio', .3, false, .65), practicalHit(3.75, .16, 'upper', .65), practicalHit(3.875, .09, 'top', .3, false, .7)],
+  ] },
+  'dub-echo': { variants: [
+    [practicalHit(0, .7, 'low', .85, true), practicalHit(.5, .23, 'upper', .9, true), practicalHit(.875, .16, 'top', .2, false, .48), practicalHit(1.5, .2, 'upper', .75), practicalHit(1.875, .15, 'top', .2, false, .44), practicalHit(2, .58, 'low', .8, true), practicalHit(2.5, .22, 'upper', .85), practicalHit(3.5, .22, 'upper', .85), practicalHit(3.875, .1, 'top', .2, false, .48)],
+    [practicalHit(0, .7, 'low', .85, true), practicalHit(.75, .22, 'upper', .9, true), practicalHit(1.125, .15, 'top', .2, false, .48), practicalHit(1.75, .18, 'upper', .75), practicalHit(2, .58, 'low', .8, true), practicalHit(2.75, .23, 'upper', .85), practicalHit(3.125, .14, 'top', .2, false, .44), practicalHit(3.5, .22, 'upper', .85), practicalHit(3.875, .1, 'top', .2, false, .48)],
+  ] },
+  'pop-push': { variants: [
+    [practicalHit(0, .42, 'chord', .95, true), practicalHit(.75, .34, 'upper', .65), practicalHit(1.5, .36, 'chord', .75), practicalHit(2, .42, 'low', .9, true), practicalHit(2.75, .38, 'upper', .7), practicalHit(3.5, .38, 'chord', .8)],
+    [practicalHit(0, .42, 'chord', .95, true), practicalHit(.5, .28, 'upper', .6), practicalHit(1.25, .38, 'chord', .75), practicalHit(2, .42, 'low', .9, true), practicalHit(2.5, .29, 'upper', .6), practicalHit(3.25, .41, 'chord', .8), practicalHit(3.75, .14, 'middle', .3, false, .75)],
+  ] },
+  'triplet-turnaround': { variants: [
+    [practicalHit(0, .77, 'chord', .9, true), practicalHit(1.5, .36, 'upper', .55), practicalHit(2, .56, 'chord', .8, true)],
+    [practicalHit(0, .68, 'chord', .9, true), practicalHit(.75, .21, 'middle', .3, false, .75), practicalHit(1.75, .2, 'upper', .55), practicalHit(2, .51, 'chord', .8, true)],
+  ] },
+  'hocket-comp': { variants: [
+    [practicalHit(0, .18, 'low', .9, true), practicalHit(.375, .24, 'upper', .65, true), practicalHit(1, .24, 'low', .75), practicalHit(1.625, .23, 'upper', .55), practicalHit(2.25, .19, 'low', .8, true), practicalHit(2.75, .23, 'upper', .6, true), practicalHit(3.5, .15, 'low', .75), practicalHit(3.75, .16, 'upper', .65)],
+    [practicalHit(0, .19, 'low', .9, true), practicalHit(.625, .22, 'upper', .6, true), practicalHit(1.25, .2, 'low', .75), practicalHit(1.75, .22, 'upper', .55), practicalHit(2.5, .16, 'low', .8, true), practicalHit(2.875, .22, 'upper', .65, true), practicalHit(3.5, .13, 'low', .75), practicalHit(3.75, .17, 'upper', .65)],
+  ] },
+};
+
+function practicalHits(pattern, variation, bar, length, swing, add) {
+  const rhythm = PRACTICAL_RHYTHMS[pattern];
+  const cycleLength = bar * (rhythm.bars || 1);
+  const articulation = [1, .85, 1.08, .92][Math.floor(variation / 4)];
+  // The mixed triplet preview has twelve cells per quarter note: its binary
+  // foundation stays on sixteenths, with only the written response on thirds.
+  const grid = pattern === 'triplet-turnaround' ? .25 : (PREVIEW_GRIDS[pattern] || 16) >= 32 ? .125 : .25;
+  const response = Boolean(variation & 2);
+  for (let cycle = 0; cycle * cycleLength < length; cycle++) {
+    const source = rhythm.variants[variation % rhythm.variants.length];
+    const arranged = source.map((item, index) => {
+      const cellBar = Math.floor(item.at / 4);
+      const local = item.at - cellBar * 4;
+      const at = cellBar * bar + Math.round(local * bar / 4 / grid) * grid;
+      const shifted = at + (Math.round(at / grid) % 2 ? grid * swing : 0);
+      let voice = item.voice;
+      if (response) voice = pattern === 'hocket-comp' || pattern === 'dub-echo'
+        ? voice === 'upper' ? 'upper' : voice
+        : ({ upper: 'chord', chord: 'upper', top: 'middle', middle: 'top', arpeggio: 'reverse-arpeggio' }[voice] || voice);
+      // Hocket keeps the same register roles; the response changes only its
+      // upper articulation. Echoes always remain single, quiet top notes.
+      let duration = item.length * bar / 4 * articulation * (response && pattern === 'hocket-comp' && voice === 'upper' ? .72 : 1);
+      if (pattern === 'dub-echo' && response && voice === 'top') duration *= .72;
+      return { ...item, at: shifted, duration, voice, ordinal: cycle * 64 + index };
+    });
+    if (pattern === 'triplet-turnaround') {
+      const voices = response ? ['upper', 'middle', 'low'] : ['low', 'upper', 'top'];
+      for (let i = 0; i < 3; i++) arranged.push({ at: bar - 1 + i / 3, duration: (.16 + i * .035) * articulation, voice: voices[i], accent: .55 + i * .1, essential: false, gain: i === 2 ? .8 : 1, ordinal: cycle * 64 + 24 + i });
+    }
+    arranged.sort((a, b) => a.at - b.at);
+    arranged.forEach((item, index) => {
+      const at = cycle * cycleLength + item.at;
+      if (at >= length || item.at >= cycleLength) return;
+      if (pattern === 'hocket-comp') {
+        const next = arranged[index + 1]?.at ?? cycleLength;
+        item.duration = Math.min(item.duration, Math.max(1 / 480, next - item.at) * .55);
+      }
+      add(at, item.duration, item.voice, item.accent, item.essential, item.ordinal, item.gain);
+    });
+  }
+}
 
 function barLength(settings) {
   const [numerator, denominator] = meterParts(settings.meter);
@@ -390,9 +500,9 @@ function rhythmicHits(pattern, settings, length, bass = false) {
   const density = SIMPLE_PATTERN_IDS.has(pattern) ? 1 : fraction(settings.density, 1, 0, 1);
   const rhythm = RHYTHMS[pattern];
   const output = [];
-  const add = (at, duration, voice, accent, essential, ordinal) => {
+  const add = (at, duration, voice, accent, essential, ordinal, gain = 1) => {
     if (!essential && pseudoRandom(ordinal * 17 + variation * 997 + (bass ? 431 : 0)) > density) return;
-    output.push({ start: at, end: at + duration, voice, accent, ordinal });
+    output.push({ start: at, end: at + duration, voice, accent, ordinal, ...(gain !== 1 ? { gain } : {}) });
   };
   const regular = (step, duration, voice, articulation = 1) => {
     const count = Math.ceil(length / step);
@@ -417,6 +527,10 @@ function rhythmicHits(pattern, settings, length, bass = false) {
     return output.sort((a, b) => a.start - b.start);
   }
   if (['arp', 'updown', 'broken'].includes(pattern)) { regular(.5, null, pattern); return output; }
+  if (PRACTICAL_PATTERN_IDS.has(pattern)) {
+    practicalHits(pattern, variation, bar, length, fraction(settings.swing, 0, 0, .5), add);
+    return output.sort((a, b) => a.start - b.start);
+  }
   if (INTRICATE_PATTERN_IDS.has(pattern)) {
     intricateHits(pattern, variation, bar, length, add);
     return output.sort((a, b) => a.start - b.start);
@@ -546,7 +660,7 @@ export function arrangementEvents(chords, settings = {}) {
         if (stroke.start >= end || strokeEnd <= cursor) continue;
         const start = Math.max(cursor, stroke.start);
         const pitches = new Set(voicesFor(voicedNotes, stroke.voice, stroke.ordinal, variation));
-        for (const pitch of pitches) add(pitch, start, strokeEnd, velocity, 'chords', chordIndex, end, seed + stroke.ordinal * 17 + pitch, stroke.accent);
+        for (const pitch of pitches) add(pitch, start, strokeEnd, velocity * (stroke.gain ?? 1), 'chords', chordIndex, end, seed + stroke.ordinal * 17 + pitch, stroke.accent);
       }
     }
     if (settings.bass) {

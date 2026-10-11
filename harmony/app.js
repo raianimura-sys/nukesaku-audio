@@ -1,7 +1,7 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js';
-import {patternChoices,adjacentPattern} from './pattern-browser.js';
-import {AudioEngine} from './audio.js';
-import {createProject as defaults, validateProject} from './project.js';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=1.3.0';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=1.3.0';
+import {AudioEngine} from './audio.js?v=1.3.0';
+import {createProject as defaults, validateProject} from './project.js?v=1.3.0';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -175,6 +175,7 @@ function renderRhythm(){
  $('rhythm-name').textContent=pattern.name;$('rhythm-description').textContent=pattern.description;
  $('rhythm-kind').textContent=RHYTHM_LABELS[pattern.complexity];$('rhythm-kind').className=`rhythm-kind ${pattern.complexity}`;
  $('rhythm-strip').innerHTML=rhythmStrip(pattern.id);$('rhythm-strip').style.setProperty('--steps',rhythmSteps(pattern.id));
+ $('rhythm-strip').style.gap=pattern.grid>32?'.5px':pattern.grid>=32?'1px':'';
  $('rhythm-summary').textContent=advanced?`VAR ${String(state.settings.variation+1).padStart(2,'0')} · 密度 ${Math.round(state.settings.density*100)}% · アクセント ${Math.round(state.settings.accent*100)}%`:'基本のパターン';
  document.querySelectorAll('[data-quick-pattern]').forEach(button=>{const on=button.dataset.quickPattern===pattern.id;button.classList.toggle('active',on);button.setAttribute('aria-pressed',on);});
  if(modalMode==='rhythm'){
