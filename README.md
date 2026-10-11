@@ -24,11 +24,11 @@ HARMONY is available at <https://raianimura-sys.github.io/nukesaku-audio/harmony
 
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
 
-`harmony-home.css` provides HARMONY-specific routes, its home topic, and introduction-page layout. The home redesign and site-wide visual treatment are applied by `studio.css`.
+`harmony-home.css` provides HARMONY-specific routes, its home topic, and introduction-page layout. The renewed home layout and site-wide spacing are applied by `studio.css`, using the original cream, pink, lavender, and mint brand palette.
 
 ## Home demo and shared styling
 
-- `studio.css?v=3` is loaded after existing styles by every root-level HTML page, including product pages, learning articles, and the fallback. The independent `harmony/` app is excluded so its editor styling stays separate.
+- `studio.css?v=4` is loaded after existing styles by every root-level HTML page, including product pages, learning articles, and the fallback. The independent `harmony/` app is excluded so its editor styling stays separate.
 - `homepage-demo.js` uses the existing HARMONY engines for the home demo. Playback starts from a user action, plays the progression once, and can be stopped. The simple and complex controls let visitors compare the two rhythm families.
 - Keep the home routes to `harmony/`, `harmony.html`, the COMPOSE Beta page, CHOP preview, development log, the 15-article curriculum, BOOTH, YouTube, and contact. Preserve the `#lab` and `#about` anchors used by other pages.
 - Keep screenshots with their actual product/version labels. The FLOW and GuitarPractice images are development evidence, not released products.
