@@ -1,4 +1,4 @@
-import { arrangementEvents, totalBeats, chordNotes } from './music.js?v=2.1.0';
+import { arrangementEvents, totalBeats, chordNotes } from './music.js?v=2.1.1';
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, Number(value) || 0));
 const frequency = pitch => 440 * Math.pow(2, (pitch - 69) / 12);

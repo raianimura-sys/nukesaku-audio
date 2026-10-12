@@ -1,11 +1,11 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.1.0';
-import {suggestNextChords} from './recommendations.js?v=2.1.0';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.1.0';
-import {AudioEngine} from './audio.js?v=2.1.0';
-import {createProject as defaults, validateProject} from './project.js?v=2.1.0';
-import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.1.0';
-import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.1.0';
-import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.1.0';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.1.1';
+import {suggestNextChords} from './recommendations.js?v=2.1.1';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.1.1';
+import {AudioEngine} from './audio.js?v=2.1.1';
+import {createProject as defaults, validateProject} from './project.js?v=2.1.1';
+import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.1.1';
+import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.1.1';
+import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.1.1';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -63,7 +63,7 @@ function renderSections(){
  $('section-assistant-description').textContent=source?`${sectionLabel(source,state.sections)}の響きから3案。前後をつなげて聴いて、好きな案を採用。`:'今のキーから3案。まずは気になる進行を聴いて選んでみましょう。';
  const targets=[context.targetType,...(context.targetType==='chorus'?['prechorus','bridge']:context.targetType==='prechorus'?['chorus','bridge']:['chorus','verse']), 'bridge'].filter((t,i,a)=>a.indexOf(t)===i).slice(0,3);
  const full=songChordCount(state)+4>MAX_SONG_CHORDS||!context.destinationId&&state.sections.length>=MAX_SECTIONS;
- $('section-suggestions').innerHTML=targets.map((id,i)=>{const t=SECTION_TYPES.find(t=>t.id===id);return `<button data-generate-section="${id}" class="section-suggestion ${i===0?'recommended':''}" ${full?'disabled':''}><span>${i===0?'おすすめ':'別の展開'}</span><strong>${t.ja} <small>/ ${t.en}</small></strong><b aria-hidden="true">↗</b></button>`;}).join('');
+ $('section-suggestions').innerHTML=targets.map((id,i)=>{const t=SECTION_TYPES.find(t=>t.id===id),target=sectionGenerationContext(state,id),disabled=songChordCount(state)+4>MAX_SONG_CHORDS||!target.destinationId&&state.sections.length>=MAX_SECTIONS;return `<button data-generate-section="${id}" class="section-suggestion ${i===0?'recommended':''}" ${disabled?'disabled':''}><span>${i===0?'おすすめ':'別の展開'}</span><strong>${t.ja} <small>/ ${t.en}</small></strong><b aria-hidden="true">↗</b></button>`;}).join('');
  $('generate-section').disabled=full;
  if(full)$('section-assistant-description').textContent='上限に達しました。セクションやコードを減らすと新しい展開を作れます。';
  document.querySelectorAll('[data-play-scope]').forEach(b=>{const on=b.dataset.playScope===state.settings.playScope;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on);});
@@ -260,7 +260,7 @@ function openVoicings(){
 }
 
 function openSectionGenerator(targetType){
- stop();const context=sectionGenerationContext(state);
+ stop();const context=sectionGenerationContext(state,targetType);
  sectionDraft={...context,targetType:targetType||context.targetType,bars:4,round:0,history:[],choices:[],audition:'connection'};
  refreshSectionChoices();
 }
@@ -528,7 +528,7 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
   if(action==='json'){download(JSON.stringify({...state,app:'HARMONY',version:3},null,2),filename().replace(/\.mid$/,'.harmony.json'),'application/json');toast('プロジェクトのJSONを書き出しました');}if(action==='import')$('project-import').click();
  });
  $('modal-body').addEventListener('input',e=>{if(e.target.id==='rhythm-search'){rhythmSearch=e.target.value;$('rhythm-list').scrollTop=0;renderRhythmCards();return;}const key=e.target.dataset.setting;if(!key||e.target.type!=='range')return;const output=$(key+'-value');if(output)output.textContent=key==='variation'?String(Number(e.target.value)+1).padStart(2,'0'):e.target.value+'%';if(key==='volume'){state.settings.volume=Number(e.target.value)/100;audio.setVolume(state.settings.volume);$('volume-input').value=e.target.value;autosave();}});
- $('modal-body').addEventListener('change',e=>{if(e.target.id==='generated-section-type'){sectionDraft.targetType=e.target.value;sectionDraft.round=0;sectionDraft.history=[];refreshSectionChoices();$('generated-section-type')?.focus({preventScroll:true});return;}if(e.target.id==='rhythm-auto-audition'){rhythmPrefs.autoplay=e.target.checked;saveRhythmPrefs();renderRhythmCards();$('rhythm-select-hint').textContent=rhythmPrefs.autoplay?'タップで選択・試聴':'タップで選択';return;}const key=e.target.dataset.setting;if(!key||key==='volume')return;const value=e.target.type==='checkbox'?e.target.checked:['octave','variation'].includes(key)?Number(e.target.value):Number(e.target.value)/100;updateSettings({[key]:value});if(modalMode==='rhythm')renderRhythmCards();});
+ $('modal-body').addEventListener('change',e=>{if(e.target.id==='generated-section-type'){Object.assign(sectionDraft,sectionGenerationContext(state,e.target.value));sectionDraft.round=0;sectionDraft.history=[];refreshSectionChoices();$('generated-section-type')?.focus({preventScroll:true});return;}if(e.target.id==='rhythm-auto-audition'){rhythmPrefs.autoplay=e.target.checked;saveRhythmPrefs();renderRhythmCards();$('rhythm-select-hint').textContent=rhythmPrefs.autoplay?'タップで選択・試聴':'タップで選択';return;}const key=e.target.dataset.setting;if(!key||key==='volume')return;const value=e.target.type==='checkbox'?e.target.checked:['octave','variation'].includes(key)?Number(e.target.value):Number(e.target.value)/100;updateSettings({[key]:value});if(modalMode==='rhythm')renderRhythmCards();});
  $('modal-body').addEventListener('keydown',e=>{if(modalMode!=='rhythm'||!e.target.closest('[data-rhythm]')||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const direction=['ArrowRight','ArrowDown'].includes(e.key)?1:-1;stepRhythm(direction);document.querySelector(`[data-rhythm="${state.settings.pattern}"]`)?.focus({preventScroll:true});});
  $('project-import').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>1000000)throw new Error('1MB以下のプロジェクトJSONを選んでください。');const p=validateProject(JSON.parse(await f.text()));p.id=uid();mutate(()=>{state=p;},{message:'プロジェクトを読み込みました'});closeModal();}catch(error){toast(error.message||'ファイルを読み込めませんでした。');}e.target.value='';};
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){finishTouch(true);if($('modal').open)closeModal();else stop();e.preventDefault();return;}if($('modal').open)return;const typing=e.target.closest('input,select,textarea,[contenteditable=true]');const command=e.metaKey||e.ctrlKey;if(command&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();return;}if(typing)return;if(e.target.closest('.song-builder')&&['ArrowLeft','ArrowRight','Delete','Backspace'].includes(e.key))return;if(command&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();return;}if(command&&e.key.toLowerCase()==='d'){e.preventDefault();copyChord();return;}if(e.code==='Space'){if(e.repeat){e.preventDefault();return;}if(e.target.closest('button,a,summary,[role=button]'))return;e.preventDefault();togglePlay();return;}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeChord();return;}if(e.key==='ArrowLeft'){e.preventDefault();moveChord(state.selected,state.selected-1);}if(e.key==='ArrowRight'){e.preventDefault();moveChord(state.selected,state.selected+1);}if(/^[1-7]$/.test(e.key)){const manual=$('manual-chords').open,c=manual?palette[Number(e.key)-1]:recommendations[Number(e.key)-1]?.chord;if(c){e.preventDefault();chooseCandidate(c,!manual);}}});

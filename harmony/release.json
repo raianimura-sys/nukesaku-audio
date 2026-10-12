@@ -1,7 +1,7 @@
 {
   "app": "HARMONY",
-  "version": "2.1.0",
-  "source_commit": "a2ebf95787c50c09e3cbc166c2f8cedf90036ed6",
+  "version": "2.1.1",
+  "source_commit": "998126e7a344cd84d064bc43504fa7cc8e314e6f",
   "source_directory": "harmony-studio/dist",
   "homepage_url": "https://raianimura-sys.github.io/nukesaku-audio/harmony/"
 }

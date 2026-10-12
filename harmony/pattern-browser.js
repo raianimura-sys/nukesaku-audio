@@ -1,4 +1,4 @@
-import {SIMPLE_PATTERNS, COMPLEX_PATTERNS} from './music.js?v=2.1.0';
+import {SIMPLE_PATTERNS, COMPLEX_PATTERNS} from './music.js?v=2.1.1';
 
 const normalized = value => String(value ?? '').normalize('NFKC').toLowerCase().trim();
 export function patternChoices({group = 'simple', feel = 'all', query = '', favorites = [], favoritesOnly = false} = {}) {

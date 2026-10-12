@@ -1,7 +1,7 @@
-import {diatonicChords, makeChord, QUALITIES, voiceLead} from './music.js?v=2.1.0';
-import {connectionScore} from './recommendations.js?v=2.1.0';
-import {progressionSignature} from './composition.js?v=2.1.0';
-import {activeSection, createSection, activateSection, sectionType, songChordCount, MAX_SECTIONS, MAX_SONG_CHORDS} from './sections.js?v=2.1.0';
+import {diatonicChords, makeChord, QUALITIES, voiceLead} from './music.js?v=2.1.1';
+import {connectionScore} from './recommendations.js?v=2.1.1';
+import {progressionSignature} from './composition.js?v=2.1.1';
+import {activeSection, createSection, activateSection, sectionType, songChordCount, MAX_SECTIONS, MAX_SONG_CHORDS} from './sections.js?v=2.1.1';
 
 const mod=n=>((n%12)+12)%12;
 const isDiminished=c=>['dim','dim7','m7b5','m7b5b9'].includes(c.quality);
@@ -32,17 +32,19 @@ const PHRASES={
 
 /** Empty sections are filled; populated sections create a new following part.
  * Context reads the active editing buffer without mutating the project. */
-export function sectionGenerationContext(project){
+export function sectionGenerationContext(project,targetType=null){
  const current=activeSection(project),index=project.sections.indexOf(current);
  const sequence=s=>s.id===project.activeSectionId?project.chords:s.chords;
  const empty=!sequence(current).length;
  const source=empty?[...project.sections.slice(0,index)].reverse().find(s=>sequence(s).length)||null:current;
  const following=project.sections[index+1];
- const destination=empty?current:following&&!sequence(following).length?following:null;
- const insertAt=destination?project.sections.indexOf(destination):index+1;
+ const planned=empty?current:following&&!sequence(following).length?following:null;
+ const type=targetType||planned?.type||NEXT[current.type]||'prechorus';
+ const destination=planned?.type===type?planned:null;
+ const insertAt=planned?project.sections.indexOf(planned):index+1;
  const next=project.sections.slice(insertAt+(destination?1:0)).find(s=>sequence(s).length)||null;
  return {sourceId:source?.id||null,source:source?sequence(source):[],destinationId:destination?.id||null,insertAt,
-  nextId:next?.id||null,next:next?sequence(next):[],targetType:destination?.type||NEXT[current.type]||'prechorus'};
+  nextId:next?.id||null,next:next?sequence(next):[],targetType:type};
 }
 
 const directions=[
@@ -134,7 +136,7 @@ export function generateSectionProgressions({source=[],next=[],key=0,mode='major
 export function adoptGeneratedSection(project,context,targetType,chords){
  const destination=context.destinationId?project.sections.find(s=>s.id===context.destinationId):null;
  const count=destination?.id===project.activeSectionId?project.chords.length:destination?.chords.length;
- if(context.destinationId&&(!destination||count))throw new Error('追加先が変わりました。候補を作り直してください。');
+ if(context.destinationId&&(!destination||count||destination.type!==targetType))throw new Error('追加先が変わりました。候補を作り直してください。');
  if(!destination&&project.sections.length>=MAX_SECTIONS)throw new Error('セクションは12個までです。');
  if(songChordCount(project)+chords.length>MAX_SONG_CHORDS)throw new Error('曲全体は512コードまでです。');
  const sequence=chords.map(c=>({...c,id:makeChord(c.root,c.quality).id}));
