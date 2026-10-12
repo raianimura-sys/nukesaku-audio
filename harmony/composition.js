@@ -1,5 +1,5 @@
-import {chordPool, connectionScore} from './recommendations.js?v=2.1.1';
-import {makeChord, chordNotes, voiceLead, QUALITIES} from './music.js?v=2.1.1';
+import {chordPool, connectionScore} from './recommendations.js?v=2.1.2';
+import {makeChord, chordNotes, voiceLead, QUALITIES} from './music.js?v=2.1.2';
 
 export const progressionSignature = chords => chords.map(c=>`${c.root}:${c.quality}`).join('|');
 const signature=progressionSignature;
