@@ -1,4 +1,4 @@
-import {MODES, QUALITIES, makeChord, diatonicChords, chordName} from './music.js?v=2.1.2';
+import {MODES, QUALITIES, makeChord, diatonicChords, chordName} from './music.js?v=2.2.0';
 
 // Written transition choices, rather than random chord suggestions. The order
 // offers several musical directions while retaining the current key and mode.

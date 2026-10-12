@@ -1,11 +1,12 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.1.2';
-import {suggestNextChords} from './recommendations.js?v=2.1.2';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.1.2';
-import {AudioEngine} from './audio.js?v=2.1.2';
-import {createProject as defaults, validateProject} from './project.js?v=2.1.2';
-import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.1.2';
-import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.1.2';
-import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.1.2';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.2.0';
+import {suggestNextChords} from './recommendations.js?v=2.2.0';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.2.0';
+import {AudioEngine} from './audio.js?v=2.2.0';
+import {createProject as defaults, validateProject} from './project.js?v=2.2.0';
+import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.2.0';
+import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.2.0';
+import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.2.0';
+import {ProjectStorage, STORAGE} from './storage.js?v=2.2.0';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -15,22 +16,37 @@ const clamp=(n,min,max)=>Math.min(max,Math.max(min,Number(n)||0));
 const mod=n=>((n%12)+12)%12;
 const uid=()=>globalThis.crypto?.randomUUID?.()??`project-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 const KEYS=['C','D♭','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
-const STORAGE={draft:'harmony.draft.v1',library:'harmony.library.v1',picker:'harmony.pattern-picker.v1'};
+const projectStorage=new ProjectStorage();
 const audio=new AudioEngine();
 let toastTimer,saveTimer,activeChord=-1,palette=[],paletteTab='diatonic',chromaticRoot=0,midiBytes,midiUri,midiFilename,rollShown=true,dragIndex=null,touchDrag=null,lastFocused=null;
 let candidateChoice=null,recommendations=[],suppressCandidateClickUntil=0;
-let undoStack=[],redoStack=[],storageUnavailable=false,starting=false,playRequest=0;
+let undoStack=[],redoStack=[],storageUnavailable=false,starting=false,playRequest=0,storageNotice='';
 let playbackPlan=null, playingSectionId=null, auditionLabel='', compareChoices=[], compareHistory=[], voicingChoices=[], alternativeRound=0;
 let sectionDraft=null;
 let timelineNodes=[],arrangementLength=0,paintedChord=-1,paintedStep=-1,transportPhase='',modalMode=null,rhythmSearch='',rhythmFilter='simple',rhythmFeel='all',rhythmFavoritesOnly=false;
 
 function readStorage(key,fallback){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch{return fallback;}}
-let state;try{const saved=readStorage(STORAGE.draft,null);state=saved?validateProject(saved):defaults();}catch{state=defaults();}
-let library=readStorage(STORAGE.library,[]);if(!Array.isArray(library))library=[];
+const initialDraft=projectStorage.loadDraft();let state=initialDraft.project;
+if(['invalid','recovered','unavailable'].includes(initialDraft.status))storageNotice=initialDraft.status;
+let library=projectStorage.loadLibrary().projects;
 const savedPicker=readStorage(STORAGE.picker,{});let rhythmPrefs={autoplay:savedPicker?.autoplay!==false,favorites:Array.isArray(savedPicker?.favorites)?savedPicker.favorites.filter(id=>ADVANCED_PATTERNS.some(p=>p.id===id)):[]};
 
 function toast(message){$('toast').textContent=message;$('toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3200);}
-function autosave(){syncSection(state);clearTimeout(saveTimer);$('save-status').innerHTML='<i></i>保存中…';saveTimer=setTimeout(()=>{try{localStorage.setItem(STORAGE.draft,JSON.stringify(state));$('save-status').innerHTML='<i></i>保存済み';storageUnavailable=false;}catch{$('save-status').textContent='保存できません';if(!storageUnavailable){toast('ブラウザに保存できません。ライブラリからJSONを保存してください。');storageUnavailable=true;}}},300);}
+function renderStorageNotice(){
+ const notice=$('storage-notice');notice.hidden=!storageNotice;if(!storageNotice)return;
+ const messages={conflict:'別の画面で進行が更新されました。今の編集はここに残しています。保存する進行を選んでください。',invalid:'自動保存を読み込めませんでした。元のデータを保護しています。',recovered:'直前の自動保存を開きました。読み込めなかった元のデータも保護しています。',unavailable:'このブラウザに保存できません。今の進行をJSONで保存できます。'};
+ $('storage-message').textContent=messages[storageNotice];
+ $('storage-load-latest').hidden=storageNotice!=='conflict';
+ $('storage-original').hidden=!['invalid','recovered'].includes(storageNotice);
+ $('storage-resume').hidden=storageNotice==='unavailable';
+}
+function flushDraft({resolve=false}={}){
+ clearTimeout(saveTimer);syncSection(state);const result=projectStorage.saveDraft(state,{resolve});
+ if(result.status==='saved'){storageNotice='';storageUnavailable=false;$('save-status').innerHTML='<i></i>保存済み';}
+ else{storageNotice=result.status==='invalid'&&storageNotice==='recovered'?'recovered':result.status;$('save-status').textContent=result.status==='conflict'?'保存を保留中':result.status==='invalid'?'元データを保護中':'保存できません';if(result.status==='unavailable'&&!storageUnavailable){toast('ブラウザに保存できません。JSONを書き出して保存してください。');storageUnavailable=true;}}
+ renderStorageNotice();return result.status==='saved';
+}
+function autosave(){syncSection(state);clearTimeout(saveTimer);if(!storageNotice)$('save-status').innerHTML='<i></i>保存中…';saveTimer=setTimeout(()=>flushDraft(),300);}
 function stop(){playRequest++;starting=false;audio.stop();activeChord=-1;playbackPlan=null;playingSectionId=null;auditionLabel='';renderPlayback(0,-1);}
 function mutate(action,{message,history=true}={}){syncSection(state);if(history){undoStack.push(clone(state));if(undoStack.length>70)undoStack.shift();redoStack=[];}stop();action(state);candidateChoice=null;state.selected=state.chords.length?Math.min(Math.max(0,state.selected),state.chords.length-1):-1;syncSection(state);render();autosave();if(message)toast(message);}
 function undo(){if(!undoStack.length)return;stop();redoStack.push(clone(state));state=undoStack.pop();candidateChoice=null;render();autosave();toast('元に戻しました');}
@@ -304,7 +320,7 @@ function applySectionChoice(index){
 
 function openModal(title,body,eyebrow='HARMONY STUDIO',mode=null){
  if(!$('modal').open)lastFocused=document.activeElement;
- modalMode=mode;$('modal').classList.toggle('rhythm-modal',mode==='rhythm');$('modal').classList.toggle('composer-modal',['comparison','voicing','section-generation'].includes(mode));$('modal').classList.toggle('section-generation-modal',mode==='section-generation');
+ modalMode=mode;$('modal').classList.toggle('rhythm-modal',mode==='rhythm');$('modal').classList.toggle('library-modal',mode==='library');$('modal').classList.toggle('composer-modal',['comparison','voicing','section-generation'].includes(mode));$('modal').classList.toggle('section-generation-modal',mode==='section-generation');
  $('modal-title').textContent=title;$('modal-eyebrow').textContent=eyebrow;$('modal-body').innerHTML=body;
  if(!$('modal').open)$('modal').showModal();
 }
@@ -391,8 +407,14 @@ function nextVariation(){
  stop();updateSettings({variation:(state.settings.variation+1)%16},{restart:false});if(modalMode==='rhythm')renderRhythmCards();if(listen)togglePlay();
 }
 function openPresets(){openModal('アイデアの種',`<p>有名な進行を、現在のキーで読み込めます。元の進行は「元に戻す」で復元。基本形の響きを保ち、必要に応じてスケールも切り替えます。</p><div class="preset-grid">${NAMED_PRESETS.map(p=>presetCard(p)).join('')}</div>`,'PROGRESSION RECIPES');}
-function saveProject(){state.title=$('project-title').value.trim()||'Untitled progression';const entry={...clone(state),savedAt:Date.now()};const next=library.slice(),i=next.findIndex(p=>p.id===state.id);if(i>=0)next[i]=entry;else next.unshift(entry);try{localStorage.setItem(STORAGE.library,JSON.stringify(next));library=next;$('library-count').textContent=library.length;autosave();toast('マイライブラリに保存しました');}catch{toast('保存容量がいっぱいです。JSONを書き出して保存してください。');}}
-function openLibrary(){openModal('マイライブラリ',`<div class="library-toolbar"><button class="button" data-library="new">${icon('plus')}新しい進行</button><button class="button" data-library="save">${icon('save')}今の進行を保存</button><button class="button" data-library="json">${icon('download')}JSONを書き出す</button><button class="button" data-library="import">${icon('folder')}JSONを読み込む</button></div><div class="modal-note">進行はこのブラウザに保存されます。別の端末へ移すときはJSONを書き出して読み込んでください。</div><div class="library-list" style="margin-top:16px">${library.length?library.map((p,i)=>`<div class="library-item"><div class="library-info"><strong>${esc(p.title)}</strong><small>${esc(KEYS[p.key]||'C')} · ${esc(p.settings?.bpm||120)} BPM · ${p.sections?.length||1} sections · ${p.sections?.reduce((n,s)=>n+(s.chords?.length||0),0)??p.chords?.length??0} chords · ${new Date(p.savedAt||Date.now()).toLocaleDateString('ja-JP')}</small></div><button class="button" data-load="${i}">開く</button><button class="icon-button" data-remove="${i}" aria-label="${esc(p.title)}を削除">${icon('trash')}</button></div>`).join(''):'<div class="library-empty">気に入った進行を、ここに集めていきましょう。</div>'}</div>`,'YOUR COLLECTION');}
+function saveProject(asCopy=false){state.title=$('project-title').value.trim()||'Untitled progression';syncSection(state);try{library=projectStorage.saveLibraryProject(state,{asCopy});$('library-count').textContent=library.length;autosave();toast(asCopy?'別の進行としてコピーを保存しました':'マイライブラリに保存しました');return true;}catch{toast('ライブラリに保存できません。JSONを書き出して保存してください。');return false;}}
+function exportProject(){syncSection(state);download(JSON.stringify({...state,app:'HARMONY',version:3},null,2),filename().replace(/\.mid$/,'.harmony.json'),'application/json');toast('プロジェクトのJSONを書き出しました');}
+function openLibrary(){
+ const loaded=projectStorage.loadLibrary();library=loaded.projects;$('library-count').textContent=library.length;
+ let trash=[],trashError=false;try{trash=projectStorage.loadTrash();}catch{trashError=true;}
+ const backup=projectStorage.loadBackup();
+ openModal('マイライブラリ',`<div class="library-toolbar"><button class="button" data-library="new">${icon('plus')}新しい進行</button><button class="button" data-library="save">${icon('save')}今の進行を保存</button><button class="button" data-library="copy">${icon('copy')}コピーとして保存</button><button class="button" data-library="json">${icon('download')}JSONを書き出す</button><button class="button" data-library="import">${icon('folder')}JSONを読み込む</button></div><div class="modal-note">進行はこのブラウザに保存されます。別の端末へ移すときはJSONを書き出して読み込んでください。コピーとして保存すると、以前の進行を残せます。</div>${loaded.status!=='ready'?'<div class="modal-note storage-error">ライブラリを読み込めません。元の保存データは変更していません。<button class="button" data-library="raw">元のデータを保存</button></div>':''}<div class="library-list" style="margin-top:16px">${library.length?library.map(p=>`<div class="library-item"><div class="library-info"><strong>${esc(p.title)}</strong><small>${esc(KEYS[p.key]||'C')} · ${esc(p.settings.bpm)} BPM · ${p.sections.length} sections · ${p.sections.reduce((n,s)=>n+s.chords.length,0)} chords · ${new Date(p.savedAt||Date.now()).toLocaleDateString('ja-JP')}</small></div><button class="button" data-load="${esc(p.id)}" aria-label="${esc(p.title)}を開く">開く</button><button class="icon-button" data-remove="${esc(p.id)}" aria-label="${esc(p.title)}を削除">${icon('trash')}</button></div>`).join(''):'<div class="library-empty">気に入った進行を、ここに集めていきましょう。</div>'}</div><details class="library-recovery"><summary>保存・削除した進行を復元 <span>${trash.length}件</span></summary>${trashError?'<p>削除した進行を読み込めません。元の保存データは変更していません。</p>':''}${backup?`<div class="library-item"><div class="library-info"><strong>直前の自動保存</strong><small>${esc(backup.title)} · ${backup.sections.length} sections</small></div><button class="button" data-library="backup">開く</button></div>`:'<p>直前の自動保存は、次の編集が保存されると残ります。</p>'}${trash.map(item=>`<div class="library-item"><div class="library-info"><strong>${esc(item.project.title)}</strong><small>${new Date(item.deletedAt).toLocaleDateString('ja-JP')}に削除</small></div><button class="button" data-restore="${esc(item.token)}" aria-label="${esc(item.project.title)}を復元">復元</button></div>`).join('')}</details>`,'YOUR COLLECTION','library');
+}
 function openSettings(){openModal('演奏・書き出し設定',`<div class="settings-grid"><label>ノートの長さ（100%でつなぐ） <span id="gate-value">${Math.round(state.settings.gate*100)}%</span><input data-setting="gate" type="range" min="10" max="100" value="${state.settings.gate*100}"></label><label>スイング <span id="swing-value">${Math.round(state.settings.swing*100)}%</span><input data-setting="swing" type="range" min="0" max="50" value="${state.settings.swing*100}"></label><label>ヒューマナイズ <span id="humanize-value">${Math.round(state.settings.humanize*100)}%</span><input data-setting="humanize" type="range" min="0" max="100" value="${state.settings.humanize*100}"></label><label>音量 <span id="volume-value">${Math.round(state.settings.volume*100)}%</span><input data-setting="volume" aria-label="試聴の音量" type="range" min="0" max="100" value="${state.settings.volume*100}"></label><label>全体の音域<select data-setting="octave">${[-2,-1,0,1,2].map(n=>`<option value="${n}" ${n===state.settings.octave?'selected':''}>${n===0?'そのまま':(n>0?'+':'')+n+' オクターブ'}</option>`).join('')}</select></label><label class="check-label"><input data-setting="bass" type="checkbox" ${state.settings.bass?'checked':''}>ベースを追加する</label></div><p>ノートの長さ・演奏パターン・スイング・ヒューマナイズ・音域・ベースは、試聴とMIDIの両方に反映されます。</p><div class="settings-footer">MIDIはコードとベースを別トラックにし、テンポ・拍子も含めて書き出します。音色とメトロノームは試聴用です。6/8拍子はBPMを四分音符基準として扱います。</div>`,'MAKE IT FEEL RIGHT');}
 function openHelp(){openModal('HARMONYの使い方',`<h3>1. おすすめを聴き比べる</h3><p>キーとスケールを選ぶと候補が切り替わります。Triad・7th・9thは追加する候補の響きです。すでに並べたコードやプリセットはそのまま。候補をタップすると選択・試聴できます。＋を押すか進行へドラッグしたときだけ追加します。数字キー1〜5でおすすめを試聴。「自分でコードを選ぶ」を開くと、キーのコード・借用コード・すべてのコード種別から自由に選べます。開いている間は数字キー1〜7でその一覧を試聴できます。</p><h3>2. おすすめから進行を組み立てる</h3><p>進行のコードを選ぶと、その次のおすすめが5つ表示されます。候補を押して前後のつながりを試聴し、＋で選択コードの直後に追加。「末尾から続ける」で続きを作れます。コードをタップするとエディターで長さ・転回形・音域を変更できます。各コードの「削除」で1個ずつ消し、「元に戻す」で復元できます。ドラッグハンドル「⠿」で並び替え、またはエディターの左右ボタンで移動。「響きを整える」から、転回形・上の音・ベース・広い配置を聴き比べられます。</p><h3>曲の構成と別案</h3><p>「曲の構成」でAメロ / Verse、Bメロ / Pre-Chorus、サビ / Chorusなどを追加し、切り替えて編集します。複製・左右移動・削除にも対応。「このセクション / 曲全体」は再生とMIDI両方の範囲です。キー・拍子・テンポ・刻みは曲全体で共通です。</p><p>コードの鍵マークで、別案と響き調整で固定するコードを指定。「別案を聴き比べる」で、元の進行と3案を同じ条件で試聴できます。採用まで元の進行は変わりません。「響きを整える」では音の配置とベースの流れを比較できます。どの変更も元に戻せます。</p><h3>3. 刻みを試す</h3><p>基本のパターンに加えて「高度なパターン」の単純系で一定の刻み、複雑系で細切れや変則リズムを聴き比べられます。星でお気に入りに保存し、左右のボタンで順番に試せます。密度・アクセント・16通りのバリエーションはMIDIにも反映。「すべての音を停止」は試聴や残響も止めます。</p><h3>4. DAWへ持ち出す</h3><p>パソコンではMIDIカードをDAWへドラッグ。ドラッグの受け取りはブラウザ・OS・DAWの組み合わせによって異なります。対応しない場合は「MIDIを保存」で.midファイルを保存し、DAWへ読み込んでください。スマホは保存、または対応端末の共有ボタンを使えます。</p><div class="modal-note">ブラウザからDAWへの直接ドラッグはChromium系の対応環境向けです。このアプリからDAWの受け取り完了は確認できません。MIDIファイルとしての保存はいつでも使えます。</div><h3>スマホで使う</h3><p>ホーム画面に追加するとアプリのように開けます。初回読み込み後はオフラインでも使えます。進行は端末のブラウザに保存されるため、バックアップはライブラリからJSONを書き出してください。</p>`,'A LITTLE GUIDE');}
 function openLearn(){openModal('コードのヒント',`<h3>トニック — 帰ってくる場所</h3><p>Ⅰ・Ⅲ・Ⅵを中心に、落ち着きを感じる響きです。最初や最後のコードに置くと進行がまとまりやすくなります。</p><h3>サブドミナント — 景色を変える</h3><p>Ⅱ・Ⅳを中心に、動きや広がりをつくる響きです。トニックから離れて、次の展開へ向かうときに。</p><h3>ドミナント — 次へ向かう力</h3><p>Ⅴ・Ⅶを中心に、緊張感をつくる響きです。Ⅴ → Ⅰの流れは、帰ってきた感覚を生みます。機能は前後の文脈でも変わります。</p><h3>借用コードで色をつける</h3><p>同じ主音を持つ別のスケールから響きを借ります。CメジャーでFmを使う、など。色分けは目安なので、最後は耳で選んでみてください。</p><h3>転回形でなめらかに</h3><p>一番下の音を変えると、同じコードでも聞こえ方が変わります。コード名の「/E」はEがベースになっている印。「なめらかにつなぐ」で、隣り合うコードの音の動きを整えられます。</p>`,'FOLLOW YOUR EARS');}
@@ -491,7 +513,7 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
  $('midi-drag').onclick=downloadMidi;$('midi-drag').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();downloadMidi();}};
  $('midi-drag').addEventListener('dragstart',e=>{if(!performancePlan(state).chords.length){e.preventDefault();return;}e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData('DownloadURL',`audio/midi:${midiFilename}:${midiUri}`);e.dataTransfer.setData('text/uri-list',midiUri);try{e.dataTransfer.items.add(file());}catch{}toast('DAWで受け取れない場合は「MIDIを保存」をお使いください。');});
  $('share-midi').onclick=async()=>{try{await navigator.share({files:[file()],title:state.title});}catch(e){if(e.name!=='AbortError')toast('共有できませんでした。「MIDIを保存」をお使いください。');}};
- ['settings-button','export-options'].forEach(id=>$(id).onclick=openSettings);['nav-library','mobile-library'].forEach(id=>$(id).onclick=openLibrary);$('save-project').onclick=saveProject;
+ ['settings-button','export-options'].forEach(id=>$(id).onclick=openSettings);['nav-library','mobile-library'].forEach(id=>$(id).onclick=openLibrary);$('save-project').onclick=()=>saveProject();
  $('project-title').addEventListener('change',e=>{state.title=e.target.value.trim()||'Untitled progression';e.target.value=state.title;autosave();prepareMidi();});$('project-title').addEventListener('input',e=>{state.title=e.target.value;autosave();prepareMidi();});
  ['help-button'].forEach(id=>$(id).onclick=openHelp);$('nav-learn').onclick=openLearn;$('shortcut-button').onclick=openShortcuts;$('nav-compose').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
  $('close-modal').onclick=closeModal;$('modal').addEventListener('cancel',()=>{if(['rhythm','comparison','voicing','section-generation'].includes(modalMode))stop();modalMode=null;sectionDraft=null;});$('modal').addEventListener('click',e=>{if(e.target===$('modal')){const r=$('modal').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal();}});
@@ -521,17 +543,26 @@ const modeLabels={major:'Major / メジャー',minor:'Minor / マイナー',dori
   if(e.target.closest('#rhythm-previous')){stepRhythm(-1);return;}if(e.target.closest('#rhythm-next')){stepRhythm(1);return;}
   if(e.target.closest('#rhythm-play')){togglePlay();return;}if(e.target.closest('[data-rhythm-variation]')){nextVariation();return;}
   const preset=e.target.closest('[data-preset]');if(preset){applyPreset(preset.dataset.preset);return;}
-  const load=e.target.closest('[data-load]');if(load){try{const project=validateProject(library[Number(load.dataset.load)]);mutate(()=>{state=project;},{message:'進行を読み込みました'});closeModal();}catch(error){toast(error.message);}return;}
-  const remove=e.target.closest('[data-remove]');if(remove){const removed=library.splice(Number(remove.dataset.remove),1);try{localStorage.setItem(STORAGE.library,JSON.stringify(library));}catch{library.push(...removed);toast('ライブラリを更新できませんでした。');return;}$('library-count').textContent=library.length;openLibrary();toast('ライブラリから削除しました');return;}
+  const load=e.target.closest('[data-load]');if(load){try{const project=validateProject(projectStorage.loadLibrary().projects.find(p=>p.id===load.dataset.load));mutate(()=>{state=project;},{message:'進行を読み込みました'});closeModal();}catch(error){toast(error.message);}return;}
+  const remove=e.target.closest('[data-remove]');if(remove){try{library=projectStorage.removeLibraryProject(remove.dataset.remove);openLibrary();toast('削除しました。「保存・削除した進行を復元」から戻せます。');}catch(error){toast(error.message||'ライブラリを更新できませんでした。');}return;}
+  const restore=e.target.closest('[data-restore]');if(restore){try{library=projectStorage.restoreLibraryProject(restore.dataset.restore);openLibrary();toast('ライブラリに復元しました');}catch(error){toast(error.message||'復元できませんでした。');}return;}
   const action=e.target.closest('[data-library]')?.dataset.library;
-  if(action==='save'){saveProject();openLibrary();}if(action==='new'){mutate(()=>{state=defaults();state.chords=[];state.selected=-1;},{message:'新しい進行を作成しました'});closeModal();}
-  if(action==='json'){download(JSON.stringify({...state,app:'HARMONY',version:3},null,2),filename().replace(/\.mid$/,'.harmony.json'),'application/json');toast('プロジェクトのJSONを書き出しました');}if(action==='import')$('project-import').click();
+  if(action==='save'||action==='copy'){saveProject(action==='copy');openLibrary();}if(action==='new'){mutate(()=>{state=defaults();state.chords=[];state.selected=-1;},{message:'新しい進行を作成しました'});closeModal();}
+  if(action==='backup'){const backup=projectStorage.loadBackup();if(backup){mutate(()=>{state=backup;},{message:'直前の自動保存を開きました。元に戻すで今の編集へ戻れます。'});closeModal();}}
+  if(action==='raw'){try{const raw=localStorage.getItem(STORAGE.library);if(raw!==null)download(raw,'Harmony-library-original.json','application/json');}catch{toast('保存データを取得できませんでした。');}}
+ if(action==='json')exportProject();if(action==='import')$('project-import').click();
  });
  $('modal-body').addEventListener('input',e=>{if(e.target.id==='rhythm-search'){rhythmSearch=e.target.value;$('rhythm-list').scrollTop=0;renderRhythmCards();return;}const key=e.target.dataset.setting;if(!key||e.target.type!=='range')return;const output=$(key+'-value');if(output)output.textContent=key==='variation'?String(Number(e.target.value)+1).padStart(2,'0'):e.target.value+'%';if(key==='volume'){state.settings.volume=Number(e.target.value)/100;audio.setVolume(state.settings.volume);$('volume-input').value=e.target.value;autosave();}});
  $('modal-body').addEventListener('change',e=>{if(e.target.id==='generated-section-type'){Object.assign(sectionDraft,sectionGenerationContext(state,e.target.value));sectionDraft.round=0;sectionDraft.history=[];refreshSectionChoices();$('generated-section-type')?.focus({preventScroll:true});return;}if(e.target.id==='rhythm-auto-audition'){rhythmPrefs.autoplay=e.target.checked;saveRhythmPrefs();renderRhythmCards();$('rhythm-select-hint').textContent=rhythmPrefs.autoplay?'タップで選択・試聴':'タップで選択';return;}const key=e.target.dataset.setting;if(!key||key==='volume')return;const value=e.target.type==='checkbox'?e.target.checked:['octave','variation'].includes(key)?Number(e.target.value):Number(e.target.value)/100;updateSettings({[key]:value});if(modalMode==='rhythm')renderRhythmCards();});
  $('modal-body').addEventListener('keydown',e=>{if(modalMode!=='rhythm'||!e.target.closest('[data-rhythm]')||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const direction=['ArrowRight','ArrowDown'].includes(e.key)?1:-1;stepRhythm(direction);document.querySelector(`[data-rhythm="${state.settings.pattern}"]`)?.focus({preventScroll:true});});
  $('project-import').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{if(f.size>1000000)throw new Error('1MB以下のプロジェクトJSONを選んでください。');const p=validateProject(JSON.parse(await f.text()));p.id=uid();mutate(()=>{state=p;},{message:'プロジェクトを読み込みました'});closeModal();}catch(error){toast(error.message||'ファイルを読み込めませんでした。');}e.target.value='';};
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){finishTouch(true);if($('modal').open)closeModal();else stop();e.preventDefault();return;}if($('modal').open)return;const typing=e.target.closest('input,select,textarea,[contenteditable=true]');const command=e.metaKey||e.ctrlKey;if(command&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();return;}if(typing)return;if(e.target.closest('.song-builder')&&['ArrowLeft','ArrowRight','Delete','Backspace'].includes(e.key))return;if(command&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();return;}if(command&&e.key.toLowerCase()==='d'){e.preventDefault();copyChord();return;}if(e.code==='Space'){if(e.repeat){e.preventDefault();return;}if(e.target.closest('button,a,summary,[role=button]'))return;e.preventDefault();togglePlay();return;}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeChord();return;}if(e.key==='ArrowLeft'){e.preventDefault();moveChord(state.selected,state.selected-1);}if(e.key==='ArrowRight'){e.preventDefault();moveChord(state.selected,state.selected+1);}if(/^[1-7]$/.test(e.key)){const manual=$('manual-chords').open,c=manual?palette[Number(e.key)-1]:recommendations[Number(e.key)-1]?.chord;if(c){e.preventDefault();chooseCandidate(c,!manual);}}});
- window.addEventListener('pagehide',()=>{stop();try{localStorage.setItem(STORAGE.draft,JSON.stringify(state));}catch{}});
- render();audio.setVolume(state.settings.volume);autosave();
+ $('storage-export').onclick=exportProject;
+ $('storage-original').onclick=()=>{const raw=projectStorage.rawDraft();if(raw!==null)download(raw,'Harmony-autosave-original.json','application/json');};
+ $('storage-load-latest').onclick=()=>{stop();const latest=projectStorage.loadDraft();storageNotice=['invalid','recovered','unavailable'].includes(latest.status)?latest.status:'';mutate(()=>{state=latest.project;},{message:'保存されている進行を開きました。今の編集は元に戻すで復元できます。'});renderStorageNotice();};
+ $('storage-resume').onclick=()=>{if(flushDraft({resolve:true}))toast('この進行で自動保存を再開しました。前のデータも保持しています。');};
+ window.addEventListener('storage',e=>{if(e.key===STORAGE.draft||e.key===null){if(projectStorage.noteExternalDraft(e.key===null?projectStorage.rawDraft():e.newValue)){clearTimeout(saveTimer);stop();finishTouch(true);storageNotice='conflict';$('save-status').textContent='保存を保留中';renderStorageNotice();}}if(e.key===STORAGE.library||e.key===STORAGE.trash||e.key===null){library=projectStorage.loadLibrary().projects;$('library-count').textContent=library.length;if(modalMode==='library')openLibrary();}});
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){stop();finishTouch(true);flushDraft();}});
+ window.addEventListener('pagehide',()=>{stop();finishTouch(true);flushDraft();});
+ render();renderStorageNotice();audio.setVolume(state.settings.volume);autosave();
  if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});

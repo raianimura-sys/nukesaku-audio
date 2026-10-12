@@ -1,4 +1,4 @@
-import {makeChord, totalBeats} from './music.js?v=2.1.2';
+import {makeChord, totalBeats} from './music.js?v=2.2.0';
 
 export const SECTION_TYPES = [
   {id:'intro', ja:'イントロ', en:'Intro'},

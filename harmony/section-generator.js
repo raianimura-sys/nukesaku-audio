@@ -1,7 +1,7 @@
-import {diatonicChords, makeChord, QUALITIES, voiceLead} from './music.js?v=2.1.2';
-import {connectionScore} from './recommendations.js?v=2.1.2';
-import {progressionSignature} from './composition.js?v=2.1.2';
-import {activeSection, createSection, activateSection, sectionType, songChordCount, MAX_SECTIONS, MAX_SONG_CHORDS} from './sections.js?v=2.1.2';
+import {diatonicChords, makeChord, QUALITIES, voiceLead} from './music.js?v=2.2.0';
+import {connectionScore} from './recommendations.js?v=2.2.0';
+import {progressionSignature} from './composition.js?v=2.2.0';
+import {activeSection, createSection, activateSection, sectionType, songChordCount, MAX_SECTIONS, MAX_SONG_CHORDS} from './sections.js?v=2.2.0';
 
 const mod=n=>((n%12)+12)%12;
 const isDiminished=c=>['dim','dim7','m7b5','m7b5b9'].includes(c.quality);
