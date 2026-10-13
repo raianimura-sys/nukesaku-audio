@@ -1,0 +1,37 @@
+/* Original HARMONY palette, with clearer surfaces and short, quiet reactions. */
+:root{--motion-ease:cubic-bezier(.22,1,.36,1);--surface-shadow:0 3px 16px #24332906}
+.key-section,.song-builder,.recommendation-section,.inspector,.piano-roll-section,.rhythm-section,.midi-panel{border-radius:13px;box-shadow:var(--surface-shadow)}
+.key-section{border-color:#dce3d7}.song-builder{border-color:#d5e0cc}.recommendation-section{background:#f0f5e9;border-color:#d5e0cc;padding:21px 18px}
+.recommendation-context{font-size:17px;letter-spacing:-.25px}.recommendation-note,.recommendation-card p{color:#66765d}.recommendation-card{border-radius:10px;background:#fcfdf9;border-color:#d9e3d2;box-shadow:0 2px 8px #263b2204;position:relative;overflow:hidden}
+.recommendation-card:before{content:'';position:absolute;inset:0 0 auto;height:3px;background:var(--chord-color);pointer-events:none}
+.recommendation-card p{font-size:10px;line-height:1.8}.recommendation-card .candidate-select{padding-top:3px}.candidate-card.candidate-selected{border-color:#6e9360;background:#f5faef;box-shadow:inset 0 0 0 1px #6e9360,0 3px 12px #4966380b}
+.candidate-plus{min-height:40px;border-radius:7px;background:#e5efdb;color:#3f6031;font-size:10px}.candidate-grip{width:34px;min-height:40px;border-radius:6px;color:#677e58}
+.timeline-chord{border-radius:0;transition:border-color 160ms,box-shadow 160ms,background-color 160ms}.timeline-chord:first-child{border-radius:10px 0 0 10px}.timeline-chord:nth-last-child(2){border-radius:0 10px 10px 0}.timeline-chord:first-child:nth-last-child(2){border-radius:10px}.timeline-chord.selected{border-color:transparent;box-shadow:inset 0 0 0 2px #466843}.timeline-chord.playing{box-shadow:inset 0 -3px #446d36}.timeline-chord.selected.playing{box-shadow:inset 0 0 0 2px #466843,inset 0 -4px #446d36}.timeline-chord.playing:after{animation:none}
+.timeline-select{min-height:90px}.timeline-chord .chord-role{opacity:.85}.timeline-lock,.timeline-delete{border-radius:6px}.timeline-delete{background:#ffffff68;color:#455a3b}.timeline-card-actions .drag-grip{width:25px}
+.section-chip,.section-suggestion,.template-card{border-radius:10px}.section-chip.active{box-shadow:0 3px 12px #22301b12}.section-suggestion:not(.recommended){background:#fcfdf8}
+.button,.icon-button,.preview-button,.candidate-plus,.timeline-delete,.section-chip,.section-suggestion,.template-card,.rhythm-card,.segmented button{transition:background-color 160ms,border-color 160ms,box-shadow 180ms,transform 180ms var(--motion-ease),opacity 120ms}
+.button:active:not(:disabled),.icon-button:active:not(:disabled),.candidate-plus:active:not(:disabled),.preview-button:active:not(:disabled),.section-suggestion:active:not(:disabled),.template-card:active:not(:disabled){transform:scale(.97)}
+.candidate-select:active,.timeline-select:active,.candidate-grip:active{transform:none}
+.button.dark{box-shadow:0 2px 6px #192c1712}.preview-button{width:34px;height:34px}.selected-notes{color:#75876b}.inspector-heading h2{color:#6f8264}
+.manual-chords summary{min-height:48px;color:#4c683d}.manual-chords summary>span{transition:transform 220ms var(--motion-ease)}.manual-chords[data-motion-closing] summary>span{transform:rotate(0)}
+.section-menu summary,.rhythm-adjustments summary{min-height:44px}.section-menu summary>span{display:inline-block;transition:transform 180ms var(--motion-ease)}.section-menu[open] summary>span{transform:rotate(180deg)}
+.motion-ready .section-menu[open] .section-tools{animation:motion-popover 170ms var(--motion-ease) both}@keyframes motion-popover{from{opacity:.3;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #648c4f;outline-offset:3px}
+.transport{box-shadow:0 -6px 24px #23302708}.play-button,.panic-stop{transition:background-color 160ms,transform 150ms var(--motion-ease)}.play-button:active{transform:scale(.94)}
+.touch-drag-ghost{box-shadow:0 16px 35px #20301b30;transform:rotate(1.5deg);border-radius:10px}.timeline-chord.touch-drop,.timeline-chord.drop-target{box-shadow:inset 3px 0 #3d6d2e,0 0 0 2px #7da76944}
+.motion-ready #modal[open]::backdrop{animation:motion-backdrop 180ms ease-out both}@keyframes motion-backdrop{from{opacity:0}to{opacity:1}}
+@media(hover:hover) and (pointer:fine){
+ .candidate-card:hover{border-color:#a2bb8f;box-shadow:0 5px 15px #36552a0b}.candidate-plus:hover{background:#d4e8c5}
+ .section-suggestion:hover:not(:disabled),.template-card:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 5px 14px #36552a0c}
+ .button.dark:hover:not(:disabled){box-shadow:0 4px 12px #192c1720}.timeline-delete:hover{background:#fff9;color:#845348}
+}
+@media(max-width:620px){
+ .recommendation-section{padding:18px 13px}.recommendation-context{font-size:15px}.recommendation-card{min-height:183px;padding:12px 10px 9px}.recommendation-card p{font-size:10px;line-height:1.75}.recommendation-card strong{font-size:27px}.recommendation-card.long-name strong{font-size:21px}
+ .candidate-plus,.candidate-grip{min-height:44px}.candidate-plus{padding:5px 10px}.candidate-grip{width:34px}.timeline-chord .card-top{min-height:44px}.timeline-delete,.timeline-lock,.timeline-card-actions .drag-grip{min-height:44px}.timeline-delete{width:44px}.timeline-card-actions .drag-grip{width:25px}.timeline-lock{width:32px}.timeline-chord{min-width:145px;min-height:157px;padding-inline:9px}
+ .arrange-actions .icon-button{width:36px;height:44px}.chord-edit-actions button{min-height:44px}.preview-button{width:44px;height:44px}.rhythm-stepper button,.rhythm-favorite{min-width:40px;min-height:44px}.rhythm-modal .rhythm-card-top{padding-right:42px}.manual-chords .palette-tabs button{min-height:44px}.intro p{color:#75816e}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ .section-suggestion:hover:not(:disabled),.template-card:hover:not(:disabled),.button:active:not(:disabled),.icon-button:active:not(:disabled),.candidate-plus:active:not(:disabled),.preview-button:active:not(:disabled),.play-button:active{transform:none}
+ .touch-drag-ghost{transform:none}
+}

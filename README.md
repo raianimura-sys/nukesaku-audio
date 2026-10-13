@@ -28,6 +28,8 @@ Version 1.5 puts five context-aware chord recommendations at the center of the c
 
 Version 1.6 replaces mood-based suggestions in “アイデアの種” with eight named progressions. Royal road, Canon, Marusa, and Komuro are directly visible; every recipe shows its actual chords in the current key before loading. Curated chord qualities are preserved.
 
+Version 2.3 adds short list reveals, fluid chord rearrangement, interruptible disclosure animation and immediate modal/press feedback, following Motion Reference. It keeps the original palette, copy, gapless chord timeline and explicit plus/drag insertion. Reduced-motion preferences are respected and mobile controls are easier to tap.
+
 Version 1.7 adds a labeled delete button to every timeline chord. Individual deletion preserves the selected chord when an earlier chord is removed, stops playback and previews, and supports undo/redo. Selection and deletion use separate keyboard-accessible buttons.
 
 Progressions and favorites are stored locally in each browser. The GitHub Pages origin differs from the original Sites app, so saved projects do not transfer automatically. Export a project as JSON in the original app, then import that JSON into this version to move it.
