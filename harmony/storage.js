@@ -1,4 +1,4 @@
-import {createProject, validateProject} from './project.js?v=2.3.0';
+import {createProject, validateProject} from './project.js?v=2.3.1';
 
 export const STORAGE = {
   draft:'harmony.draft.v1', backup:'harmony.draft.backup.v1', unreadable:'harmony.draft.unreadable.v1',

@@ -1,13 +1,13 @@
-import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.3.0';
-import {suggestNextChords} from './recommendations.js?v=2.3.0';
-import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.3.0';
-import {AudioEngine} from './audio.js?v=2.3.0';
-import {createProject as defaults, validateProject} from './project.js?v=2.3.0';
-import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.3.0';
-import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.3.0';
-import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.3.0';
-import {ProjectStorage, STORAGE} from './storage.js?v=2.3.0';
-import {createMotion} from './motion.js?v=2.3.0';
+import {NOTE_NAMES,MODES,QUALITIES,makeChord,chordName,chordNotes,diatonicChords,romanNumeral,transposeChords,voiceLead,PRESETS,NAMED_PRESETS,makePreset,totalBeats,arrangementEvents,createMidi,PATTERNS,BASIC_PATTERNS,ADVANCED_PATTERNS,SIMPLE_PATTERNS,COMPLEX_PATTERNS} from './music.js?v=2.3.1';
+import {suggestNextChords} from './recommendations.js?v=2.3.1';
+import {patternChoices,adjacentPattern} from './pattern-browser.js?v=2.3.1';
+import {AudioEngine} from './audio.js?v=2.3.1';
+import {createProject as defaults, validateProject} from './project.js?v=2.3.1';
+import {SECTION_TYPES, MAX_SECTIONS, MAX_SONG_CHORDS, activeSection, sectionLabel, createSection, duplicateSection, syncSection, activateSection, songChordCount, performancePlan} from './sections.js?v=2.3.1';
+import {progressionAlternatives, progressionSignature, shapeVoicings} from './composition.js?v=2.3.1';
+import {sectionGenerationContext, generateSectionProgressions, adoptGeneratedSection} from './section-generator.js?v=2.3.1';
+import {ProjectStorage, STORAGE} from './storage.js?v=2.3.1';
+import {createMotion} from './motion.js?v=2.3.1';
 
 const $=id=>document.getElementById(id);
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
