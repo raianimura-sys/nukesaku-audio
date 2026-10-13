@@ -11,6 +11,7 @@ Static website for Nukesaku Audio, published with GitHub Pages.
 - `index.html` — studio home: live HARMONY demo, public tools, development projects, learning and contact routes
 - `harmony/` — free browser chord progression app with mobile support and MIDI export
 - `harmony.html` — HARMONY features and a three-step guide, with direct app links
+- `harmony-pro.html` — HARMONY PRO development introduction and six melody/arrangement listening comparisons
 - `nukesakucompose.html` — currently distributed Beta product page
 - `nukesakuchop.html` — upcoming phrase collage instrument product preview
 - `compose-evolution.html` — formal 1.5.0 Composer Canvas development log and earlier milestones
@@ -72,3 +73,11 @@ Interactive controls and text remain HTML/CSS/JavaScript. `nukesaku-audio-social
 ## Search and sharing
 
 Canonical URLs and Open Graph metadata live in each page `<head>`. Update `sitemap.xml` when adding a public page. The root social card is 1200 × 630.
+
+## HARMONY PRO development preview
+
+`harmony-pro.html` introduces the independent PRO app as an in-development product, without publishing its application code or promising a launch date. The home page links to it through the navigation, dedicated topic and footer. Existing home copy, shared palette and the free HARMONY app are preserved.
+
+The page presents the four melody-based accompaniment directions, manual beat blocks, generated bass and separate-track MIDI export. Six approved original melody samples are available as melody-only and melody/chords/bass AAC audio. These use the natural proposal from the October 13 development build; the fourth emotional proposal was added afterward and is described separately. The accompanying source and combined MIDI files can be downloaded.
+
+`harmony-pro-preview.css` is scoped to this page and the new home topic. `harmony-pro-preview.js` keeps one audio player active, switches sources at the same listening position, and requires a user action to play. Native audio controls use `preload="none"` to avoid loading all samples before listening. Media lives in `harmony-pro-preview/audio/`; no localhost URLs or private project data are published.
